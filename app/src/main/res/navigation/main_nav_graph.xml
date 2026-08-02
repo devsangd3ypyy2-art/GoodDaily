@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.sangapp.gooddaily.ui.dashboard.DashboardFragment"
+        android:label="Tổng quan" />
+
+    <fragment
+        android:id="@+id/financeFragment"
+        android:name="com.sangapp.gooddaily.ui.finance.FinanceFragment"
+        android:label="Tài chính" />
+
+    <fragment
+        android:id="@+id/healthFragment"
+        android:name="com.sangapp.gooddaily.ui.health.HealthFragment"
+        android:label="Sức khỏe" />
+
+    <fragment
+        android:id="@+id/plannerFragment"
+        android:name="com.sangapp.gooddaily.ui.planner.PlannerFragment"
+        android:label="Kế hoạch" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.sangapp.gooddaily.ui.profile.ProfileFragment"
+        android:label="Cá nhân" />
+
+    <fragment
+        android:id="@+id/reminderManagerFragment"
+        android:name="com.sangapp.gooddaily.ui.reminder.ReminderManagerFragment"
+        android:label="Quản lý thông báo" />
+</navigation>

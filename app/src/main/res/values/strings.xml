@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Good Daily</string>
+    <string name="dashboard">Tổng quan</string>
+    <string name="finance">Tài chính</string>
+    <string name="health">Sức khỏe</string>
+    <string name="planner">Kế hoạch</string>
+    <string name="profile">Cá nhân</string>
+
+    <string name="profile_subtitle">Quản lý tài khoản, sao lưu và giao diện theo cách của bạn.</string>
+    <string name="local_account">Tài khoản cục bộ</string>
+    <string name="reminder_daily_summary">Nhắc tổng kết ngày lúc khoảng 20:00</string>
+    <string name="backup_export_title">Xuất dữ liệu</string>
+    <string name="backup_export_subtitle">Tạo file sao lưu JSON để lưu trữ hoặc chuyển máy.</string>
+    <string name="backup_import_title">Nhập dữ liệu</string>
+    <string name="backup_import_subtitle">Khôi phục toàn bộ dữ liệu từ file JSON đã xuất.</string>
+    <string name="sample_data_title">Dữ liệu mẫu</string>
+    <string name="sample_data_subtitle">Thêm dữ liệu minh họa để xem biểu đồ và giao diện.</string>
+    <string name="logout_title">Đăng xuất</string>
+    <string name="logout_subtitle">Thoát phiên hiện tại nhưng vẫn giữ dữ liệu trên máy.</string>
+    <string name="appearance_title">Màu nhấn ứng dụng</string>
+    <string name="appearance_subtitle">Bạn có thể đổi màu phong cách của màn hình Cá nhân và thanh điều hướng dưới.</string>
+    <string name="theme_green_label">Măng tây</string>
+    <string name="theme_blue_label">Xanh dương</string>
+    <string name="theme_orange_label">Cam ấm</string>
+    <string name="theme_purple_label">Tím mận</string>
+    <string name="local_storage_info">Dữ liệu Good Daily đang được lưu cục bộ bằng Room/SQLite. Bạn có thể xuất file JSON để sao lưu, rồi nhập lại trên điện thoại khác khi cần.</string>
+    <string name="support_card_title">Trạng thái ứng dụng</string>
+    <string name="support_card_subtitle">Offline, riêng tư, dữ liệu luôn nằm trên máy của bạn.</string>
+</resources>

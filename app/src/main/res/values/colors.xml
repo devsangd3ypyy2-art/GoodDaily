@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#2E7D5B</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="primary_container">#B7F3D6</color>
+    <color name="on_primary_container">#0B3B28</color>
+    <color name="secondary">#556B5F</color>
+    <color name="background">#F6F4EF</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#ECE7DF</color>
+    <color name="on_surface">#1F1B16</color>
+    <color name="on_surface_variant">#6E665C</color>
+    <color name="outline">#D2C8BA</color>
+    <color name="income">#17864B</color>
+    <color name="income_container">#D9F2E3</color>
+    <color name="expense">#C53C3C</color>
+    <color name="expense_container">#F8DEDE</color>
+    <color name="warning">#B26A00</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="theme_green">#6E8B3D</color>
+    <color name="theme_green_container">#E2EDC8</color>
+    <color name="theme_green_on_container">#293600</color>
+
+    <color name="theme_blue">#2E6AA6</color>
+    <color name="theme_blue_container">#D6E8FA</color>
+    <color name="theme_blue_on_container">#00274B</color>
+
+    <color name="theme_orange">#C46A2C</color>
+    <color name="theme_orange_container">#FBE4D4</color>
+    <color name="theme_orange_on_container">#4D2200</color>
+
+    <color name="theme_purple">#7A4CA2</color>
+    <color name="theme_purple_container">#EBDCFA</color>
+    <color name="theme_purple_on_container">#2F114A</color>
+    <color name="schedule_work">#DDEED6</color>
+    <color name="schedule_work_text">#315225</color>
+    <color name="schedule_study">#DCEBFA</color>
+    <color name="schedule_study_text">#214C75</color>
+    <color name="schedule_sleep">#E8E6EE</color>
+    <color name="schedule_sleep_text">#4C4758</color>
+    <color name="schedule_health">#F9E4D4</color>
+    <color name="schedule_health_text">#7B431C</color>
+    <color name="schedule_other">#F1E3EE</color>
+    <color name="schedule_other_text">#6A3D60</color>
+    <color name="busy_dot">#D9544D</color>
+</resources>

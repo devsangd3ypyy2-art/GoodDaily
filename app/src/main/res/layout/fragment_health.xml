@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/healthScroll"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/screen_padding"
+        android:paddingBottom="32dp">
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sức khỏe" android:textColor="@color/on_surface" android:textSize="28sp" android:textStyle="bold" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Theo dõi cơ thể và năng lượng mỗi ngày" android:textColor="@color/on_surface_variant" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:orientation="horizontal">
+            <com.google.android.material.card.MaterialCardView android:id="@+id/cardBodySummary" style="@style/GoodDaily.Card" android:layout_width="0dp" android:layout_height="132dp" android:layout_marginEnd="6dp" android:layout_weight="1">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical" android:padding="12dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cân nặng" android:textColor="@color/on_surface_variant" />
+                    <TextView android:id="@+id/tvWeight" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="-- kg" android:textColor="@color/on_surface" android:textSize="25sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/tvBmi" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="BMI: --" android:textColor="@color/on_surface_variant" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView android:id="@+id/cardMealSummary" style="@style/GoodDaily.Card" android:layout_width="0dp" android:layout_height="132dp" android:layout_marginStart="6dp" android:layout_weight="1">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical" android:padding="12dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Kcal hôm nay" android:textColor="@color/on_surface_variant" />
+                    <TextView android:id="@+id/tvCalories" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="0" android:textColor="@color/on_surface" android:textSize="25sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/tvProtein" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Protein: 0 g" android:textColor="@color/on_surface_variant" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:orientation="horizontal">
+            <com.google.android.material.button.MaterialButton android:id="@+id/btnAddBody" android:layout_width="0dp" android:layout_height="52dp" android:layout_marginEnd="6dp" android:layout_weight="1" android:text="Đo cơ thể" app:icon="@drawable/ic_plus" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/btnAddMeal" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="52dp" android:layout_marginStart="6dp" android:layout_weight="1" android:text="Thêm bữa ăn" app:icon="@drawable/ic_plus" />
+        </LinearLayout>
+
+        <TextView android:id="@+id/tvMealsSection" style="@style/GoodDaily.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:text="Bữa ăn gần đây" />
+        <LinearLayout android:id="@+id/mealContainer" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" />
+
+        <TextView android:id="@+id/tvBodiesSection" style="@style/GoodDaily.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:text="Lịch sử cơ thể" />
+        <LinearLayout android:id="@+id/bodyContainer" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
