@@ -24,7 +24,7 @@ public final class SampleDataSeeder {
         AppExecutors.database().execute(() -> {
             GoodDailyDatabase db = GoodDailyDatabase.get(context);
             long now = System.currentTimeMillis();
-            db.transactionDao().insert(new TransactionEntity("INCOME", 520000, "Thu nhập công việc", "BANK", "Doanh thu hôm nay", now - 3_600_000));
+            db.transactionDao().insert(new TransactionEntity("INCOME", 520000, "Thu nhập công việc", "OTHER", "Doanh thu hôm nay", now - 3_600_000));
             db.transactionDao().insert(new TransactionEntity("EXPENSE", 45000, "Xăng xe", "CASH", "Đổ xăng", now - 2_800_000));
             db.transactionDao().insert(new TransactionEntity("EXPENSE", 35000, "Ăn uống", "CASH", "Bữa trưa", now - 2_000_000));
             for (int i = 1; i <= 6; i++) {

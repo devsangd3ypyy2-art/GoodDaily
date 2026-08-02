@@ -123,7 +123,7 @@ public final class FinancePdfExporter {
     }
 
     private static String accountName(String account) {
-        if ("BANK".equals(account)) return "Ngân hàng";
+        if ("BANK".equals(account) || "OTHER".equals(account)) return "Tài khoản khác";
         if ("EWALLET".equals(account)) return "Ví điện tử";
         return "Tiền mặt";
     }

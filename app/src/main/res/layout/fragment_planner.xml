@@ -212,6 +212,14 @@
                     </LinearLayout>
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCopySchedule"
+                        style="@style/Widget.Material3.Button.IconButton"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="Sao chép thời gian biểu sang ngày khác"
+                        app:icon="@drawable/ic_restore" />
+
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnAddSchedule"
                         style="@style/Widget.Material3.Button.TonalButton"
                         android:layout_width="48dp"
@@ -467,6 +475,15 @@
                     android:orientation="vertical" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPlannerAdvanced"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="14dp"
+            android:text="Lịch tháng, mục tiêu và quản lý nâng cao"
+            app:icon="@drawable/ic_more_grid" />
 
         <com.google.android.material.card.MaterialCardView
             style="@style/GoodDaily.Card"

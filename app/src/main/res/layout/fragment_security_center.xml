@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="18dp" android:paddingBottom="110dp">
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Bảo mật ứng dụng" android:textColor="@color/on_surface" android:textSize="27sp" android:textStyle="bold" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="PIN được băm và mã hóa bằng Android Keystore. Bạn có thể bật sinh trắc học, tự khóa và ẩn màn hình gần đây." android:textColor="@color/on_surface_variant" />
+
+        <com.google.android.material.card.MaterialCardView style="@style/GoodDaily.Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                <TextView style="@style/GoodDaily.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mã khóa" />
+                <TextView android:id="@+id/tvPinStatus" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:textColor="@color/on_surface_variant" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:orientation="horizontal">
+                    <com.google.android.material.button.MaterialButton android:id="@+id/btnSetPin" android:layout_width="0dp" android:layout_height="50dp" android:layout_marginEnd="5dp" android:layout_weight="1" android:text="Đặt / đổi PIN" />
+                    <com.google.android.material.button.MaterialButton android:id="@+id/btnDisablePin" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="50dp" android:layout_marginStart="5dp" android:layout_weight="1" android:text="Tắt PIN" />
+                </LinearLayout>
+                <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/switchBiometric" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="Mở khóa bằng vân tay / sinh trắc học" />
+                <com.google.android.material.textfield.TextInputLayout style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:hint="Tự khóa sau">
+                    <AutoCompleteTextView android:id="@+id/dropdownAutoLock" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="none" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView style="@style/GoodDaily.Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                <TextView style="@style/GoodDaily.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Quyền riêng tư" />
+                <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/switchSecureScreen" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Ẩn nội dung trong màn hình ứng dụng gần đây và chặn ảnh chụp" />
+                <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/switchFinanceLock" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Yêu cầu mở khóa khi vào Tài chính" />
+                <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/switchJournalLock" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Yêu cầu mở khóa khi vào Nhật ký" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton android:id="@+id/btnLockNow" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="14dp" android:text="Khóa ứng dụng ngay" app:icon="@drawable/ic_settings" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

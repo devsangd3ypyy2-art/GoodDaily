@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="@dimen/screen_padding" android:paddingBottom="40dp">
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Báo cáo sức khỏe" android:textSize="28sp" android:textStyle="bold" android:textColor="@color/on_surface" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp"
+            android:text="Theo dõi xu hướng cân nặng và dinh dưỡng theo tuần, tháng hoặc năm."
+            android:textColor="@color/on_surface_variant" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/rangeGroup" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" app:singleSelection="true" app:selectionRequired="true">
+            <com.google.android.material.button.MaterialButton android:id="@+id/btnWeek" style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:text="Tuần" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/btnMonth" style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:text="Tháng" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/btnYear" style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:text="Năm" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <com.google.android.material.card.MaterialCardView style="@style/GoodDaily.Card"
+            android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="18dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tổng quan kỳ"
+                    android:textStyle="bold" android:textSize="17sp" android:textColor="@color/on_surface" />
+                <TextView android:id="@+id/tvSummary" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" android:textColor="@color/on_surface_variant" android:lineSpacingExtra="5dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView style="@style/GoodDaily.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="22dp" android:text="Xu hướng cân nặng" />
+        <com.sangapp.gooddaily.ui.widget.HealthTrendView android:id="@+id/weightChart"
+            android:layout_width="match_parent" android:layout_height="240dp" android:layout_marginTop="10dp"
+            android:background="@drawable/bg_list_item_surface" android:padding="8dp" />
+
+        <com.google.android.material.button.MaterialButton android:id="@+id/btnExportCsv"
+            style="@style/Widget.Material3.Button.TonalButton" android:layout_width="match_parent" android:layout_height="52dp"
+            android:layout_marginTop="18dp" android:text="Xuất báo cáo sức khỏe CSV" app:icon="@drawable/ic_export" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="18dp" android:paddingBottom="110dp">
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Sao lưu và chuyển máy" android:textColor="@color/on_surface" android:textSize="27sp" android:textStyle="bold" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="Backup đầy đủ gồm Room Database, cấu hình và file đính kèm. Có thể đặt mật khẩu AES để bảo vệ." android:textColor="@color/on_surface_variant" />
+
+        <com.google.android.material.card.MaterialCardView style="@style/GoodDaily.Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                <TextView style="@style/GoodDaily.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Backup thủ công" />
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnExportEncryptedBackup" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="12dp" android:text="Xuất backup ZIP / GDZ" app:icon="@drawable/ic_export" />
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnImportFullBackup" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="10dp" android:text="Xem trước và khôi phục" app:icon="@drawable/ic_import" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="Khi nhập, bạn có thể gộp dữ liệu chưa có hoặc thay thế toàn bộ. PIN không được chuyển sang máy khác vì khóa được bảo vệ bởi Android Keystore." android:textColor="@color/on_surface_variant" android:textSize="12sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView style="@style/GoodDaily.Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                <TextView style="@style/GoodDaily.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Backup tự động trong máy" />
+                <com.google.android.material.textfield.TextInputLayout style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:hint="Tần suất">
+                    <AutoCompleteTextView android:id="@+id/dropdownAutoBackup" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="none" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnBackupNowInternal" style="@style/Widget.Material3.Button.TonalButton" android:layout_width="match_parent" android:layout_height="50dp" android:layout_marginTop="10dp" android:text="Tạo bản backup nội bộ ngay" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView style="@style/GoodDaily.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="22dp" android:text="Các bản backup tự động" />
+        <LinearLayout android:id="@+id/autoBackupListContainer" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="vertical" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

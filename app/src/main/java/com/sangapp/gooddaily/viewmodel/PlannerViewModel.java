@@ -143,4 +143,17 @@ public class PlannerViewModel extends AndroidViewModel {
             ScheduleReminderScheduler.cancel(getApplication(), block.id);
         });
     }
+
+    public void copySchedulesTo(List<ScheduleBlockEntity> source, String targetDate) {
+        if (source == null || source.isEmpty() || targetDate == null || targetDate.trim().isEmpty()) return;
+        AppExecutors.database().execute(() -> {
+            for (ScheduleBlockEntity original : source) {
+                ScheduleBlockEntity copy = new ScheduleBlockEntity(targetDate, original.title,
+                        original.category, original.startMinutes, original.endMinutes,
+                        original.reminderEnabled, original.note, System.currentTimeMillis());
+                copy.id = db.plannerDao().insertSchedule(copy);
+                if (copy.reminderEnabled) ScheduleReminderScheduler.schedule(getApplication(), copy);
+            }
+        });
+    }
 }

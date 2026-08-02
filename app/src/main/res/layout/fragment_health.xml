@@ -38,6 +38,24 @@
             <com.google.android.material.button.MaterialButton android:id="@+id/btnAddMeal" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="52dp" android:layout_marginStart="6dp" android:layout_weight="1" android:text="Thêm bữa ăn" app:icon="@drawable/ic_plus" />
         </LinearLayout>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnHealthAdvanced"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="14dp"
+            android:text="BMR, TDEE và mục tiêu kcal"
+            app:icon="@drawable/ic_more_grid" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnHealthReport"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:text="Biểu đồ và báo cáo sức khỏe"
+            app:icon="@drawable/ic_chart" />
+
         <TextView android:id="@+id/tvMealsSection" style="@style/GoodDaily.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:text="Bữa ăn gần đây" />
         <LinearLayout android:id="@+id/mealContainer" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" />
 

@@ -45,7 +45,7 @@ public class FinanceViewModel extends AndroidViewModel {
         AppExecutors.database().execute(() -> {
             long now = System.currentTimeMillis();
             db.transactionDao().insertAccount(new FinanceAccountEntity("CASH", "Tiền mặt", 0, true, now));
-            db.transactionDao().insertAccount(new FinanceAccountEntity("BANK", "Ngân hàng", 0, true, now));
+            db.transactionDao().insertAccount(new FinanceAccountEntity("OTHER", "Tài khoản khác", 0, true, now));
             db.transactionDao().insertAccount(new FinanceAccountEntity("EWALLET", "Ví điện tử", 0, true, now));
         });
     }
@@ -76,7 +76,7 @@ public class FinanceViewModel extends AndroidViewModel {
     public LiveData<List<FinanceAccountEntity>> accounts() { return db.transactionDao().observeAccounts(); }
     public LiveData<Double> totalBalance() { return db.transactionDao().observeTotalBalance(); }
     public LiveData<Double> cashBalance() { return db.transactionDao().observeAccountBalance("CASH"); }
-    public LiveData<Double> bankBalance() { return db.transactionDao().observeAccountBalance("BANK"); }
+    public LiveData<Double> otherBalance() { return db.transactionDao().observeAccountBalance("OTHER"); }
     public LiveData<Double> walletBalance() { return db.transactionDao().observeAccountBalance("EWALLET"); }
     public LiveData<Double> weekIncome() { return db.transactionDao().observeTotalByTypeAndRange("INCOME", DateUtils.startOfWeek(), DateUtils.endOfDay()); }
     public LiveData<Double> weekExpense() { return db.transactionDao().observeTotalByTypeAndRange("EXPENSE", DateUtils.startOfWeek(), DateUtils.endOfDay()); }
@@ -85,10 +85,20 @@ public class FinanceViewModel extends AndroidViewModel {
     public LiveData<Double> yearIncome() { return db.transactionDao().observeTotalByTypeAndRange("INCOME", DateUtils.startOfYear(), DateUtils.endOfDay()); }
     public LiveData<Double> yearExpense() { return db.transactionDao().observeTotalByTypeAndRange("EXPENSE", DateUtils.startOfYear(), DateUtils.endOfDay()); }
 
-    public void save(TransactionEntity entity) {
+    public interface SaveCallback { void onSaved(long transactionId); }
+
+    public void save(TransactionEntity entity) { save(entity, null); }
+
+    public void save(TransactionEntity entity, SaveCallback callback) {
         AppExecutors.database().execute(() -> {
-            if (entity.id == 0) db.transactionDao().insert(entity);
-            else db.transactionDao().update(entity);
+            long id = entity.id;
+            if (entity.id == 0) {
+                id = db.transactionDao().insert(entity);
+                entity.id = id;
+            } else {
+                db.transactionDao().update(entity);
+            }
+            if (callback != null) callback.onSaved(id);
         });
     }
 
@@ -100,7 +110,10 @@ public class FinanceViewModel extends AndroidViewModel {
     }
 
     public void delete(TransactionEntity entity) {
-        AppExecutors.database().execute(() -> db.transactionDao().delete(entity));
+        AppExecutors.database().execute(() -> {
+            db.financeAdvancedDao().deleteAttachmentsForTransaction(entity.id);
+            db.transactionDao().delete(entity);
+        });
     }
 
     public static final class Range {

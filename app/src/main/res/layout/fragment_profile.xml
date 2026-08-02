@@ -519,6 +519,57 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:cardBackgroundColor="@color/surface"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="1dp"
+            app:strokeColor="@color/surface_variant"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    style="@style/GoodDaily.SectionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Công cụ nâng cao" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnOpenFeatureHub"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Mở trung tâm quản lý"
+                    app:icon="@drawable/ic_more_grid" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnOpenFullBackup"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="9dp"
+                    android:text="Backup ZIP và chuyển máy"
+                    app:icon="@drawable/ic_export" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnOpenSecurity"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="9dp"
+                    android:text="PIN, vân tay và khóa riêng"
+                    app:icon="@drawable/ic_settings" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <TextView
             style="@style/GoodDaily.SectionTitle"
             android:layout_width="wrap_content"

@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import com.sangapp.gooddaily.R;
 import com.sangapp.gooddaily.data.local.prefs.LocalUserStore;
 import com.sangapp.gooddaily.databinding.FragmentDashboardBinding;
@@ -22,6 +24,8 @@ import com.sangapp.gooddaily.util.ThemeUtils;
 import com.sangapp.gooddaily.viewmodel.DashboardViewModel;
 
 import java.util.Calendar;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.Locale;
 
 public class DashboardFragment extends Fragment {
@@ -106,6 +110,10 @@ public class DashboardFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.reminderManagerFragment));
         binding.cardDashboardAvatar.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.profileFragment));
+        ThemeUtils.tintTonalButton(binding.btnOpenFeatureHub, requireContext(), userStore.getThemeKey());
+        binding.btnOpenFeatureHub.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.featureHubFragment));
+        binding.btnCustomizeDashboard.setOnClickListener(v -> showDashboardCustomizer(userStore));
+        applyDashboardVisibility(userStore);
 
         binding.getRoot().setAlpha(0f);
         binding.getRoot().animate().alpha(1f).setDuration(220L).start();
@@ -153,6 +161,45 @@ public class DashboardFragment extends Fragment {
         Navigation.findNavController(view).navigate(destination, args);
     }
 
+    private void showDashboardCustomizer(LocalUserStore store) {
+        String[] labels = {"Tài chính", "Kcal", "Cơ thể", "Học tập", "Thói quen", "Biểu đồ chi tiêu", "Công việc"};
+        String[] keys = {"FINANCE", "CALORIES", "HEALTH", "STUDY", "HABITS", "CHART", "TASKS"};
+        Set<String> selected = parseCards(store.getDashboardCards());
+        boolean[] checked = new boolean[keys.length];
+        for (int i = 0; i < keys.length; i++) checked[i] = selected.contains(keys[i]);
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Tùy chỉnh trang chủ")
+                .setMultiChoiceItems(labels, checked, (d, which, value) -> checked[which] = value)
+                .setNegativeButton("Hủy", null)
+                .setPositiveButton("Lưu", (d, w) -> {
+                    StringBuilder out = new StringBuilder();
+                    for (int i = 0; i < keys.length; i++) if (checked[i]) {
+                        if (out.length() > 0) out.append(',');
+                        out.append(keys[i]);
+                    }
+                    store.setDashboardCards(out.toString());
+                    applyDashboardVisibility(store);
+                }).show();
+    }
+
+    private Set<String> parseCards(String value) {
+        Set<String> out = new LinkedHashSet<>();
+        if (value != null) for (String item : value.split(",")) if (!item.trim().isEmpty()) out.add(item.trim());
+        return out;
+    }
+
+    private void applyDashboardVisibility(LocalUserStore store) {
+        if (binding == null) return;
+        Set<String> cards = parseCards(store.getDashboardCards());
+        binding.cardFinanceSummary.setVisibility(cards.contains("FINANCE") ? View.VISIBLE : View.GONE);
+        binding.cardCalories.setVisibility(cards.contains("CALORIES") ? View.VISIBLE : View.GONE);
+        binding.cardHealthSummary.setVisibility(cards.contains("HEALTH") ? View.VISIBLE : View.GONE);
+        binding.cardStudy.setVisibility(cards.contains("STUDY") ? View.VISIBLE : View.GONE);
+        binding.cardHabits.setVisibility(cards.contains("HABITS") ? View.VISIBLE : View.GONE);
+        binding.cardWeeklyChart.setVisibility(cards.contains("CHART") ? View.VISIBLE : View.GONE);
+        binding.cardTaskProgress.setVisibility(cards.contains("TASKS") ? View.VISIBLE : View.GONE);
+    }
+
     private void renderFinance() {
         if (hideAmounts) {
             binding.tvTodayIncome.setText("Thu: ••••••");
@@ -179,6 +226,7 @@ public class DashboardFragment extends Fragment {
         if (binding != null) {
             LocalUserStore store = new LocalUserStore(requireContext());
             updateHeader(store, ThemeUtils.getPrimaryColor(requireContext(), store.getThemeKey()));
+            applyDashboardVisibility(store);
         }
     }
 

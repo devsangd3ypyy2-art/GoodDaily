@@ -30,6 +30,14 @@ public class LocalUserStore {
     public String getNotificationSoundUri() { return prefs.getString("notification_sound_uri", ""); }
     public String getNotificationSoundName() { return prefs.getString("notification_sound_name", "Âm thanh mặc định"); }
     public boolean isDynamicColorsEnabled() { return prefs.getBoolean("dynamic_colors_enabled", false); }
+    public boolean isBiometricEnabled() { return prefs.getBoolean("biometric_enabled", false); }
+    public int getAutoLockMinutes() { return prefs.getInt("auto_lock_minutes", 5); }
+    public boolean isSecureScreenEnabled() { return prefs.getBoolean("secure_screen", false); }
+    public boolean isFinanceLockEnabled() { return prefs.getBoolean("finance_lock", false); }
+    public boolean isJournalLockEnabled() { return prefs.getBoolean("journal_lock", false); }
+    public long getLastBackgroundAt() { return prefs.getLong("last_background_at", 0L); }
+    public String getAutoBackupCadence() { return prefs.getString("auto_backup_cadence", "OFF"); }
+    public String getDashboardCards() { return prefs.getString("dashboard_cards", "FINANCE,CALORIES,HEALTH,STUDY,HABITS,CHART,TASKS"); }
 
     public boolean register(String displayName, String username, String password) {
         if (displayName.trim().isEmpty() || username.trim().isEmpty() || password.length() < 4) return false;
@@ -87,4 +95,12 @@ public class LocalUserStore {
                 .apply();
     }
     public void setDynamicColorsEnabled(boolean enabled) { prefs.edit().putBoolean("dynamic_colors_enabled", enabled).apply(); }
+    public void setBiometricEnabled(boolean enabled) { prefs.edit().putBoolean("biometric_enabled", enabled).apply(); }
+    public void setAutoLockMinutes(int minutes) { prefs.edit().putInt("auto_lock_minutes", Math.max(0, minutes)).apply(); }
+    public void setSecureScreenEnabled(boolean enabled) { prefs.edit().putBoolean("secure_screen", enabled).apply(); }
+    public void setFinanceLockEnabled(boolean enabled) { prefs.edit().putBoolean("finance_lock", enabled).apply(); }
+    public void setJournalLockEnabled(boolean enabled) { prefs.edit().putBoolean("journal_lock", enabled).apply(); }
+    public void setLastBackgroundAt(long value) { prefs.edit().putLong("last_background_at", value).apply(); }
+    public void setAutoBackupCadence(String value) { prefs.edit().putString("auto_backup_cadence", value == null ? "OFF" : value).apply(); }
+    public void setDashboardCards(String value) { prefs.edit().putString("dashboard_cards", value == null ? "" : value).apply(); }
 }

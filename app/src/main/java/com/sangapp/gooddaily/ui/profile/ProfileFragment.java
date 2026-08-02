@@ -143,6 +143,10 @@ public class ProfileFragment extends Fragment {
         binding.rowCustomReminders.setOnClickListener(openReminders);
         binding.btnNotificationSettings.setOnClickListener(openReminders);
         binding.cardMusicCenter.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.musicFragment));
+        binding.btnOpenFeatureHub.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.featureHubFragment));
+        binding.btnOpenFullBackup.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.backupCenterFragment));
+        binding.btnOpenSecurity.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.securityCenterFragment));
+        ThemeUtils.tintTonalButton(binding.btnOpenFeatureHub, requireContext(), userStore.getThemeKey());
 
         binding.cardExport.setOnClickListener(v -> {
             String date = new SimpleDateFormat("yyyy-MM-dd_HH-mm", Locale.US).format(new Date());

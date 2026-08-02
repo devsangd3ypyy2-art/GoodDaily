@@ -77,6 +77,7 @@ public class PlannerFragment extends Fragment {
     private List<HabitCheckInEntity> allCheckIns = new ArrayList<>();
     private final Set<Long> checkedHabitIds = new HashSet<>();
     private List<ScheduleBlockEntity> weekSchedules = new ArrayList<>();
+    private List<ScheduleBlockEntity> currentSchedules = new ArrayList<>();
     private List<DailyNoteEntity> noteHistory = new ArrayList<>();
     private CountDownTimer pomodoroTimer;
     private long pomodoroRemaining = POMODORO_MS;
@@ -127,6 +128,7 @@ public class PlannerFragment extends Fragment {
         ThemeUtils.tintTonalButton(binding.btnReminderManager, requireContext(), theme);
         ThemeUtils.tintTonalButton(binding.btnOpenCalendar, requireContext(), theme);
         ThemeUtils.tintTonalButton(binding.btnAddSchedule, requireContext(), theme);
+        binding.btnCopySchedule.setIconTint(ColorStateList.valueOf(ThemeUtils.getPrimaryColor(requireContext(), theme)));
         ThemeUtils.tintFilledButton(binding.btnStartPomodoro, requireContext(), theme);
         ThemeUtils.tintFilledButton(binding.btnSaveLearning, requireContext(), theme);
         ThemeUtils.tintFilledButton(binding.btnSaveNote, requireContext(), theme);
@@ -155,6 +157,7 @@ public class PlannerFragment extends Fragment {
         binding.btnPreviousWeek.setOnClickListener(v -> vm.selectDate(DateUtils.shiftDateKey(selectedDate, -7)));
         binding.btnNextWeek.setOnClickListener(v -> vm.selectDate(DateUtils.shiftDateKey(selectedDate, 7)));
         binding.btnAddSchedule.setOnClickListener(v -> showScheduleSheet(null));
+        binding.btnCopySchedule.setOnClickListener(v -> showCopySchedulePicker());
         binding.btnAddTask.setOnClickListener(v -> showTaskDialog());
         binding.btnAddStudy.setOnClickListener(v -> showStudyDialog());
         binding.btnAddHabit.setOnClickListener(v -> showHabitDialog());
@@ -164,6 +167,7 @@ public class PlannerFragment extends Fragment {
         binding.btnStartPomodoro.setOnClickListener(v -> togglePomodoro());
         binding.btnResetPomodoro.setOnClickListener(v -> resetPomodoro());
         binding.btnSaveNote.setOnClickListener(v -> saveNote());
+        binding.btnPlannerAdvanced.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.featureHubFragment));
         binding.btnNoteHistory.setOnClickListener(v -> showNoteHistory());
     }
 
@@ -276,7 +280,34 @@ public class PlannerFragment extends Fragment {
         return categories.size() > 1 ? "●  ●" : "●";
     }
 
+    private void showCopySchedulePicker() {
+        if (currentSchedules.isEmpty()) {
+            toast("Ngày đang chọn chưa có thời gian biểu để sao chép.");
+            return;
+        }
+        com.google.android.material.datepicker.MaterialDatePicker<Long> picker =
+                com.google.android.material.datepicker.MaterialDatePicker.Builder.datePicker()
+                        .setTitleText("Sao chép lịch sang ngày")
+                        .setSelection(DateUtils.toUtcPickerMillis(DateUtils.shiftDateKey(selectedDate, 1)))
+                        .build();
+        picker.addOnPositiveButtonClickListener(selection -> {
+            if (selection == null) return;
+            String target = DateUtils.dateKeyFromUtcPicker(selection);
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Sao chép " + currentSchedules.size() + " khối thời gian?")
+                    .setMessage("Từ " + DateUtils.formatCompactDateKey(selectedDate) + " sang "
+                            + DateUtils.formatCompactDateKey(target) + ". Dữ liệu ở ngày đích vẫn được giữ.")
+                    .setNegativeButton("Hủy", null)
+                    .setPositiveButton("Sao chép", (d, w) -> {
+                        vm.copySchedulesTo(new ArrayList<>(currentSchedules), target);
+                        toast("Đã sao chép thời gian biểu.");
+                    }).show();
+        });
+        picker.show(getParentFragmentManager(), "copy_schedule_date");
+    }
+
     private void renderSchedules(List<ScheduleBlockEntity> list) {
+        currentSchedules = list == null ? new ArrayList<>() : new ArrayList<>(list);
         binding.scheduleContainer.removeAllViews();
         if (list == null || list.isEmpty()) {
             binding.scheduleContainer.addView(infoText("Chưa có khối thời gian. Thêm giờ học, giờ làm, giờ ngủ hoặc nghỉ ngơi."));

@@ -138,6 +138,15 @@
                 android:maxLines="3" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnTransactionAttachment"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:text="Đính kèm ảnh hóa đơn"
+            app:icon="@drawable/ic_attachment" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

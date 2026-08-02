@@ -1,103 +1,187 @@
-# Good Daily v1.4.0
+# Good Daily v2.0.1
 
-Good Daily là ứng dụng quản lý cá nhân Android chạy cục bộ bằng Java, XML, MVVM, Room/SQLite và WorkManager.
+Good Daily là ứng dụng quản lý cá nhân Android chạy **hoàn toàn local**. Ứng dụng không kết nối tài khoản tài chính, không yêu cầu OTP và không gửi dữ liệu lên máy chủ.
 
-## Điểm mới trong v1.4.0
+- Package: `com.sangapp.gooddaily`
+- Database: `good_daily_database`
+- Room version: `5`
+- Java 17, XML, Material Design 3, MVVM, Room/SQLite, Navigation, WorkManager và AlarmManager
 
-### Trang Tổng quan mới
+## Nguyên tắc phần tài chính
 
-- Hiển thị lời chào theo thời gian: sáng, chiều hoặc tối kèm tên người dùng.
-- Avatar nằm ở góc phải và mở nhanh trang Cá nhân.
-- Nút chuông nằm cạnh avatar và mở Trình quản lý thông báo.
-- Hiệu ứng fade-in nhẹ khi mở Tổng quan.
-- Các thẻ Tổng quan vẫn có thể bấm để mở đúng module chi tiết.
+Phần tài chính chỉ là sổ ghi chép trên điện thoại:
 
-### Trung tâm Âm thanh & Nhạc
+- Người dùng tự tạo ví hoặc tài khoản tiền và tự đặt tên.
+- Tự nhập số dư hiện tại.
+- Không có tên ngân hàng cố định.
+- Không liên kết dịch vụ tài chính bên ngoài.
+- Không đọc SMS, OTP, mật khẩu hoặc ứng dụng tài chính khác.
 
-Mở tại: `Cá nhân → Âm thanh & nhạc`.
+## Trung tâm quản lý
 
-- Chọn file nhạc/audio có trong điện thoại bằng Storage Access Framework.
-- Không cần xin quyền đọc toàn bộ bộ nhớ.
-- Phát, tạm dừng, tiếp tục và dừng bài hát ngay trong app.
-- Ghi nhớ bài hát đã chọn sau khi đóng app.
-- Dùng bài hát đang chọn làm âm báo của Good Daily.
-- Chọn nhạc chuông thông báo có sẵn của hệ thống.
-- Nghe thử âm báo.
-- Khôi phục âm báo mặc định.
+Mở `Cá nhân → Trung tâm quản lý` để truy cập các nhóm nâng cao.
 
-Âm báo tùy chỉnh được áp dụng cho:
+### 1. Tài chính
 
-- Nhắc tổng kết ngày.
-- Nhắc nhở tùy chỉnh.
-- Nhắc thời gian biểu.
-- Cảnh báo tài chính.
+- Tạo, sửa và ẩn nhiều ví/tài khoản tiền local.
+- Nhập số dư đang có.
+- Chuyển tiền nội bộ; khoản chuyển không tính thành thu hoặc chi.
+- Tạo, đổi tên và xóa danh mục thu/chi.
+- Tìm kiếm và lọc giao dịch theo từ khóa, thời gian, tài khoản và danh mục.
+- Thêm, sửa, xóa giao dịch; đính kèm ảnh hóa đơn ngay trong biểu mẫu giao dịch.
+- Giao dịch định kỳ theo ngày, tuần, tháng hoặc năm; worker tự tạo giao dịch khi đến hạn.
+- Ngân sách tổng và ngân sách theo danh mục; cảnh báo 70%, 90% và 100%.
+- Mục tiêu tiết kiệm và tiến độ.
+- Quản lý khoản nợ và lịch sử thanh toán.
+- Biểu đồ tròn cơ cấu chi tiêu.
+- So sánh kỳ hiện tại với kỳ trước và dự báo tiền còn lại cuối tháng.
+- Thống kê ngày, tháng, năm.
+- Xuất CSV và PDF.
 
-Lưu ý: âm báo chỉ thay đổi thông báo của Good Daily, không thay đổi nhạc chuông cuộc gọi của điện thoại. Trình phát nhạc hiện hoạt động trong màn hình Âm thanh & Nhạc và dừng khi rời màn hình.
+### 2. Sức khỏe
 
-### Material You / Dynamic Colors
+- Cân nặng, chiều cao, BMI, mỡ cơ thể, khối cơ.
+- Vòng eo, ngực, tay và đùi.
+- Hồ sơ cơ thể, mục tiêu cân nặng.
+- Tính BMR, TDEE và kcal mục tiêu.
+- Bữa ăn có loại bữa, khối lượng, kcal, protein, carb, chất béo và ảnh.
+- Danh sách thực phẩm thường dùng.
+- Theo dõi nước, giấc ngủ, tâm trạng, bài tập và thuốc.
+- Báo cáo tuần, tháng, năm.
+- Biểu đồ cân nặng, dinh dưỡng và dữ liệu sức khỏe.
+- Sửa, xóa và hoàn tác dữ liệu chính.
 
-Mở tại: `Cá nhân → Cài đặt và bảo mật → Màu theo hình nền`.
+Tỷ lệ mỡ và khối cơ là dữ liệu nhập từ cân hoặc thiết bị đo; điện thoại không tự đo chính xác hai chỉ số này.
 
-- Android 12 trở lên có thể lấy bảng màu từ hình nền điện thoại.
-- Khi bật Material You, bốn màu thủ công sẽ tạm khóa để tránh xung đột.
-- Khi tắt, app quay lại bốn màu Good Daily: măng tây, xanh dương, cam ấm và tím mận.
-- Tiếp tục hỗ trợ chế độ Theo máy, Sáng và Tối.
+### 3. Lịch, thời gian biểu và công việc
 
-### Tài chính thủ công, không liên kết ngân hàng
+- Lịch tuần Dương lịch và Âm lịch.
+- Lịch tháng dạng lưới, có ngày âm và các chấm màu báo dữ liệu bận.
+- Chọn ngày cũ hoặc ngày tương lai.
+- Xem ngày, tuần và tháng.
+- Thời gian biểu dạng timeline theo giờ, hỗ trợ lịch qua đêm.
+- Sao chép lịch của một ngày sang ngày khác.
+- Mẫu thời gian biểu; worker có thể tạo lịch ngày theo các thứ đã chọn.
+- Sự kiện lịch, công việc dự án, deadline, độ ưu tiên, trạng thái và công việc con trong phần mô tả.
+- Cảnh báo sự kiện/công việc đến hạn.
+- Lịch âm và can chi cơ bản.
 
-- Good Daily không kết nối API ngân hàng hoặc ví điện tử.
-- Tiền mặt, tiền trong tài khoản và ví điện tử đều do người dùng tự nhập.
-- Không yêu cầu mật khẩu ngân hàng, OTP hoặc quyền truy cập tài khoản tài chính.
+Giao diện native hiện chưa hỗ trợ kéo-thả trực tiếp khối lịch bằng ngón tay; thời gian được sửa qua biểu mẫu để tránh sai lệch giờ.
 
-### Hệ thống thông báo
+### 4. Học tập
 
-- Notification Channel được tạo theo âm thanh đang chọn.
-- Khi đổi âm báo, các kênh cũ do Good Daily tạo sẽ được làm mới.
-- Trên Android cũ hơn Android 8, âm thanh được gắn trực tiếp vào notification.
+- Danh sách môn học và mục tiêu học.
+- Phiên học, tổng số phút/ngày/tuần.
+- Số lượng từ mới dạng số, không bắt nhập từng từ và nghĩa.
+- Điểm thi thử và mục tiêu cá nhân.
+- Pomodoro 25 phút trong màn hình chính.
+- Lưu lịch sử Pomodoro 25, 45 hoặc 60 phút trong Trung tâm quản lý.
+- Báo cáo học tập thông qua tìm kiếm, CSV và dữ liệu theo ngày.
+- Tài liệu/ảnh đính kèm cho môn học hoặc mục tiêu.
+- Nhắc học bằng thời gian biểu và nhắc nhở nâng cao.
 
-## Chức năng có sẵn từ các bản trước
+### 5. Thói quen và mục tiêu
 
-- Đăng ký, đăng nhập, đăng xuất cục bộ.
-- Thu chi, số tiền hiện có, ngân sách và thống kê ngày/tháng/năm.
-- Sửa và xóa giao dịch.
-- Sức khỏe, cân nặng, BMI, bữa ăn, kcal và protein.
-- Lịch tuần, chọn ngày, thời gian biểu theo giờ và nhắc trước 15 phút.
-- Pomodoro, tổng thời gian học, số từ mới dạng số lượng và điểm thi thử.
-- Thói quen, streak và nhật ký theo ngày.
-- Avatar tùy chỉnh.
-- Nhắc nhở một lần, hằng ngày và hằng tuần.
-- Sao lưu/khôi phục JSON và xuất báo cáo tài chính PDF.
-- Giao diện sáng/tối và bốn màu nhấn.
+- Check-in hằng ngày và streak.
+- Heatmap 12 tuần kiểu GitHub.
+- Chuỗi hiện tại và chuỗi dài nhất.
+- Tỷ lệ hoàn thành tuần và tháng.
+- Thói quen nâng cao: ngày thực hiện, số lần mục tiêu, tạm dừng và nhắc riêng.
+- Mục tiêu cá nhân: cân nặng, tiết kiệm, từ mới, tập luyện và mục tiêu tùy chỉnh.
+- Worker tự cập nhật một số mục tiêu từ dữ liệu thực tế dựa vào tên/tag của mục tiêu.
 
-## Công nghệ
+### 6. Nhật ký và nghiệm lý
 
-- Java 17
-- XML + Material Design 3
-- MVVM
-- Room / SQLite
-- Navigation Component
-- WorkManager
-- MediaPlayer
-- RingtoneManager
-- Storage Access Framework
-- ViewBinding
+- Ghi chú nhanh theo ngày trong Kế hoạch.
+- Nhiều mục nhật ký trong cùng ngày.
+- Tiêu đề, nội dung, tag, mức quan trọng, yêu thích và file/ảnh đính kèm.
+- Tìm kiếm nhật ký.
+- Khóa riêng module nhật ký bằng PIN.
+- Xuất nhật ký CSV hoặc PDF.
+- Module Lục Hào, Mai Hoa Dịch Số, nội dung luận giải, kết quả thực tế và mức độ chính xác.
+
+### 7. Ca chạy và phương tiện
+
+- Ca làm việc: doanh thu, tổng chi phí, số cuốc, thời gian và lợi nhuận ròng.
+- Hiển thị thu nhập theo giờ và theo cuốc khi đủ dữ liệu.
+- Phương tiện: tên xe, biển số, số km, giá mua và thời gian sử dụng.
+- Nhật ký nhiên liệu: số tiền, số lít, số km và mức tiêu hao.
+- Bảo dưỡng: thay nhớt, lốp, phanh, ắc quy, hạn theo ngày/km và cảnh báo đến hạn.
+- Giá mua và số năm sử dụng có thể dùng để theo dõi khấu hao trong hồ sơ phương tiện.
+
+### 8. Nhắc nhở và âm thanh
+
+- Nhắc một lần, hằng ngày, hằng tuần, hằng tháng và hằng năm.
+- Chọn nhiều ngày trong tuần bằng tag, ví dụ `T2,T4,T6`.
+- Báo trước theo số phút.
+- Âm thanh riêng cho từng nhắc nhở hoặc âm báo chung của app.
+- Tùy chọn rung; ghi `không rung` trong tag để tắt rung.
+- Nhóm thông báo: sức khỏe, học tập, tài chính, thói quen và chung.
+- Nút `Nhắc lại 10 phút` và `Hoàn thành` ngay trên notification.
+- AlarmManager cho nhắc nâng cao, WorkManager cho các tác vụ nền.
+- Tự khôi phục lịch nhắc sau khi khởi động lại thiết bị hoặc cập nhật ứng dụng.
+- Chọn và phát nhạc/audio trong máy ở màn hình Âm thanh & Nhạc.
+
+### 9. Bảo mật
+
+- Mật khẩu đăng nhập local.
+- PIN 4–8 số.
+- PIN hash được mã hóa AES/GCM bằng khóa Android Keystore.
+- Mở khóa sinh trắc học khi thiết bị hỗ trợ.
+- Tự khóa sau 1, 5, 15 hoặc 30 phút.
+- Khóa riêng Tài chính và Nhật ký.
+- `FLAG_SECURE` để ẩn nội dung nhạy cảm khỏi ảnh chụp và màn hình ứng dụng gần đây.
+
+Giới hạn kỹ thuật: file Room/SQLite chưa được mã hóa toàn bộ bằng SQLCipher. Vì vậy không nên root máy hoặc chia sẻ trực tiếp thư mục dữ liệu ứng dụng.
+
+### 10. Sao lưu và chuyển máy
+
+- JSON tương thích với các bản cũ.
+- Backup đầy đủ dạng ZIP/GDZ: database, preferences, avatar, hóa đơn, nhật ký và file đính kèm.
+- Mã hóa backup bằng mật khẩu AES-GCM/PBKDF2.
+- Xem trước thông tin backup.
+- Chọn `Gộp dữ liệu` hoặc `Thay thế dữ liệu`.
+- Bỏ qua dữ liệu trùng theo cơ chế đối chiếu tốt nhất có thể.
+- Sao lưu tự động theo tuần hoặc tháng, giữ nhiều phiên bản.
+- Chia sẻ file backup.
+
+PIN/khóa Keystore không được chuyển sang máy khác vì khóa được ràng buộc với thiết bị. Sau khi khôi phục trên máy mới, hãy đặt PIN mới.
+
+### 11. UI/UX
+
+- Material Design 3.
+- Sáng, tối hoặc theo hệ thống.
+- Material You trên Android 12+.
+- Bốn màu nhấn thủ công.
+- Trang chủ có lời chào, tên người dùng, chuông và avatar.
+- Avatar chọn từ máy.
+- Empty state, Snackbar hoàn tác, tìm kiếm toàn app và biểu đồ custom.
+- Bố cục tablet thông qua `values-sw600dp`.
+- Bottom sheet giao dịch cuộn toàn màn hình.
 
 ## Cách chạy
 
-1. Mở thư mục project có trực tiếp `app`, `gradle`, `build.gradle` và `settings.gradle`.
-2. Chờ Gradle Sync hoàn tất.
-3. Chọn máy ảo hoặc điện thoại.
-4. Nhấn Run.
+1. Dùng JDK 17.
+2. Mở thư mục gốc có trực tiếp `app`, `gradle`, `build.gradle`, `settings.gradle` và `gradlew`.
+3. Chờ Gradle Sync.
+4. Chọn `Build → Clean Project`, sau đó `Build → Rebuild Project`.
+5. Chạy trên điện thoại hoặc máy ảo Android.
 
-## Cập nhật không mất dữ liệu
+## Giữ dữ liệu khi cập nhật
 
-- Giữ nguyên package: `com.sangapp.gooddaily`.
-- Giữ nguyên database: `good_daily_database`.
-- Room vẫn ở version 3 vì bản này không thay đổi bảng dữ liệu.
-- Không gỡ app cũ và không bấm Clear Data.
+- Không gỡ app cũ.
+- Không bấm Clear Data.
+- Package và tên database không đổi.
+- Room có migration từ version 1 đến version 5.
+- Nên tạo một backup trước khi nâng cấp.
 
-## Bản vá 1.4.1
+## Kiểm thử trong gói source
 
-- Sửa lỗi biên dịch `ThemeUtils.java: cannot find symbol variable colorPrimary`.
-- Không còn phụ thuộc trực tiếp vào `com.google.android.material.R.attr.colorPrimary`.
-- Vẫn giữ Material You, giao diện sáng/tối và bốn màu thủ công.
+Có unit test nền tảng cho ngày tháng, tiền tệ và danh mục tính năng. Source đã được kiểm tra tĩnh về XML, resource, import nội bộ và cú pháp Java. Môi trường tạo gói không có Android SDK/Gradle cache đầy đủ nên chưa thể build APK thực tế; Android Studio trên máy của bạn vẫn là bước kiểm tra build cuối cùng.
+
+
+## Sửa lỗi v2.0.1
+
+- Sửa trùng phương thức `empty(String)` trong `LocalAccountManagerFragment`.
+- Sửa kiểu dữ liệu chiều cao tối thiểu trong `HabitHeatmapView`.
+- Sửa kiểu dữ liệu chiều cao tối thiểu trong `HealthTrendView`.

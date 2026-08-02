@@ -57,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="Nhập và theo dõi thủ công · không kết nối tài khoản ngân hàng"
+                    android:text="Nhập và theo dõi thủ công · không kết nối dịch vụ tài chính bên ngoài"
                     android:textColor="@color/on_surface_variant"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:lineSpacingExtra="4dp"
-                    android:text="Tiền mặt: 0 ₫\nNgân hàng: 0 ₫\nVí điện tử: 0 ₫"
+                    android:text="Tiền mặt: 0 ₫\nTài khoản khác: 0 ₫\nVí điện tử: 0 ₫"
                     android:textColor="@color/on_primary_soft"
                     android:textSize="13sp" />
 
@@ -284,6 +284,15 @@
                     app:trackCornerRadius="4dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFinanceAdvanced"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="14dp"
+            android:text="Tài chính nâng cao và báo cáo"
+            app:icon="@drawable/ic_more_grid" />
 
         <LinearLayout
             android:layout_width="match_parent"

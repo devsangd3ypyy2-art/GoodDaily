@@ -1,0 +1,7 @@
+<resources>
+    <dimen name="screen_padding">32dp</dimen>
+    <dimen name="card_radius">24dp</dimen>
+    <dimen name="space_small">10dp</dimen>
+    <dimen name="space_medium">18dp</dimen>
+    <dimen name="space_large">28dp</dimen>
+</resources>

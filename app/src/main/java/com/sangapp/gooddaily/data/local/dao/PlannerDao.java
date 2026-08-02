@@ -87,10 +87,17 @@ public interface PlannerDao {
     @Query("SELECT dateKey, COUNT(*) AS count FROM schedule_blocks WHERE dateKey BETWEEN :startDate AND :endDate GROUP BY dateKey")
     LiveData<List<DateCount>> observeScheduleCounts(String startDate, String endDate);
 
+
+    @Query("SELECT * FROM tasks WHERE dateKey = :dateKey ORDER BY completed ASC, id DESC") List<TaskEntity> getTasksByDateSync(String dateKey);
+    @Query("SELECT * FROM study_sessions WHERE dateKey = :dateKey ORDER BY createdAt DESC") List<StudySessionEntity> getStudiesByDateSync(String dateKey);
+    @Query("SELECT * FROM schedule_blocks WHERE dateKey = :dateKey ORDER BY startMinutes ASC") List<ScheduleBlockEntity> getSchedulesByDateSync(String dateKey);
+    @Query("SELECT * FROM daily_notes WHERE dateKey = :dateKey LIMIT 1") DailyNoteEntity getNoteByDateSync(String dateKey);
+
     @Query("SELECT * FROM tasks") List<TaskEntity> getTasksSync();
     @Query("SELECT * FROM study_sessions") List<StudySessionEntity> getStudiesSync();
     @Query("SELECT * FROM vocabulary") List<VocabularyEntity> getVocabularySync();
     @Query("SELECT * FROM daily_notes") List<DailyNoteEntity> getNotesSync();
+    @Query("SELECT COALESCE(SUM(vocabularyCount),0) FROM daily_learning") int getTotalVocabularyCountSync();
     @Query("SELECT * FROM daily_learning") List<DailyLearningEntity> getLearningSync();
     @Query("SELECT * FROM schedule_blocks") List<ScheduleBlockEntity> getSchedulesSync();
 

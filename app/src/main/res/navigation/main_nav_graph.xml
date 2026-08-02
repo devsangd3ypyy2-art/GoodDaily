@@ -38,4 +38,65 @@
         android:id="@+id/reminderManagerFragment"
         android:name="com.sangapp.gooddaily.ui.reminder.ReminderManagerFragment"
         android:label="Quản lý thông báo" />
+
+    <fragment
+        android:id="@+id/featureHubFragment"
+        android:name="com.sangapp.gooddaily.ui.advanced.FeatureHubFragment"
+        android:label="Trung tâm quản lý" />
+
+    <fragment
+        android:id="@+id/featureManagerFragment"
+        android:name="com.sangapp.gooddaily.ui.advanced.FeatureManagerFragment"
+        android:label="Quản lý dữ liệu" />
+
+    <fragment
+        android:id="@+id/localAccountManagerFragment"
+        android:name="com.sangapp.gooddaily.ui.advanced.LocalAccountManagerFragment"
+        android:label="Ví và tài khoản tiền" />
+
+    <fragment
+        android:id="@+id/financeInsightsFragment"
+        android:name="com.sangapp.gooddaily.ui.advanced.FinanceInsightsFragment"
+        android:label="Phân tích tài chính" />
+
+    <fragment
+        android:id="@+id/healthCalculatorFragment"
+        android:name="com.sangapp.gooddaily.ui.advanced.HealthCalculatorFragment"
+        android:label="BMR và TDEE" />
+
+    <fragment
+        android:id="@+id/monthCalendarFragment"
+        android:name="com.sangapp.gooddaily.ui.advanced.MonthCalendarFragment"
+        android:label="Lịch tổng hợp" />
+
+    <fragment
+        android:id="@+id/globalSearchFragment"
+        android:name="com.sangapp.gooddaily.ui.advanced.GlobalSearchFragment"
+        android:label="Tìm kiếm" />
+
+    <fragment
+        android:id="@+id/securityCenterFragment"
+        android:name="com.sangapp.gooddaily.ui.advanced.SecurityCenterFragment"
+        android:label="Bảo mật" />
+
+    <fragment
+        android:id="@+id/backupCenterFragment"
+        android:name="com.sangapp.gooddaily.ui.advanced.BackupCenterFragment"
+        android:label="Sao lưu" />
+
+    <fragment
+        android:id="@+id/healthReportFragment"
+        android:name="com.sangapp.gooddaily.ui.advanced.HealthReportFragment"
+        android:label="Báo cáo sức khỏe" />
+
+    <fragment
+        android:id="@+id/financeSearchFragment"
+        android:name="com.sangapp.gooddaily.ui.advanced.FinanceSearchFragment"
+        android:label="Tìm giao dịch" />
+
+    <fragment
+        android:id="@+id/habitInsightsFragment"
+        android:name="com.sangapp.gooddaily.ui.advanced.HabitInsightsFragment"
+        android:label="Tiến độ thói quen" />
+
 </navigation>

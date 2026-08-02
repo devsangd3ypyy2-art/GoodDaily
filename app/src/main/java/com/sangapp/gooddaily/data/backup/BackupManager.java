@@ -276,7 +276,7 @@ public class BackupManager {
         if (list.isEmpty()) {
             long now=System.currentTimeMillis();
             list.add(new FinanceAccountEntity("CASH","Tiền mặt",0,true,now));
-            list.add(new FinanceAccountEntity("BANK","Ngân hàng",0,true,now));
+            list.add(new FinanceAccountEntity("OTHER","Tài khoản khác",0,true,now));
             list.add(new FinanceAccountEntity("EWALLET","Ví điện tử",0,true,now));
         }
         return list;

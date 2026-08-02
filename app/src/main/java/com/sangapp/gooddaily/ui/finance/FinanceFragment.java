@@ -1,6 +1,7 @@
 package com.sangapp.gooddaily.ui.finance;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,7 +29,9 @@ import com.sangapp.gooddaily.R;
 import com.sangapp.gooddaily.data.backup.FinancePdfExporter;
 import com.sangapp.gooddaily.data.local.entity.AccountBalance;
 import com.sangapp.gooddaily.data.local.entity.FinanceAccountEntity;
+import com.sangapp.gooddaily.data.local.entity.FinanceCategoryEntity;
 import com.sangapp.gooddaily.data.local.entity.TransactionEntity;
+import com.sangapp.gooddaily.data.local.entity.TransactionAttachmentEntity;
 import com.sangapp.gooddaily.data.local.prefs.LocalUserStore;
 import com.sangapp.gooddaily.databinding.BottomSheetTransactionBinding;
 import com.sangapp.gooddaily.databinding.DialogBudgetBinding;
@@ -36,13 +39,18 @@ import com.sangapp.gooddaily.databinding.DialogInitialBalanceBinding;
 import com.sangapp.gooddaily.databinding.FragmentFinanceBinding;
 import com.sangapp.gooddaily.notification.FinanceAlertManager;
 import com.sangapp.gooddaily.ui.adapter.TransactionAdapter;
+import com.sangapp.gooddaily.ui.auth.PinLockActivity;
 import com.sangapp.gooddaily.util.DateUtils;
+import com.sangapp.gooddaily.util.AttachmentStore;
 import com.sangapp.gooddaily.util.MoneyUtils;
+import com.sangapp.gooddaily.util.SecuritySession;
 import com.sangapp.gooddaily.util.ThemeUtils;
 import com.sangapp.gooddaily.viewmodel.FinanceViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -53,6 +61,8 @@ public class FinanceFragment extends Fragment {
     private FinanceViewModel vm;
     private LocalUserStore userStore;
     private List<FinanceAccountEntity> accounts = new ArrayList<>();
+    private List<FinanceCategoryEntity> incomeCategories = new ArrayList<>();
+    private List<FinanceCategoryEntity> expenseCategories = new ArrayList<>();
     private List<AccountBalance> currentAccountBalances = new ArrayList<>();
     private List<TransactionEntity> allTransactions = new ArrayList<>();
     private double weekIncome, weekExpense, monthIncome, monthExpense, yearIncome, yearExpense;
@@ -60,6 +70,23 @@ public class FinanceFragment extends Fragment {
     private boolean hideAmounts;
     private String selectedPeriod = FinanceViewModel.PERIOD_MONTH;
     private long periodReferenceTime = System.currentTimeMillis();
+    private BottomSheetTransactionBinding activeTransactionForm;
+    private String pendingTransactionAttachment = "";
+    private String pendingTransactionAttachmentName = "";
+    private boolean transactionAttachmentChanged;
+
+    private final ActivityResultLauncher<String[]> pickTransactionAttachment = registerForActivityResult(
+            new ActivityResultContracts.OpenDocument(), uri -> {
+                if (uri == null || activeTransactionForm == null) return;
+                try {
+                    pendingTransactionAttachment = AttachmentStore.copyToInternal(requireContext(), uri);
+                    pendingTransactionAttachmentName = AttachmentStore.displayName(requireContext(), uri);
+                    transactionAttachmentChanged = true;
+                    activeTransactionForm.btnTransactionAttachment.setText("Đã chọn: " + pendingTransactionAttachmentName);
+                } catch (Exception e) {
+                    toast("Không thể lưu ảnh hóa đơn: " + e.getMessage());
+                }
+            });
 
     private final ActivityResultLauncher<String> createFinancePdf = registerForActivityResult(
             new ActivityResultContracts.CreateDocument("application/pdf"),
@@ -117,7 +144,14 @@ public class FinanceFragment extends Fragment {
         });
         vm.transactions().observe(getViewLifecycleOwner(), items ->
                 allTransactions = items == null ? new ArrayList<>() : new ArrayList<>(items));
-        vm.accounts().observe(getViewLifecycleOwner(), value -> accounts = value == null ? new ArrayList<>() : value);
+        vm.accounts().observe(getViewLifecycleOwner(), value -> {
+            accounts = value == null ? new ArrayList<>() : value;
+            Map<String, String> names = new HashMap<>();
+            for (FinanceAccountEntity account : accounts) names.put(account.code, account.name);
+            adapter.setAccountNames(names);
+        });
+        com.sangapp.gooddaily.data.local.GoodDailyDatabase.get(requireContext()).financeAdvancedDao().observeCategories("INCOME").observe(getViewLifecycleOwner(), value -> incomeCategories = value == null ? new ArrayList<>() : new ArrayList<>(value));
+        com.sangapp.gooddaily.data.local.GoodDailyDatabase.get(requireContext()).financeAdvancedDao().observeCategories("EXPENSE").observe(getViewLifecycleOwner(), value -> expenseCategories = value == null ? new ArrayList<>() : new ArrayList<>(value));
         vm.accountBalances().observe(getViewLifecycleOwner(), this::renderAccounts);
         vm.totalBalance().observe(getViewLifecycleOwner(), value ->
                 binding.tvTotalBalance.setText(displayMoney(value == null ? 0 : value)));
@@ -154,7 +188,8 @@ public class FinanceFragment extends Fragment {
         binding.btnPeriodDate.setOnClickListener(v -> showPeriodDatePicker());
         binding.btnAddIncome.setOnClickListener(v -> showTransactionSheet("INCOME", null));
         binding.btnAddExpense.setOnClickListener(v -> showTransactionSheet("EXPENSE", null));
-        binding.btnEditOpeningBalance.setOnClickListener(v -> showOpeningBalances());
+        binding.btnEditOpeningBalance.setOnClickListener(v -> androidx.navigation.Navigation.findNavController(v).navigate(R.id.localAccountManagerFragment));
+        binding.btnFinanceAdvanced.setOnClickListener(v -> androidx.navigation.Navigation.findNavController(v).navigate(R.id.featureHubFragment));
         binding.cardBudget.setOnClickListener(v -> showBudgetDialog());
         binding.btnExportFinancePdf.setOnClickListener(v -> {
             String stamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm", Locale.US).format(new Date());
@@ -183,6 +218,7 @@ public class FinanceFragment extends Fragment {
         ThemeUtils.tintTonalButton(binding.btnExportFinancePdf, requireContext(), userStore.getThemeKey());
         ThemeUtils.tintTonalButton(binding.btnEditOpeningBalance, requireContext(), userStore.getThemeKey());
         ThemeUtils.tintTonalButton(binding.btnPeriodDate, requireContext(), userStore.getThemeKey());
+        ThemeUtils.tintTonalButton(binding.btnFinanceAdvanced, requireContext(), userStore.getThemeKey());
     }
 
     private void renderAccounts(List<AccountBalance> balances) {
@@ -258,10 +294,10 @@ public class FinanceFragment extends Fragment {
         }
         DialogInitialBalanceBinding d = DialogInitialBalanceBinding.inflate(getLayoutInflater());
         FinanceAccountEntity cash = accountByCode("CASH");
-        FinanceAccountEntity bank = accountByCode("BANK");
+        FinanceAccountEntity bank = accountByCode("OTHER");
         FinanceAccountEntity wallet = accountByCode("EWALLET");
         if (cash != null) d.edtOpeningCash.setText(cleanNumber(currentBalanceByCode("CASH")));
-        if (bank != null) d.edtOpeningBank.setText(cleanNumber(currentBalanceByCode("BANK")));
+        if (bank != null) d.edtOpeningOther.setText(cleanNumber(currentBalanceByCode("OTHER")));
         if (wallet != null) d.edtOpeningWallet.setText(cleanNumber(currentBalanceByCode("EWALLET")));
 
         androidx.appcompat.app.AlertDialog alert = new MaterialAlertDialogBuilder(requireContext())
@@ -273,7 +309,7 @@ public class FinanceFragment extends Fragment {
         alert.setOnShowListener(x -> alert.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)
                 .setOnClickListener(v -> {
                     updateCurrentBalance(cash, parseDouble(text(d.edtOpeningCash.getText())));
-                    updateCurrentBalance(bank, parseDouble(text(d.edtOpeningBank.getText())));
+                    updateCurrentBalance(bank, parseDouble(text(d.edtOpeningOther.getText())));
                     updateCurrentBalance(wallet, parseDouble(text(d.edtOpeningWallet.getText())));
                     alert.dismiss();
                     toast("Đã cập nhật số tiền hiện có.");
@@ -304,18 +340,32 @@ public class FinanceFragment extends Fragment {
     private void showTransactionSheet(String type, @Nullable TransactionEntity existing) {
         BottomSheetDialog sheet = new BottomSheetDialog(requireContext());
         BottomSheetTransactionBinding d = BottomSheetTransactionBinding.inflate(getLayoutInflater());
+        activeTransactionForm = d;
+        pendingTransactionAttachment = "";
+        pendingTransactionAttachmentName = "";
+        transactionAttachmentChanged = false;
         sheet.setContentView(d.getRoot());
+        sheet.setOnDismissListener(x -> {
+            if (activeTransactionForm == d) activeTransactionForm = null;
+        });
         ThemeUtils.tintFilledButton(d.btnSaveTransaction, requireContext(), userStore.getThemeKey());
         ThemeUtils.tintTonalButton(d.btnTransactionDate, requireContext(), userStore.getThemeKey());
+        ThemeUtils.tintTonalButton(d.btnTransactionAttachment, requireContext(), userStore.getThemeKey());
+        d.btnTransactionAttachment.setOnClickListener(v -> pickTransactionAttachment.launch(new String[]{"image/*"}));
 
         boolean income = "INCOME".equals(type);
-        String[] categories = income
-                ? new String[]{"Thu nhập công việc", "Lương", "Thưởng", "Bán hàng", "Thu nhập khác"}
-                : new String[]{"Ăn uống", "Xăng xe", "Nhà ở", "Học tập", "Sức khỏe", "Mua sắm", "Giải trí", "Bảo dưỡng xe", "Khác"};
+        List<FinanceCategoryEntity> categorySource = income ? incomeCategories : expenseCategories;
+        List<String> categoryNames = new ArrayList<>();
+        for (FinanceCategoryEntity item : categorySource) if (item.active) categoryNames.add(item.name);
+        if (categoryNames.isEmpty()) {
+            if (income) { categoryNames.add("Thu nhập công việc"); categoryNames.add("Thu nhập khác"); }
+            else { categoryNames.add("Ăn uống"); categoryNames.add("Di chuyển"); categoryNames.add("Khác"); }
+        }
+        String[] categories = categoryNames.toArray(new String[0]);
         List<String> accountNames = new ArrayList<>();
         for (FinanceAccountEntity account : accounts) if (account.active) accountNames.add(account.name);
         if (accountNames.isEmpty()) {
-            accountNames.add("Tiền mặt"); accountNames.add("Ngân hàng"); accountNames.add("Ví điện tử");
+            accountNames.add("Tiền mặt"); accountNames.add("Tài khoản khác"); accountNames.add("Ví điện tử");
         }
         d.dropdownTransactionCategory.setAdapter(new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, categories));
         d.dropdownTransactionAccount.setAdapter(new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, accountNames));
@@ -338,6 +388,20 @@ public class FinanceFragment extends Fragment {
         } else {
             d.dropdownTransactionCategory.setText(categories[0], false);
             d.dropdownTransactionAccount.setText(accountNames.get(0), false);
+        }
+        if (existing != null) {
+            com.sangapp.gooddaily.util.AppExecutors.io().execute(() -> {
+                List<TransactionAttachmentEntity> attachments = com.sangapp.gooddaily.data.local.GoodDailyDatabase
+                        .get(requireContext()).financeAdvancedDao().getAttachmentsSync(existing.id);
+                if (attachments == null || attachments.isEmpty()) return;
+                TransactionAttachmentEntity first = attachments.get(0);
+                requireActivity().runOnUiThread(() -> {
+                    if (activeTransactionForm != d) return;
+                    pendingTransactionAttachment = first.uri == null ? "" : first.uri;
+                    pendingTransactionAttachmentName = first.displayName == null ? "Ảnh hóa đơn" : first.displayName;
+                    d.btnTransactionAttachment.setText("Đã có: " + pendingTransactionAttachmentName + " · chạm để thay");
+                });
+            });
         }
         d.btnTransactionDate.setText(DateUtils.formatShortDate(transactionTime[0]));
         d.btnTransactionDate.setOnClickListener(v -> {
@@ -375,7 +439,17 @@ public class FinanceFragment extends Fragment {
                 entity.note = note;
                 entity.transactionTime = transactionTime[0];
             }
-            vm.save(entity);
+            final boolean shouldAttach = transactionAttachmentChanged && !pendingTransactionAttachment.isEmpty();
+            final android.content.Context appContext = requireContext().getApplicationContext();
+            final String attachmentPath = pendingTransactionAttachment;
+            final String attachmentName = pendingTransactionAttachmentName;
+            vm.save(entity, transactionId -> {
+                if (shouldAttach) {
+                    com.sangapp.gooddaily.data.local.GoodDailyDatabase.get(appContext).financeAdvancedDao()
+                            .insertAttachment(new TransactionAttachmentEntity(transactionId, attachmentPath,
+                                    attachmentName.isEmpty() ? "Ảnh hóa đơn" : attachmentName, System.currentTimeMillis()));
+                }
+            });
             sheet.dismiss();
             toast(existing == null ? "Đã thêm giao dịch" : "Đã cập nhật giao dịch");
         });
@@ -453,17 +527,30 @@ public class FinanceFragment extends Fragment {
     }
     private String accountCode(String value) {
         for (FinanceAccountEntity account : accounts) if (account.name.equals(value)) return account.code;
-        if (value.contains("Ngân")) return "BANK";
+        if (value.contains("Khác")) return "OTHER";
         if (value.contains("Ví")) return "EWALLET";
         return "CASH";
     }
     private String accountName(String code) {
         for (FinanceAccountEntity account : accounts) if (code.equals(account.code)) return account.name;
-        if ("BANK".equals(code)) return "Ngân hàng";
+        if ("BANK".equals(code) || "OTHER".equals(code)) return "Tài khoản khác";
         if ("EWALLET".equals(code)) return "Ví điện tử";
         return "Tiền mặt";
     }
     private void toast(String message) { Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show(); }
 
-    @Override public void onDestroyView() { super.onDestroyView(); binding = null; }
+    @Override public void onResume() {
+        super.onResume();
+        if (SecuritySession.shouldLockModule(requireContext(), SecuritySession.MODULE_FINANCE)) {
+            Intent intent = new Intent(requireContext(), PinLockActivity.class);
+            intent.putExtra(PinLockActivity.EXTRA_MODULE, SecuritySession.MODULE_FINANCE);
+            startActivity(intent);
+        }
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+        activeTransactionForm = null;
+    }
 }

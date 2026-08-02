@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="18dp"
+        android:paddingBottom="110dp">
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Phân tích tài chính" android:textColor="@color/on_surface" android:textSize="27sp" android:textStyle="bold" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="So sánh kỳ, cơ cấu chi tiêu và dự báo số tiền còn lại đến cuối tháng." android:textColor="@color/on_surface_variant" />
+
+        <com.google.android.material.card.MaterialCardView style="@style/GoodDaily.Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                <TextView style="@style/GoodDaily.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tháng này so với tháng trước" />
+                <TextView android:id="@+id/tvFinanceComparison" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:lineSpacingExtra="5dp" android:textColor="@color/on_surface" android:textSize="15sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView style="@style/GoodDaily.Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                <TextView style="@style/GoodDaily.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cơ cấu chi tiêu tháng" />
+                <com.sangapp.gooddaily.ui.widget.FinancePieChartView android:id="@+id/financePieChart" android:layout_width="match_parent" android:layout_height="230dp" android:layout_marginTop="8dp" />
+                <LinearLayout android:id="@+id/categoryLegendContainer" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView style="@style/GoodDaily.Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                <TextView style="@style/GoodDaily.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Dự báo cuối tháng" />
+                <TextView android:id="@+id/tvFinanceForecast" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:lineSpacingExtra="5dp" android:textColor="@color/on_surface" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:orientation="horizontal">
+            <com.google.android.material.button.MaterialButton android:id="@+id/btnExportAllFinanceCsv" android:layout_width="0dp" android:layout_height="52dp" android:layout_marginEnd="5dp" android:layout_weight="1" android:text="Xuất CSV" app:icon="@drawable/ic_export" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/btnOpenFinancePdf" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="0dp" android:layout_height="52dp" android:layout_marginStart="5dp" android:layout_weight="1" android:text="Xuất PDF" app:icon="@drawable/ic_export" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

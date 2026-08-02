@@ -16,6 +16,9 @@ import com.sangapp.gooddaily.databinding.ItemTransactionBinding;
 import com.sangapp.gooddaily.util.DateUtils;
 import com.sangapp.gooddaily.util.MoneyUtils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TransactionAdapter extends ListAdapter<TransactionEntity, TransactionAdapter.Holder> {
     public interface Listener {
         void onClick(TransactionEntity entity);
@@ -23,6 +26,7 @@ public class TransactionAdapter extends ListAdapter<TransactionEntity, Transacti
     }
 
     private final Listener listener;
+    private final Map<String, String> accountNames = new HashMap<>();
 
     public TransactionAdapter(Listener listener) {
         super(new DiffUtil.ItemCallback<TransactionEntity>() {
@@ -43,6 +47,12 @@ public class TransactionAdapter extends ListAdapter<TransactionEntity, Transacti
     }
 
     private static String safe(String value) { return value == null ? "" : value; }
+
+    public void setAccountNames(Map<String, String> names) {
+        accountNames.clear();
+        if (names != null) accountNames.putAll(names);
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -83,9 +93,12 @@ public class TransactionAdapter extends ListAdapter<TransactionEntity, Transacti
         }
 
         private String accountName(String account) {
-            if ("BANK".equals(account)) return "Ngân hàng";
+            String custom = accountNames.get(account);
+            if (custom != null && !custom.trim().isEmpty()) return custom;
+            if ("BANK".equals(account) || "OTHER".equals(account)) return "Tài khoản khác";
             if ("EWALLET".equals(account)) return "Ví điện tử";
-            return "Tiền mặt";
+            if ("CASH".equals(account)) return "Tiền mặt";
+            return account == null || account.trim().isEmpty() ? "Tài khoản local" : account;
         }
     }
 }

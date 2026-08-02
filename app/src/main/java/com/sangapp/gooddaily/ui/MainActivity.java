@@ -1,7 +1,9 @@
 package com.sangapp.gooddaily.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -12,6 +14,8 @@ import com.google.android.material.color.DynamicColors;
 import com.sangapp.gooddaily.R;
 import com.sangapp.gooddaily.data.local.prefs.LocalUserStore;
 import com.sangapp.gooddaily.databinding.ActivityMainBinding;
+import com.sangapp.gooddaily.ui.auth.PinLockActivity;
+import com.sangapp.gooddaily.util.SecuritySession;
 import com.sangapp.gooddaily.util.ThemeUtils;
 
 import java.util.Arrays;
@@ -28,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         LocalUserStore startupStore = new LocalUserStore(this);
         if (startupStore.isDynamicColorsEnabled()) DynamicColors.applyToActivityIfAvailable(this);
+        if (startupStore.isSecureScreenEnabled()) getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -77,4 +82,15 @@ public class MainActivity extends AppCompatActivity {
             binding.bottomNavigation.setSelectedItemId(R.id.plannerFragment);
         }
     }
+
+    @Override protected void onStart() {
+        super.onStart();
+        if (SecuritySession.shouldLock(this)) startActivity(new Intent(this, PinLockActivity.class));
+    }
+
+    @Override protected void onStop() {
+        super.onStop();
+        new LocalUserStore(this).setLastBackgroundAt(System.currentTimeMillis());
+    }
+
 }

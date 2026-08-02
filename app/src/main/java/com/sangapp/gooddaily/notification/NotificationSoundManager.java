@@ -63,6 +63,35 @@ public final class NotificationSoundManager {
         return channelId;
     }
 
+
+    @NonNull
+    public static String ensureChannelWithSound(@NonNull Context context,
+                                                @NonNull String baseId,
+                                                @NonNull String name,
+                                                @NonNull String description,
+                                                int importance,
+                                                Uri customSound,
+                                                boolean vibrationEnabled) {
+        Uri sound = customSound == null ? getSelectedSound(context) : customSound;
+        String key = Integer.toHexString((sound.toString() + vibrationEnabled).hashCode());
+        String channelId = baseId + "_" + key;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager manager = context.getSystemService(NotificationManager.class);
+            if (manager != null && manager.getNotificationChannel(channelId) == null) {
+                NotificationChannel channel = new NotificationChannel(channelId, name, importance);
+                channel.setDescription(description);
+                AudioAttributes attributes = new AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .build();
+                channel.setSound(sound, attributes);
+                channel.enableVibration(vibrationEnabled);
+                manager.createNotificationChannel(channel);
+            }
+        }
+        return channelId;
+    }
+
     public static void applySoundForLegacy(@NonNull Context context,
                                            @NonNull NotificationCompat.Builder builder) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {

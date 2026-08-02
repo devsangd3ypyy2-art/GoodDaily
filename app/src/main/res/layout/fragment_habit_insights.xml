@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="@dimen/screen_padding" android:paddingBottom="40dp">
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Tiến độ thói quen"
+            android:textSize="28sp" android:textStyle="bold" android:textColor="@color/on_surface" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp"
+            android:text="Heatmap, chuỗi dài nhất và tỷ lệ hoàn thành trong 7/30 ngày."
+            android:textColor="@color/on_surface_variant" />
+        <com.google.android.material.card.MaterialCardView style="@style/GoodDaily.Card"
+            android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                <com.sangapp.gooddaily.ui.widget.HabitHeatmapView android:id="@+id/heatmap"
+                    android:layout_width="match_parent" android:layout_height="190dp" />
+                <TextView android:id="@+id/tvOverall" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" android:textColor="@color/on_surface_variant" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <TextView style="@style/GoodDaily.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="22dp" android:text="Từng thói quen" />
+        <LinearLayout android:id="@+id/habitStatsContainer" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" android:orientation="vertical" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
