@@ -1,12 +1,20 @@
-# Nâng cấp Good Daily lên v2.0.0
+# Cập nhật Good Daily v2.1.x lên v2.2.0
 
-## Cách an toàn
+Bản v2.2.0 giữ nguyên:
 
-1. Trong bản cũ, vào `Cá nhân → Dữ liệu` và xuất JSON hoặc backup dự phòng.
-2. Không gỡ ứng dụng trên điện thoại/máy ảo.
-3. Không bấm `Clear Data`.
-4. Giải nén file ZIP v2.0.0.
-5. Mở đúng thư mục có trực tiếp:
+- Package: `com.sangapp.gooddaily`
+- Database: `good_daily_database`
+- Room version: `6`
+
+Vì không thay đổi schema Room, dữ liệu cũ được giữ nguyên khi cài đè.
+
+## Cách cập nhật an toàn
+
+1. Trong app cũ, tạo một bản sao lưu GDZ/ZIP.
+2. Không gỡ ứng dụng cũ.
+3. Không bấm **Clear Data**.
+4. Giải nén `GoodDaily_v2.2.0_advanced_divination.zip`.
+5. Mở thư mục chứa trực tiếp:
 
 ```text
 app
@@ -14,61 +22,38 @@ gradle
 build.gradle
 settings.gradle
 gradlew
-gradlew.bat
 ```
 
-6. Chọn `Build → Clean Project`.
-7. Chọn `Build → Rebuild Project`.
-8. Run trên đúng thiết bị đã cài bản cũ.
+6. Dùng Gradle JDK 17.
+7. Chọn **Build → Clean Project**.
+8. Chọn **Build → Rebuild Project**.
+9. Run trên đúng máy ảo hoặc điện thoại đang cài bản cũ.
 
-## Dữ liệu cũ
+## Nếu dùng thư mục GitHub chính
 
-Bản v2 giữ nguyên:
+Chép source mới vào thư mục Git chính nhưng giữ nguyên:
 
 ```text
-applicationId: com.sangapp.gooddaily
-database: good_daily_database
+.git
+local.properties
 ```
 
-Room nâng lên version 5 và có chuỗi migration:
-
-```text
-1 → 2 → 3 → 4 → 5
-```
-
-Các bảng mới phục vụ tài chính nâng cao, hồ sơ sức khỏe, mục tiêu, nhắc nhở, file đính kèm và dữ liệu quản lý tổng hợp.
-
-## Đưa bản mới vào thư mục GitHub chính
-
-Giữ một thư mục Git chính có `.git`, sau đó chép source mới vào nhưng không chép cache và cấu hình máy:
+Sau khi build thành công:
 
 ```powershell
-robocopy `
-"C:\Users\ADMIN\Downloads\GoodDaily_v2.0.0" `
-"C:\Users\ADMIN\Documents\GoodDaily" `
-/MIR /XD .git .gradle .idea build app\build /XF local.properties
-
-cd C:\Users\ADMIN\Documents\GoodDaily
 git status
 git add .
-git commit -m "Update Good Daily v2.0.0"
+git commit -m "Update Good Daily v2.2.0 advanced Mai Hoa and Liu Hao"
 git push
 ```
 
-Nếu bạn mở thẳng thư mục mới và muốn liên kết nó với repository hiện tại, hãy clone repository trước rồi chép source vào thư mục clone. Cách đó an toàn hơn việc tạo lịch sử Git mới.
+## Dữ liệu lịch sử quẻ
 
-## Khi build lỗi
+Các quẻ đã lưu ở v2.1 vẫn đọc được. Quẻ mới của v2.2 sẽ lưu thêm toàn bộ phần:
 
-Mở `Build Output`, mở rộng tác vụ lỗi và gửi dòng đầu tiên có dạng:
+- Kết luận theo chủ đề.
+- Bảng Nạp Giáp hoặc phân tích Thể–Dụng.
+- Cửa sổ thời gian tham khảo.
+- Mức độ nhất quán.
 
-```text
-path/to/File.java:123: error: ...
-```
-
-hoặc:
-
-```text
-path/to/layout.xml:45: error: ...
-```
-
-Không cần gửi riêng dòng `failed` vì dòng đó chưa cho biết nguyên nhân thật.
+Không cần migration vì các phần này được lưu trong trường luận giải hiện có.

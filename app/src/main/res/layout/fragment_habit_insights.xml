@@ -12,7 +12,7 @@
         <com.google.android.material.card.MaterialCardView style="@style/GoodDaily.Card"
             android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
-                <com.sangapp.gooddaily.ui.widget.HabitHeatmapView android:id="@+id/heatmap"
+                <com.sangapp.gooddaily.ui.habit.widget.HabitHeatmapView android:id="@+id/heatmap"
                     android:layout_width="match_parent" android:layout_height="190dp" />
                 <TextView android:id="@+id/tvOverall" android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginTop="8dp" android:textColor="@color/on_surface_variant" />

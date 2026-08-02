@@ -25,7 +25,7 @@
         <com.google.android.material.card.MaterialCardView style="@style/GoodDaily.Card" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
                 <TextView style="@style/GoodDaily.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cơ cấu chi tiêu tháng" />
-                <com.sangapp.gooddaily.ui.widget.FinancePieChartView android:id="@+id/financePieChart" android:layout_width="match_parent" android:layout_height="230dp" android:layout_marginTop="8dp" />
+                <com.sangapp.gooddaily.ui.finance.widget.FinancePieChartView android:id="@+id/financePieChart" android:layout_width="match_parent" android:layout_height="230dp" android:layout_marginTop="8dp" />
                 <LinearLayout android:id="@+id/categoryLegendContainer" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

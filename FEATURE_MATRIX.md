@@ -1,33 +1,28 @@
-# Ma trận chức năng Good Daily v2.0.0
+# Feature Matrix – Good Daily v2.2.0
 
-| Nhóm | Trạng thái | Vị trí chính |
+| Tính năng | Trạng thái | Ghi chú |
 |---|---|---|
-| Ví/tài khoản tiền local tùy chỉnh | Có | Tài chính → Số tiền hiện có / Trung tâm quản lý |
-| Chuyển tiền nội bộ | Có | Ví và tài khoản tiền |
-| Danh mục thu/chi tùy chỉnh | Có | Ví và tài khoản tiền |
-| Tìm/lọc giao dịch | Có | Tìm và lọc giao dịch |
-| Giao dịch định kỳ | Có | Tài chính nâng cao |
-| Ảnh hóa đơn | Có | Bottom sheet giao dịch và Hóa đơn/chứng từ |
-| Ngân sách theo danh mục | Có | Tài chính nâng cao |
-| Tiết kiệm và nợ | Có | Tài chính nâng cao |
-| Biểu đồ/so sánh/dự báo | Có | Phân tích tài chính |
-| CSV/PDF | Có | Tài chính và các module quản lý |
-| BMR/TDEE/kcal mục tiêu | Có | Sức khỏe nâng cao |
-| Nước/ngủ/tâm trạng/tập/thuốc | Có | Theo dõi sức khỏe |
-| Báo cáo sức khỏe | Có | Báo cáo sức khỏe |
-| Lịch tuần/tháng âm-dương | Có | Kế hoạch / Lịch tổng hợp |
-| Sao chép/mẫu thời gian biểu | Có | Kế hoạch / Mẫu thời gian biểu |
-| Dự án/deadline/ưu tiên | Có | Kế hoạch và công việc |
-| Môn học/mục tiêu/Pomodoro | Có | Học tập |
-| Heatmap/streak/mục tiêu | Có | Thói quen và mục tiêu |
-| Nhiều nhật ký/ảnh/tìm kiếm/PDF | Có | Nhật ký và nghiệm lý |
-| Lục Hào/Mai Hoa/nghiệm lý | Có | Nhật ký và nghiệm lý |
-| Ca chạy/phương tiện/xăng/bảo dưỡng | Có | Ca chạy và phương tiện |
-| Nhắc nhiều chu kỳ/âm riêng/rung/snooze | Có | Nhắc nhở nâng cao |
-| PIN/vân tay/tự khóa/khóa module | Có | Bảo mật |
-| Backup ZIP mã hóa/gộp/thay thế/tự động | Có | Sao lưu |
-| Dark mode/Material You/empty/undo/search | Có | Toàn ứng dụng |
-| Kéo-thả trực tiếp timeline | Chưa; sửa bằng form | Kế hoạch |
-| Mã hóa toàn bộ file Room bằng SQLCipher | Chưa | Giới hạn kỹ thuật |
-| Nhiều hồ sơ người dùng tách dữ liệu | Chưa; app thiết kế cho một chủ máy | Kiến trúc hiện tại |
-| Paging hàng chục nghìn bản ghi | Chưa dùng Paging 3 | Tối ưu tương lai |
+| Mai Hoa bằng ba số | Hoàn thành | Quẻ chủ, hỗ, biến, hào động, Thể–Dụng |
+| Mai Hoa theo thời gian | Hoàn thành | Dùng thời điểm hiện tại |
+| Mai Hoa luận theo chủ đề | Hoàn thành | 9 nhóm câu hỏi, có tự nhận diện từ câu hỏi |
+| Mai Hoa khí mùa/tượng quái | Hoàn thành | Định tính, có cảnh báo giới hạn |
+| Mai Hoa thời gian tham khảo | Hoàn thành | Theo hào động và bản chất câu hỏi |
+| Lục Hào gieo ba đồng xu | Hoàn thành | Sáu lần gieo, giá trị 6–9 |
+| Lục Hào nhập thủ công | Hoàn thành | Kiểm tra đủ sáu giá trị |
+| Bát cung và đời quẻ | Hoàn thành | Nhận đủ 64 quẻ |
+| Thế–Ứng | Hoàn thành | Theo đời quẻ Bát cung |
+| Nạp Can Chi | Hoàn thành | Từng hào nội/ngoại quái |
+| Lục Thân | Hoàn thành | Theo ngũ hành cung quẻ |
+| Lục Thần | Hoàn thành | Theo ngày can |
+| Nhật–Nguyệt | Hoàn thành | Tự điền gần đúng, cho chỉnh tay |
+| Không Vong | Hoàn thành | Tính theo tuần Giáp Tý của ngày can-chi |
+| Nguyệt phá/Nhật hợp-xung | Hoàn thành | Đưa vào điểm vượng suy và ghi chú |
+| Quan hệ động–biến | Một phần nâng cao | Hóa hợp/xung, hồi đầu sinh/khắc |
+| Chọn Dụng thần theo chủ đề | Hoàn thành | Tài, Quan, Phụ Mẫu, Thế hoặc Ứng |
+| Bảng Nạp Giáp sáu hào | Hoàn thành | Hiển thị Lục Thần, Lục Thân, Can Chi, Thế–Ứng, vượng suy |
+| Ứng kỳ tham khảo | Hoàn thành | Dựa trên động/tĩnh, Không Vong, hợp/xung, địa chi |
+| Lịch sử và nghiệm lý | Hoàn thành | Lưu toàn bộ phần luận giải |
+| Phục thần/phi thần toàn bộ | Chưa hoàn chỉnh | Cần thêm bảng quy tắc chuyên biệt |
+| Tam hợp/tam hình/lục hại đầy đủ | Chưa hoàn chỉnh | Chưa áp dụng mọi ngoại lệ trường phái |
+| Unit test domain | Có | Mai Hoa, Lục Hào, Bát cung, Nạp Giáp, driver |
+| Android build cuối | Cần chạy trên máy người dùng | Môi trường đóng gói không có Android SDK/Gradle online |

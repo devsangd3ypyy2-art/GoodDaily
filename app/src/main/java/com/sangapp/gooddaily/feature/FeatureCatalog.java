@@ -106,20 +106,20 @@ public final class FeatureCatalog {
         add(new FeatureDefinition("JOURNAL", JOURNAL_ENTRY, "Nhật ký nhiều mục",
                 "Viết nhiều ghi chú mỗi ngày, gắn tag, ảnh, tìm kiếm và đánh dấu quan trọng.",
                 "Tiêu đề nhật ký", "Nội dung", "Điểm cảm xúc", "Giá trị liên quan", "Mức quan trọng", "Riêng tư / bình thường", "", true, true));
-        add(new FeatureDefinition("JOURNAL", DIVINATION_ENTRY, "Nghiệm lý và gieo quẻ",
+        add(new FeatureDefinition("LEGACY", DIVINATION_ENTRY, "Nghiệm lý và gieo quẻ",
                 "Lưu Lục Hào, Mai Hoa, kết quả dự đoán và sự việc thực tế.",
                 "Câu hỏi / tên quẻ", "Luận giải và kết quả thực tế", "Độ chính xác", "Mốc kiểm chứng", "Số hào động", "Chờ kiểm chứng / đã nghiệm", "%", true, true));
 
-        add(new FeatureDefinition("DRIVER", DRIVER_SHIFT, "Ca chạy và thu nhập",
+        add(new FeatureDefinition("LEGACY", DRIVER_SHIFT, "Ca chạy và thu nhập",
                 "Tính doanh thu, số cuốc, số km, chi phí và lợi nhuận ròng.",
                 "Tên ca", "Khu vực / ghi chú", "Doanh thu", "Tổng chi phí", "Số cuốc", "Đã chốt / đang chạy", "₫", true, true));
-        add(new FeatureDefinition("DRIVER", DRIVER_VEHICLE, "Phương tiện",
+        add(new FeatureDefinition("LEGACY", DRIVER_VEHICLE, "Phương tiện",
                 "Quản lý xe, biển số, số km và thông tin sử dụng.",
                 "Tên xe", "Biển số / loại xe", "Số km hiện tại", "Giá mua", "Năm sử dụng", "Đang dùng / ngừng dùng", "km", false, true));
-        add(new FeatureDefinition("DRIVER", DRIVER_FUEL, "Nhật ký nhiên liệu",
+        add(new FeatureDefinition("LEGACY", DRIVER_FUEL, "Nhật ký nhiên liệu",
                 "Ghi tiền xăng, số lít, số km và mức tiêu hao.",
                 "Lần đổ nhiên liệu", "Cây xăng / ghi chú", "Số tiền", "Số lít", "Số km", "Đầy bình / bổ sung", "₫", true, true));
-        add(new FeatureDefinition("DRIVER", DRIVER_MAINTENANCE, "Bảo dưỡng xe",
+        add(new FeatureDefinition("LEGACY", DRIVER_MAINTENANCE, "Bảo dưỡng xe",
                 "Theo dõi thay nhớt, lốp, phanh, ắc quy và hạn tiếp theo.",
                 "Hạng mục bảo dưỡng", "Chi tiết / nơi thực hiện", "Chi phí", "Km bảo dưỡng tiếp", "Số tháng tiếp theo", "Sắp đến hạn / hoàn thành", "₫", true, true));
 

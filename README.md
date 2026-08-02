@@ -1,187 +1,120 @@
-# Good Daily v2.0.1
+# Good Daily v2.2.0
 
-Good Daily là ứng dụng quản lý cá nhân Android chạy **hoàn toàn local**. Ứng dụng không kết nối tài khoản tài chính, không yêu cầu OTP và không gửi dữ liệu lên máy chủ.
+Good Daily là ứng dụng quản lý cá nhân Android chạy hoàn toàn local. Bản v2.2.0 nâng cấp riêng module **Mai Hoa Dịch Số và Lục Hào** từ mức lập quẻ cơ bản lên bộ diễn giải quy tắc chuyên sâu hơn.
+
+## Thông tin project
 
 - Package: `com.sangapp.gooddaily`
 - Database: `good_daily_database`
-- Room version: `5`
+- Room version: `6`
+- Version code: `23`
+- Version name: `2.2.0`
 - Java 17, XML, Material Design 3, MVVM, Room/SQLite, Navigation, WorkManager và AlarmManager
 
-## Nguyên tắc phần tài chính
+## 1. Mai Hoa Dịch Số chuyên sâu
 
-Phần tài chính chỉ là sổ ghi chép trên điện thoại:
+- Lập quẻ bằng ba số hoặc ngày giờ hiện tại.
+- Tính quẻ chủ, quẻ hỗ, quẻ biến và hào động.
+- Xác định Thể quái, Dụng quái và Dụng sau biến.
+- Phân tích sinh–khắc giữa Thể và Dụng.
+- Đánh giá khí mùa gần đúng của Thể và Dụng.
+- Luận riêng theo chủ đề:
+  - Công việc.
+  - Tài chính.
+  - Tình cảm.
+  - Sức khỏe.
+  - Học tập.
+  - Xuất hành.
+  - Giấy tờ/tranh chấp.
+  - Tìm đồ thất lạc.
+  - Hỏi thời điểm.
+- Phân tích tượng của thượng quái, hạ quái và quẻ hỗ.
+- Diễn giải ý nghĩa vị trí hào 1–6.
+- Sinh cửa sổ thời gian tham khảo và mức độ nhất quán.
+- Lưu toàn bộ kết luận, chi tiết kỹ thuật và thời gian vào lịch sử nghiệm lý.
 
-- Người dùng tự tạo ví hoặc tài khoản tiền và tự đặt tên.
-- Tự nhập số dư hiện tại.
-- Không có tên ngân hàng cố định.
-- Không liên kết dịch vụ tài chính bên ngoài.
-- Không đọc SMS, OTP, mật khẩu hoặc ứng dụng tài chính khác.
+## 2. Lục Hào Nạp Giáp chuyên sâu
 
-## Trung tâm quản lý
+- Gieo ba đồng xu sáu lần hoặc nhập tay `6`, `7`, `8`, `9`.
+- Xác định quẻ chủ, quẻ hỗ, quẻ biến và hào động.
+- Tự xác định Bát cung, đời quẻ, hào Thế và hào Ứng.
+- Nạp Thiên Can và Địa Chi cho từng hào.
+- Xác định Ngũ hành từng hào.
+- Xác định Lục Thân theo hành của cung quẻ.
+- An Lục Thần theo ngày can.
+- Nhập/chỉnh Nguyệt kiến, ngày can và ngày chi.
+- Đánh giá vượng suy theo Nhật–Nguyệt.
+- Nhận diện:
+  - Không Vong.
+  - Nguyệt phá.
+  - Nhật xung, Nhật hợp.
+  - Hóa hợp, hóa xung.
+  - Hóa hồi đầu sinh/khắc.
+- Chọn Dụng thần theo chủ đề câu hỏi.
+- Phân tích quan hệ Thế–Ứng.
+- Sinh bảng Nạp Giáp sáu hào đầy đủ.
+- Luận riêng cho tài chính, công việc, thi cử, tình cảm, sức khỏe, xuất hành, tranh chấp và tìm đồ.
+- Sinh cửa sổ ứng kỳ tham khảo theo động/tĩnh, Không Vong, hợp/xung và địa chi Dụng thần.
+- Hiển thị mức độ nhất quán cao/trung bình/thấp.
 
-Mở `Cá nhân → Trung tâm quản lý` để truy cập các nhóm nâng cao.
+## 3. Lưu ý về lịch Can Chi
 
-### 1. Tài chính
+App tự điền gần đúng Nguyệt kiến và ngày Can Chi hiện tại, đồng thời cho phép chỉnh tay. Trong thực hành chuyên sâu, ranh giới tháng khí phụ thuộc tiết khí và trường phái sử dụng, vì vậy người dùng nên đối chiếu với lịch Can Chi mình tin dùng.
 
-- Tạo, sửa và ẩn nhiều ví/tài khoản tiền local.
-- Nhập số dư đang có.
-- Chuyển tiền nội bộ; khoản chuyển không tính thành thu hoặc chi.
-- Tạo, đổi tên và xóa danh mục thu/chi.
-- Tìm kiếm và lọc giao dịch theo từ khóa, thời gian, tài khoản và danh mục.
-- Thêm, sửa, xóa giao dịch; đính kèm ảnh hóa đơn ngay trong biểu mẫu giao dịch.
-- Giao dịch định kỳ theo ngày, tuần, tháng hoặc năm; worker tự tạo giao dịch khi đến hạn.
-- Ngân sách tổng và ngân sách theo danh mục; cảnh báo 70%, 90% và 100%.
-- Mục tiêu tiết kiệm và tiến độ.
-- Quản lý khoản nợ và lịch sử thanh toán.
-- Biểu đồ tròn cơ cấu chi tiêu.
-- So sánh kỳ hiện tại với kỳ trước và dự báo tiền còn lại cuối tháng.
-- Thống kê ngày, tháng, năm.
-- Xuất CSV và PDF.
+## 4. Phạm vi an toàn
 
-### 2. Sức khỏe
+- Đây là engine quy tắc văn hóa và công cụ nghiệm lý cá nhân.
+- Không coi kết quả là dự báo chắc chắn.
+- Không dùng thay tư vấn y tế, pháp lý, tài chính hoặc quyết định an toàn.
+- Lục Hào v2.2 đã có Nạp Giáp, Bát cung, Thế–Ứng, Lục Thân, Lục Thần, Nhật–Nguyệt và Dụng thần theo chủ đề, nhưng chưa thay thế kinh nghiệm biện quẻ của người thực hành lâu năm.
 
-- Cân nặng, chiều cao, BMI, mỡ cơ thể, khối cơ.
-- Vòng eo, ngực, tay và đùi.
-- Hồ sơ cơ thể, mục tiêu cân nặng.
-- Tính BMR, TDEE và kcal mục tiêu.
-- Bữa ăn có loại bữa, khối lượng, kcal, protein, carb, chất béo và ảnh.
-- Danh sách thực phẩm thường dùng.
-- Theo dõi nước, giấc ngủ, tâm trạng, bài tập và thuốc.
-- Báo cáo tuần, tháng, năm.
-- Biểu đồ cân nặng, dinh dưỡng và dữ liệu sức khỏe.
-- Sửa, xóa và hoàn tác dữ liệu chính.
+## 5. Cấu trúc module
 
-Tỷ lệ mỡ và khối cơ là dữ liệu nhập từ cân hoặc thiết bị đo; điện thoại không tự đo chính xác hai chỉ số này.
+```text
+feature/metaphysics/
+├── data/
+├── domain/
+│   ├── AdvancedMaiHoaInterpreter.java
+│   ├── EightPalaceAnalyzer.java
+│   ├── NaJiaAnalyzer.java
+│   ├── QuestionTopic.java
+│   ├── EarthlyBranch.java
+│   ├── HeavenlyStem.java
+│   ├── SixRelative.java
+│   └── SixSpirit.java
+└── ui/
+    ├── maihoa/
+    ├── liuhao/
+    └── history/
+```
 
-### 3. Lịch, thời gian biểu và công việc
+## 6. Kiểm thử
 
-- Lịch tuần Dương lịch và Âm lịch.
-- Lịch tháng dạng lưới, có ngày âm và các chấm màu báo dữ liệu bận.
-- Chọn ngày cũ hoặc ngày tương lai.
-- Xem ngày, tuần và tháng.
-- Thời gian biểu dạng timeline theo giờ, hỗ trợ lịch qua đêm.
-- Sao chép lịch của một ngày sang ngày khác.
-- Mẫu thời gian biểu; worker có thể tạo lịch ngày theo các thứ đã chọn.
-- Sự kiện lịch, công việc dự án, deadline, độ ưu tiên, trạng thái và công việc con trong phần mô tả.
-- Cảnh báo sự kiện/công việc đến hạn.
-- Lịch âm và can chi cơ bản.
+Bổ sung:
 
-Giao diện native hiện chưa hỗ trợ kéo-thả trực tiếp khối lịch bằng ngón tay; thời gian được sửa qua biểu mẫu để tránh sai lệch giờ.
+- `EightPalaceAnalyzerTest`
+- `NaJiaAnalyzerTest`
+- `AdvancedMaiHoaInterpreterTest`
 
-### 4. Học tập
+Các lớp domain thuần Java đã được compile và chạy smoke test. Toàn bộ XML đã được kiểm tra cú pháp.
 
-- Danh sách môn học và mục tiêu học.
-- Phiên học, tổng số phút/ngày/tuần.
-- Số lượng từ mới dạng số, không bắt nhập từng từ và nghĩa.
-- Điểm thi thử và mục tiêu cá nhân.
-- Pomodoro 25 phút trong màn hình chính.
-- Lưu lịch sử Pomodoro 25, 45 hoặc 60 phút trong Trung tâm quản lý.
-- Báo cáo học tập thông qua tìm kiếm, CSV và dữ liệu theo ngày.
-- Tài liệu/ảnh đính kèm cho môn học hoặc mục tiêu.
-- Nhắc học bằng thời gian biểu và nhắc nhở nâng cao.
+## 7. Cách chạy
 
-### 5. Thói quen và mục tiêu
+1. Giải nén ZIP.
+2. Mở thư mục chứa trực tiếp `app`, `gradle`, `build.gradle`, `settings.gradle` và `gradlew`.
+3. Dùng Gradle JDK 17.
+4. Chờ Gradle Sync.
+5. Chọn **Build → Clean Project**.
+6. Chọn **Build → Rebuild Project**.
+7. Nhấn **Run**.
 
-- Check-in hằng ngày và streak.
-- Heatmap 12 tuần kiểu GitHub.
-- Chuỗi hiện tại và chuỗi dài nhất.
-- Tỷ lệ hoàn thành tuần và tháng.
-- Thói quen nâng cao: ngày thực hiện, số lần mục tiêu, tạm dừng và nhắc riêng.
-- Mục tiêu cá nhân: cân nặng, tiết kiệm, từ mới, tập luyện và mục tiêu tùy chỉnh.
-- Worker tự cập nhật một số mục tiêu từ dữ liệu thực tế dựa vào tên/tag của mục tiêu.
+## 8. Cập nhật không mất dữ liệu
 
-### 6. Nhật ký và nghiệm lý
+- Không gỡ ứng dụng cũ.
+- Không bấm **Clear Data**.
+- Nên backup GDZ/ZIP trước khi cập nhật.
+- Package, database và Room version không đổi so với v2.1.0, nên không cần migration mới.
 
-- Ghi chú nhanh theo ngày trong Kế hoạch.
-- Nhiều mục nhật ký trong cùng ngày.
-- Tiêu đề, nội dung, tag, mức quan trọng, yêu thích và file/ảnh đính kèm.
-- Tìm kiếm nhật ký.
-- Khóa riêng module nhật ký bằng PIN.
-- Xuất nhật ký CSV hoặc PDF.
-- Module Lục Hào, Mai Hoa Dịch Số, nội dung luận giải, kết quả thực tế và mức độ chính xác.
+## 9. Giới hạn kiểm tra build
 
-### 7. Ca chạy và phương tiện
-
-- Ca làm việc: doanh thu, tổng chi phí, số cuốc, thời gian và lợi nhuận ròng.
-- Hiển thị thu nhập theo giờ và theo cuốc khi đủ dữ liệu.
-- Phương tiện: tên xe, biển số, số km, giá mua và thời gian sử dụng.
-- Nhật ký nhiên liệu: số tiền, số lít, số km và mức tiêu hao.
-- Bảo dưỡng: thay nhớt, lốp, phanh, ắc quy, hạn theo ngày/km và cảnh báo đến hạn.
-- Giá mua và số năm sử dụng có thể dùng để theo dõi khấu hao trong hồ sơ phương tiện.
-
-### 8. Nhắc nhở và âm thanh
-
-- Nhắc một lần, hằng ngày, hằng tuần, hằng tháng và hằng năm.
-- Chọn nhiều ngày trong tuần bằng tag, ví dụ `T2,T4,T6`.
-- Báo trước theo số phút.
-- Âm thanh riêng cho từng nhắc nhở hoặc âm báo chung của app.
-- Tùy chọn rung; ghi `không rung` trong tag để tắt rung.
-- Nhóm thông báo: sức khỏe, học tập, tài chính, thói quen và chung.
-- Nút `Nhắc lại 10 phút` và `Hoàn thành` ngay trên notification.
-- AlarmManager cho nhắc nâng cao, WorkManager cho các tác vụ nền.
-- Tự khôi phục lịch nhắc sau khi khởi động lại thiết bị hoặc cập nhật ứng dụng.
-- Chọn và phát nhạc/audio trong máy ở màn hình Âm thanh & Nhạc.
-
-### 9. Bảo mật
-
-- Mật khẩu đăng nhập local.
-- PIN 4–8 số.
-- PIN hash được mã hóa AES/GCM bằng khóa Android Keystore.
-- Mở khóa sinh trắc học khi thiết bị hỗ trợ.
-- Tự khóa sau 1, 5, 15 hoặc 30 phút.
-- Khóa riêng Tài chính và Nhật ký.
-- `FLAG_SECURE` để ẩn nội dung nhạy cảm khỏi ảnh chụp và màn hình ứng dụng gần đây.
-
-Giới hạn kỹ thuật: file Room/SQLite chưa được mã hóa toàn bộ bằng SQLCipher. Vì vậy không nên root máy hoặc chia sẻ trực tiếp thư mục dữ liệu ứng dụng.
-
-### 10. Sao lưu và chuyển máy
-
-- JSON tương thích với các bản cũ.
-- Backup đầy đủ dạng ZIP/GDZ: database, preferences, avatar, hóa đơn, nhật ký và file đính kèm.
-- Mã hóa backup bằng mật khẩu AES-GCM/PBKDF2.
-- Xem trước thông tin backup.
-- Chọn `Gộp dữ liệu` hoặc `Thay thế dữ liệu`.
-- Bỏ qua dữ liệu trùng theo cơ chế đối chiếu tốt nhất có thể.
-- Sao lưu tự động theo tuần hoặc tháng, giữ nhiều phiên bản.
-- Chia sẻ file backup.
-
-PIN/khóa Keystore không được chuyển sang máy khác vì khóa được ràng buộc với thiết bị. Sau khi khôi phục trên máy mới, hãy đặt PIN mới.
-
-### 11. UI/UX
-
-- Material Design 3.
-- Sáng, tối hoặc theo hệ thống.
-- Material You trên Android 12+.
-- Bốn màu nhấn thủ công.
-- Trang chủ có lời chào, tên người dùng, chuông và avatar.
-- Avatar chọn từ máy.
-- Empty state, Snackbar hoàn tác, tìm kiếm toàn app và biểu đồ custom.
-- Bố cục tablet thông qua `values-sw600dp`.
-- Bottom sheet giao dịch cuộn toàn màn hình.
-
-## Cách chạy
-
-1. Dùng JDK 17.
-2. Mở thư mục gốc có trực tiếp `app`, `gradle`, `build.gradle`, `settings.gradle` và `gradlew`.
-3. Chờ Gradle Sync.
-4. Chọn `Build → Clean Project`, sau đó `Build → Rebuild Project`.
-5. Chạy trên điện thoại hoặc máy ảo Android.
-
-## Giữ dữ liệu khi cập nhật
-
-- Không gỡ app cũ.
-- Không bấm Clear Data.
-- Package và tên database không đổi.
-- Room có migration từ version 1 đến version 5.
-- Nên tạo một backup trước khi nâng cấp.
-
-## Kiểm thử trong gói source
-
-Có unit test nền tảng cho ngày tháng, tiền tệ và danh mục tính năng. Source đã được kiểm tra tĩnh về XML, resource, import nội bộ và cú pháp Java. Môi trường tạo gói không có Android SDK/Gradle cache đầy đủ nên chưa thể build APK thực tế; Android Studio trên máy của bạn vẫn là bước kiểm tra build cuối cùng.
-
-
-## Sửa lỗi v2.0.1
-
-- Sửa trùng phương thức `empty(String)` trong `LocalAccountManagerFragment`.
-- Sửa kiểu dữ liệu chiều cao tối thiểu trong `HabitHeatmapView`.
-- Sửa kiểu dữ liệu chiều cao tối thiểu trong `HealthTrendView`.
+Môi trường đóng gói không có Android SDK và không truy cập được máy chủ Gradle, nên chưa chạy được `assembleDebug`. Việc compile các lớp domain, smoke test thuật toán và kiểm tra XML đã hoàn tất; Android Studio trên máy bạn là bước build cuối cùng.

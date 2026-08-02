@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:paddingBottom="110dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ca chạy &amp; phương tiện"
+            android:textColor="@color/on_surface"
+            android:textSize="27sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Theo dõi doanh thu, lợi nhuận, pin, số kilomet và các mốc bảo dưỡng quan trọng."
+            android:textColor="@color/on_surface_variant" />
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/GoodDaily.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@color/primary_container">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="18dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Lợi nhuận ròng" android:textColor="@color/on_primary_container" />
+                    <TextView android:id="@+id/tvDriverNetProfit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="0 ₫" android:textColor="@color/on_primary_container" android:textSize="23sp" android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ca / đơn / km" android:textColor="@color/on_primary_container" />
+                    <TextView android:id="@+id/tvDriverSummary" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="0 / 0 / 0" android:textColor="@color/on_primary_container" android:textSize="16sp" android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/GoodDaily.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Theo dõi ca trực tiếp"
+                        android:textColor="@color/on_surface"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvLiveShiftStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Chưa bắt đầu ca"
+                        android:textColor="@color/on_surface_variant"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnToggleLiveShift"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="Bắt đầu ca"
+                    app:icon="@drawable/ic_play" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:columnCount="2">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddDriverShift"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="6dp"
+                android:text="Thêm ca chạy"
+                app:icon="@drawable/ic_plus" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddVehicle"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="6dp"
+                android:text="Thêm xe" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddCharge"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_columnWeight="1"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="6dp"
+                android:text="Ghi lần sạc" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddMaintenance"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="8dp"
+                android:text="Bảo dưỡng" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddFuel"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="6dp"
+                android:layout_marginTop="8dp"
+                android:text="Ghi đổ xăng" />
+        </GridLayout>
+
+        <TextView style="@style/GoodDaily.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:text="Ca chạy gần đây" />
+        <LinearLayout android:id="@+id/containerDriverShifts" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="vertical" />
+
+        <TextView style="@style/GoodDaily.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="22dp" android:text="Phương tiện" />
+        <LinearLayout android:id="@+id/containerVehicles" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="vertical" />
+
+        <TextView style="@style/GoodDaily.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="22dp" android:text="Bảo dưỡng sắp tới" />
+        <LinearLayout android:id="@+id/containerMaintenance" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="vertical" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

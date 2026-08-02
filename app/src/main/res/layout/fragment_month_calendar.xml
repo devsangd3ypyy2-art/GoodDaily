@@ -97,7 +97,7 @@
                 app:icon="@drawable/ic_chevron_right" />
         </LinearLayout>
 
-        <com.sangapp.gooddaily.ui.widget.BusyMonthCalendarView
+        <com.sangapp.gooddaily.ui.planner.widget.BusyMonthCalendarView
             android:id="@+id/monthCalendarView"
             android:layout_width="match_parent"
             android:layout_height="390dp"

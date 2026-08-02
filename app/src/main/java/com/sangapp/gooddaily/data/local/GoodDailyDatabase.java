@@ -40,6 +40,14 @@ import com.sangapp.gooddaily.data.local.entity.StudySessionEntity;
 import com.sangapp.gooddaily.data.local.entity.TaskEntity;
 import com.sangapp.gooddaily.data.local.entity.TransactionEntity;
 import com.sangapp.gooddaily.data.local.entity.VocabularyEntity;
+import com.sangapp.gooddaily.feature.driver.data.DriverDao;
+import com.sangapp.gooddaily.feature.driver.data.entity.BatteryChargeEntity;
+import com.sangapp.gooddaily.feature.driver.data.entity.DriverShiftEntity;
+import com.sangapp.gooddaily.feature.driver.data.entity.FuelLogEntity;
+import com.sangapp.gooddaily.feature.driver.data.entity.MaintenanceRecordEntity;
+import com.sangapp.gooddaily.feature.driver.data.entity.VehicleEntity;
+import com.sangapp.gooddaily.feature.metaphysics.data.DivinationDao;
+import com.sangapp.gooddaily.feature.metaphysics.data.DivinationSessionEntity;
 
 @Database(
         entities = {
@@ -51,9 +59,11 @@ import com.sangapp.gooddaily.data.local.entity.VocabularyEntity;
                 PersonalRecordEntity.class, FinanceCategoryEntity.class, MoneyTransferEntity.class,
                 RecurringTransactionEntity.class, CategoryBudgetEntity.class, SavingGoalEntity.class,
                 DebtEntity.class, DebtPaymentEntity.class, TransactionAttachmentEntity.class,
-                HealthProfileEntity.class
+                HealthProfileEntity.class,
+                DivinationSessionEntity.class, DriverShiftEntity.class, VehicleEntity.class,
+                BatteryChargeEntity.class, FuelLogEntity.class, MaintenanceRecordEntity.class
         },
-        version = 5,
+        version = 6,
         exportSchema = true
 )
 public abstract class GoodDailyDatabase extends RoomDatabase {
@@ -67,6 +77,8 @@ public abstract class GoodDailyDatabase extends RoomDatabase {
     public abstract AdvancedRecordDao advancedRecordDao();
     public abstract FinanceAdvancedDao financeAdvancedDao();
     public abstract HealthProfileDao healthProfileDao();
+    public abstract DivinationDao divinationDao();
+    public abstract DriverDao driverDao();
 
     private static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
@@ -171,6 +183,69 @@ public abstract class GoodDailyDatabase extends RoomDatabase {
         }
     };
 
+    public static final Migration MIGRATION_5_6 = new Migration(5, 6) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE IF NOT EXISTS `divination_sessions` (" +
+                    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `system` TEXT, `method` TEXT, `question` TEXT, " +
+                    "`castTime` INTEGER NOT NULL, `lunarText` TEXT, `inputData` TEXT, `baseHexagramNumber` INTEGER NOT NULL, " +
+                    "`baseHexagramName` TEXT, `changedHexagramNumber` INTEGER NOT NULL, `changedHexagramName` TEXT, " +
+                    "`nuclearHexagramNumber` INTEGER NOT NULL, `nuclearHexagramName` TEXT, `movingLines` TEXT, " +
+                    "`bodyUse` TEXT, `elementRelation` TEXT, `interpretation` TEXT, `verification` TEXT, " +
+                    "`verifiedAt` INTEGER NOT NULL, `status` TEXT, `favorite` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL)");
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_divination_sessions_system` ON `divination_sessions` (`system`)");
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_divination_sessions_castTime` ON `divination_sessions` (`castTime`)");
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_divination_sessions_status` ON `divination_sessions` (`status`)");
+            database.execSQL("INSERT INTO divination_sessions(system, method, question, castTime, lunarText, inputData, baseHexagramNumber, baseHexagramName, changedHexagramNumber, changedHexagramName, nuclearHexagramNumber, nuclearHexagramName, movingLines, bodyUse, elementRelation, interpretation, verification, verifiedAt, status, favorite, createdAt, updatedAt) SELECT 'LEGACY', 'MANUAL', title, createdAt, '', tags, 0, 'Chưa xác định', 0, 'Chưa xác định', 0, 'Chưa xác định', '', '', '', details, '', 0, CASE WHEN status IS NULL THEN 'CHO_KIEM_CHUNG' ELSE status END, favorite, createdAt, updatedAt FROM personal_records WHERE feature='DIVINATION_ENTRY'");
+
+            database.execSQL("CREATE TABLE IF NOT EXISTS `driver_shifts` (" +
+                    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `dateKey` TEXT, `startTime` INTEGER NOT NULL, `endTime` INTEGER NOT NULL, " +
+                    "`revenue` REAL NOT NULL, `bonus` REAL NOT NULL, `tips` REAL NOT NULL, `orderCount` INTEGER NOT NULL, " +
+                    "`distanceKm` REAL NOT NULL, `platformFee` REAL NOT NULL, `energyCost` REAL NOT NULL, `mealCost` REAL NOT NULL, " +
+                    "`otherCost` REAL NOT NULL, `depreciationCost` REAL NOT NULL, `area` TEXT, `note` TEXT, `status` TEXT, " +
+                    "`createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL)");
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_driver_shifts_dateKey` ON `driver_shifts` (`dateKey`)");
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_driver_shifts_startTime` ON `driver_shifts` (`startTime`)");
+
+            database.execSQL("CREATE TABLE IF NOT EXISTS `vehicles` (" +
+                    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `plateNumber` TEXT, `vehicleType` TEXT, `energyType` TEXT, " +
+                    "`currentOdometerKm` REAL NOT NULL, `purchasePrice` REAL NOT NULL, `purchaseDate` INTEGER NOT NULL, " +
+                    "`batteryNominalCapacity` REAL NOT NULL, `active` INTEGER NOT NULL, `note` TEXT, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL)");
+            database.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_vehicles_name_plateNumber` ON `vehicles` (`name`, `plateNumber`)");
+
+            database.execSQL("CREATE TABLE IF NOT EXISTS `battery_charges` (" +
+                    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `vehicleId` INTEGER NOT NULL, `chargedAt` INTEGER NOT NULL, " +
+                    "`startPercent` INTEGER NOT NULL, `endPercent` INTEGER NOT NULL, `energyKwh` REAL NOT NULL, `cost` REAL NOT NULL, " +
+                    "`odometerKm` REAL NOT NULL, `estimatedRangeKm` REAL NOT NULL, `chargerType` TEXT, `note` TEXT)");
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_battery_charges_vehicleId` ON `battery_charges` (`vehicleId`)");
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_battery_charges_chargedAt` ON `battery_charges` (`chargedAt`)");
+
+            database.execSQL("CREATE TABLE IF NOT EXISTS `fuel_logs` (" +
+                    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `vehicleId` INTEGER NOT NULL, `fueledAt` INTEGER NOT NULL, " +
+                    "`liters` REAL NOT NULL, `cost` REAL NOT NULL, `odometerKm` REAL NOT NULL, `fullTank` INTEGER NOT NULL, `station` TEXT, `note` TEXT)");
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_fuel_logs_vehicleId` ON `fuel_logs` (`vehicleId`)");
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_fuel_logs_fueledAt` ON `fuel_logs` (`fueledAt`)");
+
+            database.execSQL("CREATE TABLE IF NOT EXISTS `maintenance_records` (" +
+                    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `vehicleId` INTEGER NOT NULL, `itemType` TEXT, `title` TEXT, " +
+                    "`performedAt` INTEGER NOT NULL, `odometerKm` REAL NOT NULL, `cost` REAL NOT NULL, `nextDueAt` INTEGER NOT NULL, " +
+                    "`nextDueOdometerKm` REAL NOT NULL, `condition` TEXT, `note` TEXT, `completed` INTEGER NOT NULL)");
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_maintenance_records_vehicleId` ON `maintenance_records` (`vehicleId`)");
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_maintenance_records_performedAt` ON `maintenance_records` (`performedAt`)");
+            database.execSQL("CREATE INDEX IF NOT EXISTS `index_maintenance_records_nextDueAt` ON `maintenance_records` (`nextDueAt`)");
+
+            // Preserve records entered through the generic v2.0 feature manager.
+            database.execSQL("INSERT INTO driver_shifts(dateKey,startTime,endTime,revenue,bonus,tips,orderCount,distanceKm,platformFee,energyCost,mealCost,otherCost,depreciationCost,area,note,status,createdAt,updatedAt) " +
+                    "SELECT dateKey, createdAt, CASE WHEN updatedAt > createdAt THEN updatedAt ELSE createdAt + 3600000 END, numericValue, 0, 0, countValue, 0, 0, 0, 0, secondaryValue, 0, title, details, COALESCE(status,'LEGACY'), createdAt, updatedAt FROM personal_records WHERE feature='DRIVER_SHIFT'");
+            database.execSQL("INSERT OR IGNORE INTO vehicles(name,plateNumber,vehicleType,energyType,currentOdometerKm,purchasePrice,purchaseDate,batteryNominalCapacity,active,note,createdAt,updatedAt) " +
+                    "SELECT CASE WHEN title IS NULL OR title='' THEN 'Phương tiện cũ' ELSE title END, '', 'Khác', tags, numericValue, secondaryValue, 0, 0, 1, details, createdAt, updatedAt FROM personal_records WHERE feature='DRIVER_VEHICLE'");
+            database.execSQL("INSERT INTO fuel_logs(vehicleId,fueledAt,liters,cost,odometerKm,fullTank,station,note) " +
+                    "SELECT 0, createdAt, numericValue, secondaryValue, countValue, 0, title, details FROM personal_records WHERE feature='DRIVER_FUEL'");
+            database.execSQL("INSERT INTO maintenance_records(vehicleId,itemType,title,performedAt,odometerKm,cost,nextDueAt,nextDueOdometerKm,condition,note,completed) " +
+                    "SELECT 0, COALESCE(tags,'LEGACY'), CASE WHEN title IS NULL OR title='' THEN 'Bảo dưỡng cũ' ELSE title END, createdAt, numericValue, secondaryValue, 0, 0, COALESCE(status,'RECORDED'), details, archived FROM personal_records WHERE feature='DRIVER_MAINTENANCE'");
+        }
+    };
+
     public static void closeInstance() {
         synchronized (GoodDailyDatabase.class) {
             if (INSTANCE != null) {
@@ -189,7 +264,7 @@ public abstract class GoodDailyDatabase extends RoomDatabase {
                                     GoodDailyDatabase.class,
                                     "good_daily_database"
                             )
-                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
                             .addCallback(new Callback() {
                                 @Override
                                 public void onCreate(@NonNull SupportSQLiteDatabase db) {
