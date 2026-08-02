@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/screen_padding"
-        android:paddingBottom="32dp">
+        android:paddingBottom="120dp">
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sức khỏe" android:textColor="@color/on_surface" android:textSize="28sp" android:textStyle="bold" />
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Theo dõi cơ thể và năng lượng mỗi ngày" android:textColor="@color/on_surface_variant" />
@@ -55,6 +55,28 @@
             android:layout_marginTop="10dp"
             android:text="Biểu đồ và báo cáo sức khỏe"
             app:icon="@drawable/ic_chart" />
+
+        <TextView
+            style="@style/GoodDaily.SectionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Theo dõi sức khỏe hằng ngày" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Nước, ngủ, tâm trạng, vận động, thuốc và số đo được mở trực tiếp tại đây."
+            android:textColor="@color/on_surface_variant"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:id="@+id/healthToolsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical" />
 
         <TextView android:id="@+id/tvMealsSection" style="@style/GoodDaily.SectionTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:text="Bữa ăn gần đây" />
         <LinearLayout android:id="@+id/mealContainer" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="vertical" />

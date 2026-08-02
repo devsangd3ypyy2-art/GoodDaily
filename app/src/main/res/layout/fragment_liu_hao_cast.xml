@@ -3,120 +3,172 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:paddingBottom="104dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp"
-        android:paddingBottom="110dp">
+        android:paddingBottom="28dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lục Hào Nạp Giáp · chuyên sâu"
+            android:text="Lục Hào Nạp Giáp"
             android:textColor="@color/on_surface"
-            android:textSize="26sp"
+            android:textSize="27sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Luận Bát cung, Thế–Ứng, Nạp Giáp, Lục Thân, Lục Thần, Nhật–Nguyệt, Không Vong, hợp/xung và Dụng thần theo chủ đề."
-            android:textColor="@color/on_surface_variant" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Chủ đề cần xem"
-            android:textColor="@color/on_surface"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/spinnerLiuHaoTopic"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginTop="6dp"
-            android:background="@color/surface_variant"
-            android:paddingHorizontal="12dp" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="Câu hỏi cụ thể">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtLiuHaoQuestion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="3" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="5dp"
+            android:lineSpacingExtra="2dp"
+            android:text="Tĩnh tâm, xác định một câu hỏi rõ ràng rồi gieo lần lượt sáu hào từ dưới lên. Mỗi lần gieo có phản hồi rung và âm đồng xu."
+            android:textColor="@color/on_surface_variant"
+            android:textSize="14sp" />
 
         <com.google.android.material.card.MaterialCardView
             style="@style/GoodDaily.Card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp">
+            android:layout_marginTop="18dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="14dp">
+                android:padding="18dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Nhật–Nguyệt dùng cho vượng suy"
+                    android:text="Ý niệm và bối cảnh"
                     android:textColor="@color/on_surface"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spinnerLiuHaoTopic"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/surface_variant"
+                    android:paddingHorizontal="12dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="Câu hỏi cụ thể, chỉ hỏi một việc">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtLiuHaoQuestion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="4"
+                        android:minLines="2" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/GoodDaily.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nhật–Nguyệt và thời điểm gieo"
+                    android:textColor="@color/on_surface"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvGanzhiHint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="App điền gần đúng theo ngày hiện tại; bạn có thể chỉnh theo lịch Can Chi chuyên dụng."
+                    android:layout_marginTop="5dp"
+                    android:text="App điền gần đúng; có thể chỉnh tay theo lịch Can Chi bạn sử dụng."
                     android:textColor="@color/on_surface_variant"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
 
-                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="Nguyệt kiến" android:textColor="@color/on_surface_variant" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Nguyệt kiến"
+                    android:textColor="@color/on_surface_variant"
+                    android:textStyle="bold" />
+
                 <Spinner
                     android:id="@+id/spinnerMonthBranch"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="4dp"
                     android:background="@color/surface_variant"
                     android:paddingHorizontal="12dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Ngày can" android:textColor="@color/on_surface_variant" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Ngày can"
+                            android:textColor="@color/on_surface_variant"
+                            android:textStyle="bold" />
+
                         <Spinner
                             android:id="@+id/spinnerDayStem"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="4dp"
                             android:background="@color/surface_variant"
                             android:paddingHorizontal="10dp" />
                     </LinearLayout>
 
-                    <Space android:layout_width="8dp" android:layout_height="1dp" />
+                    <Space android:layout_width="10dp" android:layout_height="1dp" />
 
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Ngày chi" android:textColor="@color/on_surface_variant" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Ngày chi"
+                            android:textColor="@color/on_surface_variant"
+                            android:textStyle="bold" />
+
                         <Spinner
                             android:id="@+id/spinnerDayBranch"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="4dp"
                             android:background="@color/surface_variant"
                             android:paddingHorizontal="10dp" />
                     </LinearLayout>
@@ -124,56 +176,206 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <TextView
+        <com.google.android.material.card.MaterialCardView
+            style="@style/GoodDaily.Card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:text="Sáu lần gieo từ hào 1 dưới cùng đến hào 6 trên cùng"
-            android:textColor="@color/on_surface"
-            android:textStyle="bold" />
+            app:cardBackgroundColor="@color/surface">
 
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="horizontal">
-            <com.google.android.material.textfield.TextInputLayout style="@style/Widget.Material3.TextInputLayout.OutlinedBox" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:hint="Hào 1">
-                <com.google.android.material.textfield.TextInputEditText android:id="@+id/edtLine1" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:inputType="number" android:maxLength="1" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <Space android:layout_width="6dp" android:layout_height="1dp" />
-            <com.google.android.material.textfield.TextInputLayout style="@style/Widget.Material3.TextInputLayout.OutlinedBox" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:hint="Hào 2">
-                <com.google.android.material.textfield.TextInputEditText android:id="@+id/edtLine2" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:inputType="number" android:maxLength="1" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <Space android:layout_width="6dp" android:layout_height="1dp" />
-            <com.google.android.material.textfield.TextInputLayout style="@style/Widget.Material3.TextInputLayout.OutlinedBox" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:hint="Hào 3">
-                <com.google.android.material.textfield.TextInputEditText android:id="@+id/edtLine3" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:inputType="number" android:maxLength="1" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="18dp">
 
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:orientation="horizontal">
-            <com.google.android.material.textfield.TextInputLayout style="@style/Widget.Material3.TextInputLayout.OutlinedBox" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:hint="Hào 4">
-                <com.google.android.material.textfield.TextInputEditText android:id="@+id/edtLine4" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:inputType="number" android:maxLength="1" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <Space android:layout_width="6dp" android:layout_height="1dp" />
-            <com.google.android.material.textfield.TextInputLayout style="@style/Widget.Material3.TextInputLayout.OutlinedBox" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:hint="Hào 5">
-                <com.google.android.material.textfield.TextInputEditText android:id="@+id/edtLine5" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:inputType="number" android:maxLength="1" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <Space android:layout_width="6dp" android:layout_height="1dp" />
-            <com.google.android.material.textfield.TextInputLayout style="@style/Widget.Material3.TextInputLayout.OutlinedBox" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:hint="Hào 6">
-                <com.google.android.material.textfield.TextInputEditText android:id="@+id/edtLine6" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:inputType="number" android:maxLength="1" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Nghi thức gieo ba đồng xu"
+                    android:textColor="@color/on_surface"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCastCoins"
+                <TextView
+                    android:id="@+id/tvRitualStep"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="Sẵn sàng gieo Hào 1 · hào dưới cùng"
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/ritualProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="14dp"
+                    android:max="6"
+                    android:progress="0"
+                    app:trackColor="@color/outline"
+                    app:trackCornerRadius="4dp" />
+
+                <LinearLayout
+                    android:id="@+id/coinRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/coin1"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/bg_coin"
+                        android:gravity="center"
+                        android:text="D"
+                        android:textColor="@color/on_primary"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/coin2"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:background="@drawable/bg_coin"
+                        android:gravity="center"
+                        android:text="Â"
+                        android:textColor="@color/on_primary"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/coin3"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/bg_coin"
+                        android:gravity="center"
+                        android:text="D"
+                        android:textColor="@color/on_primary"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <com.sangapp.gooddaily.feature.metaphysics.ui.widget.HexagramView
+                    android:id="@+id/ritualHexagram"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:layout_marginTop="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCastCoins"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="12dp"
+                    android:maxLines="1"
+                    android:text="Gieo Hào 1"
+                    app:icon="@drawable/ic_restore" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnResetRitual"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="4dp"
+                    android:text="Làm lại nghi thức"
+                    app:icon="@drawable/ic_delete" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/GoodDaily.Card"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="14dp"
-            android:text="Gieo ba đồng xu 6 lần" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCalculateLiuHao"
-            style="@style/Widget.Material3.Button.TonalButton"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="8dp"
-            android:text="Lập quẻ và luận chuyên sâu" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nhập tay khi đã gieo bên ngoài"
+                    android:textColor="@color/on_surface"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Nhập 6, 7, 8 hoặc 9 từ Hào 1 dưới cùng đến Hào 6 trên cùng."
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:hint="Hào 1">
+                        <com.google.android.material.textfield.TextInputEditText android:id="@+id/edtLine1" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:inputType="number" android:maxLength="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <Space android:layout_width="6dp" android:layout_height="1dp" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:hint="Hào 2">
+                        <com.google.android.material.textfield.TextInputEditText android:id="@+id/edtLine2" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:inputType="number" android:maxLength="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <Space android:layout_width="6dp" android:layout_height="1dp" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:hint="Hào 3">
+                        <com.google.android.material.textfield.TextInputEditText android:id="@+id/edtLine3" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:inputType="number" android:maxLength="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:hint="Hào 4">
+                        <com.google.android.material.textfield.TextInputEditText android:id="@+id/edtLine4" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:inputType="number" android:maxLength="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <Space android:layout_width="6dp" android:layout_height="1dp" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:hint="Hào 5">
+                        <com.google.android.material.textfield.TextInputEditText android:id="@+id/edtLine5" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:inputType="number" android:maxLength="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <Space android:layout_width="6dp" android:layout_height="1dp" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:hint="Hào 6">
+                        <com.google.android.material.textfield.TextInputEditText android:id="@+id/edtLine6" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:inputType="number" android:maxLength="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCalculateLiuHao"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="12dp"
+                    android:maxLines="1"
+                    android:text="Lập quẻ từ dữ liệu đã nhập" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardLiuHaoResult"
@@ -189,20 +391,196 @@
                 android:orientation="vertical"
                 android:padding="18dp">
 
-                <TextView android:id="@+id/tvLiuHaoBase" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/on_surface" android:textSize="19sp" android:textStyle="bold" />
-                <TextView android:id="@+id/tvLiuHaoLines" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:gravity="center" android:lineSpacingExtra="4dp" android:textColor="@color/primary" android:textSize="21sp" android:typeface="monospace" />
-                <TextView android:id="@+id/tvLiuHaoChanged" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:textColor="@color/on_surface_variant" />
-                <TextView android:id="@+id/tvLiuHaoInterpretation" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:background="@color/surface_variant" android:padding="14dp" android:textColor="@color/on_surface" />
-                <TextView android:id="@+id/tvLiuHaoTechnical" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:textColor="@color/on_surface_variant" android:textSize="12sp" android:typeface="monospace" />
-                <TextView android:id="@+id/tvLiuHaoTiming" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:background="@color/surface_variant" android:padding="14dp" android:textColor="@color/on_surface" />
-                <TextView android:id="@+id/tvLiuHaoConfidence" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:textColor="@color/primary" android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvLiuHaoBase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/on_surface"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvLiuHaoLines"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Quẻ chủ"
+                            android:textColor="@color/on_surface_variant"
+                            android:textStyle="bold" />
+
+                        <com.sangapp.gooddaily.feature.metaphysics.ui.widget.HexagramView
+                            android:id="@+id/hexagramLiuHaoBase"
+                            android:layout_width="match_parent"
+                            android:layout_height="230dp" />
+                    </LinearLayout>
+
+                    <Space android:layout_width="10dp" android:layout_height="1dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Quẻ biến"
+                            android:textColor="@color/on_surface_variant"
+                            android:textStyle="bold" />
+
+                        <com.sangapp.gooddaily.feature.metaphysics.ui.widget.HexagramView
+                            android:id="@+id/hexagramLiuHaoChanged"
+                            android:layout_width="match_parent"
+                            android:layout_height="230dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipLiuHaoMeta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:chipSpacingHorizontal="6dp"
+                    app:chipSpacingVertical="6dp" />
+
+                <TextView
+                    android:id="@+id/tvLiuHaoChanged"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/GoodDaily.QuickActionCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    app:cardBackgroundColor="@color/primary_container">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Kết luận trọng tâm"
+                            android:textColor="@color/on_primary_container"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvLiuHaoInterpretation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:lineSpacingExtra="3dp"
+                            android:textColor="@color/on_primary_container" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/GoodDaily.QuickActionCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Bảng kỹ thuật Nạp Giáp"
+                            android:textColor="@color/on_surface"
+                            android:textStyle="bold" />
+
+                        <HorizontalScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:scrollbars="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvLiuHaoTechnical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:lineSpacingExtra="2dp"
+                                android:textColor="@color/on_surface_variant"
+                                android:textSize="12sp"
+                                android:typeface="monospace" />
+                        </HorizontalScrollView>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/GoodDaily.QuickActionCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Ứng kỳ và độ tin cậy"
+                            android:textColor="@color/on_surface"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvLiuHaoTiming"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:lineSpacingExtra="2dp"
+                            android:textColor="@color/on_surface" />
+
+                        <TextView
+                            android:id="@+id/tvLiuHaoConfidence"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/primary"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSaveLiuHao"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="14dp"
-                    android:text="Lưu toàn bộ luận giải"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="16dp"
+                    android:maxLines="1"
+                    android:text="Lưu quẻ để nghiệm lý"
                     app:icon="@drawable/ic_check" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

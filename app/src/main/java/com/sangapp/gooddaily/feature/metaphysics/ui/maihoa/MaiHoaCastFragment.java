@@ -1,5 +1,6 @@
 package com.sangapp.gooddaily.feature.metaphysics.ui.maihoa;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,20 +8,25 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.chip.Chip;
+import com.sangapp.gooddaily.R;
 import com.sangapp.gooddaily.databinding.FragmentMaiHoaCastBinding;
 import com.sangapp.gooddaily.feature.metaphysics.data.DivinationSessionEntity;
 import com.sangapp.gooddaily.feature.metaphysics.domain.DivinationResult;
+import com.sangapp.gooddaily.feature.metaphysics.domain.FiveElement;
 import com.sangapp.gooddaily.feature.metaphysics.domain.MaiHoaCalculator;
 import com.sangapp.gooddaily.feature.metaphysics.domain.QuestionTopic;
-import com.sangapp.gooddaily.feature.metaphysics.ui.DivinationUi;
 import com.sangapp.gooddaily.feature.metaphysics.ui.MetaphysicsViewModel;
 import com.sangapp.gooddaily.util.DateUtils;
 import com.sangapp.gooddaily.util.LunarCalendarUtils;
+import com.sangapp.gooddaily.util.ThemeUtils;
 
 import java.util.Calendar;
 
@@ -33,7 +39,8 @@ public class MaiHoaCastFragment extends Fragment {
     private QuestionTopic currentTopic = QuestionTopic.GENERAL;
 
     @Nullable @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentMaiHoaCastBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -86,8 +93,9 @@ public class MaiHoaCastFragment extends Fragment {
     private void render() {
         if (currentResult == null) return;
         binding.cardMaiHoaResult.setVisibility(View.VISIBLE);
-        binding.tvMaiHoaBase.setText(currentResult.base.title() + "\n" + currentResult.base.symbols());
-        binding.tvMaiHoaHexagramLines.setText(DivinationUi.renderLines(currentResult));
+        binding.tvMaiHoaBase.setText(currentResult.base.title() + " · " + currentResult.base.symbols());
+        binding.hexagramMaiHoaBase.setHexagram(currentResult.base.linesBottomUp, currentResult.movingLines);
+        binding.hexagramMaiHoaChanged.setHexagram(currentResult.changed.linesBottomUp, new int[0]);
         binding.tvMaiHoaChanged.setText(currentResult.movingLinesText()
                 + "\nQuẻ hỗ: " + currentResult.nuclear.title()
                 + "\nQuẻ biến: " + currentResult.changed.title());
@@ -96,6 +104,43 @@ public class MaiHoaCastFragment extends Fragment {
         binding.tvMaiHoaTechnical.setText(currentResult.technicalDetails);
         binding.tvMaiHoaTiming.setText(currentResult.timing);
         binding.tvMaiHoaConfidence.setText(currentResult.confidence);
+        renderMetaChips();
+    }
+
+    private void renderMetaChips() {
+        binding.chipMaiHoaMeta.removeAllViews();
+        addChip(currentTopic.toString(), R.color.primary);
+        addElementChip("Thượng · " + currentResult.base.upper.element.vietnamese,
+                currentResult.base.upper.element);
+        addElementChip("Hạ · " + currentResult.base.lower.element.vietnamese,
+                currentResult.base.lower.element);
+        addChip(currentResult.movingLinesText(), R.color.hexagram_moving_line);
+    }
+
+    private void addElementChip(String text, FiveElement element) {
+        @ColorRes int color;
+        switch (element) {
+            case WOOD: color = R.color.element_wood; break;
+            case FIRE: color = R.color.element_fire; break;
+            case EARTH: color = R.color.element_earth; break;
+            case METAL: color = R.color.element_metal; break;
+            case WATER:
+            default: color = R.color.element_water; break;
+        }
+        addChip(text, color);
+    }
+
+    private void addChip(String text, @ColorRes int colorRes) {
+        int color = ContextCompat.getColor(requireContext(), colorRes);
+        Chip chip = new Chip(requireContext());
+        chip.setText(text);
+        chip.setTextColor(color);
+        chip.setChipBackgroundColor(ColorStateList.valueOf(ThemeUtils.adjustAlpha(color, 0.16f)));
+        chip.setChipStrokeColor(ColorStateList.valueOf(ThemeUtils.adjustAlpha(color, 0.50f)));
+        chip.setChipStrokeWidth(getResources().getDisplayMetrics().density);
+        chip.setClickable(false);
+        chip.setCheckable(false);
+        binding.chipMaiHoaMeta.addView(chip);
     }
 
     private void save() {

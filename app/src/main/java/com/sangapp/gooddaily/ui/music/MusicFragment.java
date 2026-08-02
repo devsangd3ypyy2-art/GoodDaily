@@ -1,6 +1,9 @@
 package com.sangapp.gooddaily.ui.music;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
@@ -18,6 +21,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -25,6 +29,7 @@ import com.sangapp.gooddaily.R;
 import com.sangapp.gooddaily.data.local.prefs.LocalUserStore;
 import com.sangapp.gooddaily.databinding.FragmentMusicBinding;
 import com.sangapp.gooddaily.notification.NotificationSoundManager;
+import com.sangapp.gooddaily.util.AppExecutors;
 import com.sangapp.gooddaily.util.ThemeUtils;
 
 public class MusicFragment extends Fragment {
@@ -33,6 +38,13 @@ public class MusicFragment extends Fragment {
     private MediaPlayer mediaPlayer;
     private Ringtone previewRingtone;
     private Uri playingUri;
+
+    private final ActivityResultLauncher<String> notificationPermission = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            granted -> {
+                if (granted) sendTestNotification();
+                else toast("Bạn cần cấp quyền thông báo để Good Daily phát chuông.");
+            });
 
     private final ActivityResultLauncher<String[]> pickAudio = registerForActivityResult(
             new ActivityResultContracts.OpenDocument(),
@@ -61,6 +73,7 @@ public class MusicFragment extends Fragment {
                 NotificationSoundManager.clearOldChannels(requireContext());
                 renderSelection();
                 toast("Đã đổi âm báo Good Daily.");
+                sendTestNotification();
             });
 
     @Nullable
@@ -94,7 +107,8 @@ public class MusicFragment extends Fragment {
         binding.btnUseAsNotification.setOnClickListener(v -> useCurrentSongAsNotification());
         binding.btnChooseSystemTone.setOnClickListener(v -> openSystemTonePicker());
         binding.btnDefaultTone.setOnClickListener(v -> resetDefaultTone());
-        binding.btnTestTone.setOnClickListener(v -> previewNotificationTone());
+        binding.btnTestTone.setOnClickListener(v -> sendTestNotification());
+        binding.btnOpenNotificationSettings.setOnClickListener(v -> NotificationSoundManager.openNotificationSettings(requireContext()));
     }
 
     private void renderSelection() {
@@ -175,18 +189,36 @@ public class MusicFragment extends Fragment {
     }
 
     private void useCurrentSongAsNotification() {
-        String uri = userStore.getMusicUri();
-        if (uri == null || uri.trim().isEmpty()) return;
+        String value = userStore.getMusicUri();
+        if (value == null || value.trim().isEmpty()) return;
         new MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Dùng làm âm báo?")
-                .setMessage("Good Daily sẽ dùng bài “" + userStore.getMusicName()
-                        + "” cho các nhắc nhở, lịch và cảnh báo tài chính. Android có thể chỉ phát một phần bài hát.")
+                .setMessage("Good Daily sẽ nhập một bản sao của bài “" + userStore.getMusicName()
+                        + "” vào thư mục Notifications để Android có thể phát chuông ổn định khi app chạy nền.")
                 .setNegativeButton("Hủy", null)
                 .setPositiveButton("Sử dụng", (dialog, which) -> {
-                    userStore.setNotificationSound(uri, userStore.getMusicName());
-                    NotificationSoundManager.clearOldChannels(requireContext());
-                    renderSelection();
-                    toast("Đã đặt bài hát làm âm báo.");
+                    binding.btnUseAsNotification.setEnabled(false);
+                    binding.btnUseAsNotification.setText("Đang chuẩn bị âm báo...");
+                    Context appContext = requireContext().getApplicationContext();
+                    Uri source = Uri.parse(value);
+                    String name = userStore.getMusicName();
+                    AppExecutors.io().execute(() -> {
+                        Uri imported = NotificationSoundManager.importAsNotificationSound(appContext, source, name);
+                        AppExecutors.main().post(() -> {
+                            if (!isAdded() || binding == null) return;
+                            binding.btnUseAsNotification.setEnabled(true);
+                            binding.btnUseAsNotification.setText("Dùng bài đang chọn làm âm báo");
+                            if (imported == null) {
+                                toast("Không thể tạo âm báo từ file này. Hãy chọn nhạc chuông hệ thống.");
+                                return;
+                            }
+                            userStore.setNotificationSound(imported.toString(), name);
+                            NotificationSoundManager.clearOldChannels(requireContext());
+                            renderSelection();
+                            toast("Đã đặt bài hát làm âm báo.");
+                            sendTestNotification();
+                        });
+                    });
                 })
                 .show();
     }
@@ -209,15 +241,16 @@ public class MusicFragment extends Fragment {
         toast("Đã dùng lại âm báo mặc định của điện thoại.");
     }
 
-    private void previewNotificationTone() {
-        if (previewRingtone != null && previewRingtone.isPlaying()) previewRingtone.stop();
-        Uri uri = NotificationSoundManager.getSelectedSound(requireContext());
-        previewRingtone = RingtoneManager.getRingtone(requireContext(), uri);
-        if (previewRingtone == null) {
-            toast("Không thể phát thử âm báo này.");
+    private void sendTestNotification() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU
+                && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+            notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS);
             return;
         }
-        previewRingtone.play();
+        boolean posted = NotificationSoundManager.postTestNotification(requireContext());
+        if (posted) toast("Đã gửi thông báo thử. Nếu vẫn im lặng, mở Cài đặt thông báo để bật Âm thanh.");
+        else toast("Không gửi được thông báo. Hãy cấp quyền thông báo cho Good Daily.");
     }
 
     private String resolveName(Uri uri) {

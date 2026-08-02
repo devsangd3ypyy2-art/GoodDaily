@@ -70,14 +70,29 @@ public class DivinationHistoryFragment extends Fragment {
                         + "\nQuẻ biến: " + safe(item.changedHexagramName)
                         + "\n" + safe(item.movingLines)
                         + "\n\n" + safe(item.interpretation));
-        form.edtVerification.setText(item.verification);
+        VerificationData verificationData = parseVerification(item.verification);
+        form.edtVerification.setText(verificationData.note);
+        form.ratingAccuracy.setRating(verificationData.rating);
+        if ("UNG_KY_DUNG".equals(verificationData.outcome)) {
+            form.toggleVerificationOutcome.check(form.btnOutcomeAccurate.getId());
+        } else if ("KET_QUA_SAI".equals(verificationData.outcome)) {
+            form.toggleVerificationOutcome.check(form.btnOutcomeWrong.getId());
+        } else {
+            form.toggleVerificationOutcome.check(form.btnOutcomeOther.getId());
+        }
         form.switchVerified.setChecked("DA_KIEM_CHUNG".equals(item.status));
         new MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Chi tiết và nghiệm lý")
                 .setView(form.getRoot())
                 .setNegativeButton("Đóng", null)
                 .setPositiveButton("Lưu", (dialog, which) -> {
-                    item.verification = form.edtVerification.getText() == null ? "" : form.edtVerification.getText().toString().trim();
+                    String outcome;
+                    int checkedId = form.toggleVerificationOutcome.getCheckedButtonId();
+                    if (checkedId == form.btnOutcomeAccurate.getId()) outcome = "UNG_KY_DUNG";
+                    else if (checkedId == form.btnOutcomeWrong.getId()) outcome = "KET_QUA_SAI";
+                    else outcome = "CO_BIEN_KHAC";
+                    String note = form.edtVerification.getText() == null ? "" : form.edtVerification.getText().toString().trim();
+                    item.verification = serializeVerification(outcome, Math.round(form.ratingAccuracy.getRating()), note);
                     item.status = form.switchVerified.isChecked() ? "DA_KIEM_CHUNG" : "CHO_KIEM_CHUNG";
                     item.verifiedAt = form.switchVerified.isChecked() ? System.currentTimeMillis() : 0;
                     item.updatedAt = System.currentTimeMillis();
@@ -92,6 +107,36 @@ public class DivinationHistoryFragment extends Fragment {
                 .setNegativeButton("Hủy", null)
                 .setPositiveButton("Xóa", (d, w) -> viewModel.delete(item, () -> toast("Đã xóa.")))
                 .show();
+    }
+
+
+    private VerificationData parseVerification(String raw) {
+        VerificationData data = new VerificationData();
+        data.note = safe(raw);
+        if (raw == null || !raw.startsWith("[OUTCOME=")) return data;
+        int end = raw.indexOf("]\n");
+        if (end < 0) return data;
+        String header = raw.substring(1, end);
+        String[] parts = header.split(";");
+        for (String part : parts) {
+            if (part.startsWith("OUTCOME=")) data.outcome = part.substring("OUTCOME=".length());
+            else if (part.startsWith("RATING=")) {
+                try { data.rating = Math.max(1, Math.min(5, Integer.parseInt(part.substring("RATING=".length())))); }
+                catch (NumberFormatException ignored) { data.rating = 3; }
+            }
+        }
+        data.note = raw.substring(end + 2);
+        return data;
+    }
+
+    private String serializeVerification(String outcome, int rating, String note) {
+        return "[OUTCOME=" + outcome + ";RATING=" + Math.max(1, Math.min(5, rating)) + "]\n" + safe(note);
+    }
+
+    private static final class VerificationData {
+        String outcome = "CO_BIEN_KHAC";
+        int rating = 3;
+        String note = "";
     }
 
     private String safe(String value) { return value == null ? "" : value; }

@@ -31,11 +31,14 @@ import com.sangapp.gooddaily.databinding.DialogChangePasswordBinding;
 import com.sangapp.gooddaily.databinding.FragmentProfileBinding;
 import com.sangapp.gooddaily.notification.ReminderScheduler;
 import com.sangapp.gooddaily.ui.auth.AuthActivity;
+import com.sangapp.gooddaily.ui.common.FeatureNavigator;
+import com.sangapp.gooddaily.ui.common.ModuleToolsRenderer;
 import com.sangapp.gooddaily.util.AppearanceUtils;
 import com.sangapp.gooddaily.util.ThemeUtils;
 import com.sangapp.gooddaily.viewmodel.ReminderViewModel;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
@@ -113,6 +116,7 @@ public class ProfileFragment extends Fragment {
         applyAppearance();
         setupThemeSelection();
         setupDisplayMode();
+        setupProfileSystemTools();
 
         reminderVm.enabledCount().observe(getViewLifecycleOwner(), count ->
                 binding.tvCustomReminderCount.setText((count == null ? 0 : count) + " nhắc nhở đang bật"));
@@ -168,6 +172,41 @@ public class ProfileFragment extends Fragment {
                 .setNegativeButton("Hủy", null)
                 .setPositiveButton("Đăng xuất", (d, w) -> logout())
                 .show());
+    }
+
+    private void setupProfileSystemTools() {
+        ModuleToolsRenderer.render(binding.profileSystemToolsContainer, Arrays.asList(
+                new ModuleToolsRenderer.ToolItem(
+                        "Quản lý thông báo",
+                        "Xem, thêm, sửa và tắt các nhắc nhở của app.",
+                        R.drawable.ic_bell,
+                        v -> FeatureNavigator.open(v, R.id.reminderManagerFragment)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Âm thanh và nhạc",
+                        "Chọn nhạc trong máy và âm báo Good Daily.",
+                        R.drawable.ic_music,
+                        v -> FeatureNavigator.open(v, R.id.musicFragment)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Bảo mật",
+                        "PIN, vân tay, tự khóa và ẩn nội dung nhạy cảm.",
+                        R.drawable.ic_settings,
+                        v -> FeatureNavigator.open(v, R.id.securityCenterFragment)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Sao lưu và chuyển máy",
+                        "Backup ZIP/JSON, khôi phục và chia sẻ dữ liệu.",
+                        R.drawable.ic_export,
+                        v -> FeatureNavigator.open(v, R.id.backupCenterFragment)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Tìm kiếm toàn app",
+                        "Tìm nhanh giao dịch, ghi chú và dữ liệu cá nhân.",
+                        R.drawable.ic_search,
+                        v -> FeatureNavigator.open(v, R.id.globalSearchFragment)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Tất cả chức năng",
+                        "Danh mục dự phòng chứa toàn bộ công cụ của Good Daily.",
+                        R.drawable.ic_more_grid,
+                        v -> FeatureNavigator.open(v, R.id.featureHubFragment))
+        ));
     }
 
     private void loadAvatar() {

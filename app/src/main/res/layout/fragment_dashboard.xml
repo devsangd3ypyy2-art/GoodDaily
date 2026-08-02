@@ -78,39 +78,11 @@
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:orientation="horizontal">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnOpenFeatureHub"
-                style="@style/Widget.Material3.Button.TonalButton"
-                android:layout_width="0dp"
-                android:layout_height="52dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="5dp"
-                android:text="Trung tâm quản lý"
-                app:icon="@drawable/ic_more_grid" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnCustomizeDashboard"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="54dp"
-                android:layout_height="52dp"
-                android:layout_marginStart="5dp"
-                android:contentDescription="Tùy chỉnh trang chủ"
-                app:icon="@drawable/ic_settings"
-                app:iconGravity="textStart"
-                app:iconPadding="0dp" />
-        </LinearLayout>
-
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardFinanceSummary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="18dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
@@ -212,7 +184,6 @@
                     android:textSize="12sp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
         <TextView
             style="@style/GoodDaily.SectionTitle"
             android:layout_width="wrap_content"
@@ -397,6 +368,56 @@
         </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardWeeklyChart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/surface"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="1dp"
+            app:strokeColor="@color/surface_variant"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/GoodDaily.SectionTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Chi tiêu 7 ngày" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Xem tài chính"
+                        android:textColor="@color/primary"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <com.sangapp.gooddaily.ui.widget.WeeklyBarChartView
+                    android:id="@+id/weeklyChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardHealthSummary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -462,57 +483,6 @@
                     app:tint="@color/on_surface_variant" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardWeeklyChart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
-            app:cardBackgroundColor="@color/surface"
-            app:cardCornerRadius="22dp"
-            app:cardElevation="1dp"
-            app:strokeColor="@color/surface_variant"
-            app:strokeWidth="1dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="18dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/GoodDaily.SectionTitle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Chi tiêu 7 ngày" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Xem tài chính"
-                        android:textColor="@color/primary"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <com.sangapp.gooddaily.ui.widget.WeeklyBarChartView
-                    android:id="@+id/weeklyChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    android:layout_marginTop="10dp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardTaskProgress"
             android:layout_width="match_parent"
@@ -548,5 +518,45 @@
                     app:tint="@color/on_surface_variant" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+        <TextView
+            style="@style/GoodDaily.SectionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Lối tắt của bạn" />
+
+        <LinearLayout
+            android:id="@+id/dashboardQuickToolsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnOpenFeatureHub"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                android:text="Tìm kiếm toàn app"
+                app:icon="@drawable/ic_more_grid" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCustomizeDashboard"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="54dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="5dp"
+                android:contentDescription="Tùy chỉnh trang chủ"
+                app:icon="@drawable/ic_settings"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

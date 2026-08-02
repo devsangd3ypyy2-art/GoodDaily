@@ -47,18 +47,22 @@ import com.sangapp.gooddaily.data.local.entity.ScheduleBlockEntity;
 import com.sangapp.gooddaily.data.local.entity.StudySessionEntity;
 import com.sangapp.gooddaily.data.local.entity.TaskEntity;
 import com.sangapp.gooddaily.data.local.prefs.LocalUserStore;
+import com.sangapp.gooddaily.feature.FeatureCatalog;
 import com.sangapp.gooddaily.databinding.BottomSheetScheduleBinding;
 import com.sangapp.gooddaily.databinding.DialogAddHabitBinding;
 import com.sangapp.gooddaily.databinding.DialogAddStudyBinding;
 import com.sangapp.gooddaily.databinding.DialogAddTaskBinding;
 import com.sangapp.gooddaily.databinding.DialogVocabularyGoalBinding;
 import com.sangapp.gooddaily.databinding.FragmentPlannerBinding;
+import com.sangapp.gooddaily.ui.common.FeatureNavigator;
+import com.sangapp.gooddaily.ui.common.ModuleToolsRenderer;
 import com.sangapp.gooddaily.util.DateUtils;
 import com.sangapp.gooddaily.util.LunarCalendarUtils;
 import com.sangapp.gooddaily.util.ThemeUtils;
 import com.sangapp.gooddaily.viewmodel.PlannerViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -103,6 +107,7 @@ public class PlannerFragment extends Fragment {
         vm = new ViewModelProvider(this).get(PlannerViewModel.class);
         userStore = new LocalUserStore(requireContext());
         applyTheme();
+        setupPlannerTools();
         setupMoodDropdown();
         setupActions();
         observeData();
@@ -167,7 +172,7 @@ public class PlannerFragment extends Fragment {
         binding.btnStartPomodoro.setOnClickListener(v -> togglePomodoro());
         binding.btnResetPomodoro.setOnClickListener(v -> resetPomodoro());
         binding.btnSaveNote.setOnClickListener(v -> saveNote());
-        binding.btnPlannerAdvanced.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.featureHubFragment));
+        binding.btnPlannerAdvanced.setOnClickListener(v -> FeatureNavigator.open(v, R.id.monthCalendarFragment));
         binding.btnNoteHistory.setOnClickListener(v -> showNoteHistory());
     }
 
@@ -223,6 +228,82 @@ public class PlannerFragment extends Fragment {
         });
         vm.noteHistory().observe(getViewLifecycleOwner(), value ->
                 noteHistory = value == null ? new ArrayList<>() : value);
+    }
+
+    private void setupPlannerTools() {
+        ModuleToolsRenderer.render(binding.plannerCalendarToolsContainer, Arrays.asList(
+                new ModuleToolsRenderer.ToolItem(
+                        "Lịch tháng tổng hợp",
+                        "Xem các ngày có lịch, tài chính, học tập và nhật ký.",
+                        R.drawable.ic_calendar,
+                        v -> FeatureNavigator.open(v, R.id.monthCalendarFragment)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Sự kiện lịch",
+                        "Tạo sự kiện, deadline, ưu tiên và nhắc trước.",
+                        R.drawable.ic_calendar,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.PLAN_EVENT)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Mẫu thời gian biểu",
+                        "Lưu mẫu học, làm, ngủ và sao chép nhanh.",
+                        R.drawable.ic_clock,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.PLAN_TEMPLATE)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Dự án và công việc",
+                        "Quản lý deadline, tiến độ, ưu tiên và việc con.",
+                        R.drawable.ic_check_circle,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.PLAN_TASK)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Quản lý nhắc nhở",
+                        "Tạo nhắc một lần, lặp lại, âm thanh và rung.",
+                        R.drawable.ic_bell,
+                        v -> FeatureNavigator.open(v, R.id.reminderManagerFragment))
+        ));
+
+        ModuleToolsRenderer.render(binding.plannerLearningToolsContainer, Arrays.asList(
+                new ModuleToolsRenderer.ToolItem(
+                        "Danh sách môn học",
+                        "Tổ chức môn, tài liệu và mục tiêu giờ học.",
+                        R.drawable.ic_book,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.LEARNING_SUBJECT)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Mục tiêu học tập",
+                        "Theo dõi TOEIC, điểm thi thử và tiến độ.",
+                        R.drawable.ic_chart,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.LEARNING_GOAL)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Lịch sử Pomodoro",
+                        "Xem các phiên 25, 45, 60 phút và mức tập trung.",
+                        R.drawable.ic_clock,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.LEARNING_POMODORO)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Tiến độ thói quen",
+                        "Heatmap, chuỗi hiện tại và chuỗi dài nhất.",
+                        R.drawable.ic_check,
+                        v -> FeatureNavigator.open(v, R.id.habitInsightsFragment)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Thói quen nâng cao",
+                        "Chọn ngày thực hiện, mục tiêu số lần và nhắc riêng.",
+                        R.drawable.ic_check_circle,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.HABIT_PLAN)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Mục tiêu cá nhân",
+                        "Tăng cân, tiết kiệm, học tập và tập luyện.",
+                        R.drawable.ic_star,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.PERSONAL_GOAL))
+        ));
+
+        ModuleToolsRenderer.render(binding.plannerLifeToolsContainer, Arrays.asList(
+                new ModuleToolsRenderer.ToolItem(
+                        "Nhật ký nhiều mục",
+                        "Viết nhiều ghi chú, gắn tag, ảnh và đánh dấu quan trọng.",
+                        R.drawable.ic_edit,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.JOURNAL_ENTRY)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Mai Hoa và Lục Hào",
+                        "Gieo quẻ, luận giải chuyên sâu và lưu lịch sử nghiệm lý.",
+                        R.drawable.ic_book,
+                        v -> FeatureNavigator.open(v, R.id.metaphysicsHomeFragment))
+        ));
     }
 
     private void renderWeekCalendar() {
@@ -310,7 +391,9 @@ public class PlannerFragment extends Fragment {
         currentSchedules = list == null ? new ArrayList<>() : new ArrayList<>(list);
         binding.scheduleContainer.removeAllViews();
         if (list == null || list.isEmpty()) {
-            binding.scheduleContainer.addView(infoText("Chưa có khối thời gian. Thêm giờ học, giờ làm, giờ ngủ hoặc nghỉ ngơi."));
+            binding.scheduleContainer.addView(emptyState(R.drawable.ic_empty_schedule,
+                    "Ngày này chưa có thời gian biểu",
+                    "Nhấn nút + để thêm giờ học, giờ làm, giờ ngủ hoặc nghỉ ngơi."));
             return;
         }
         for (ScheduleBlockEntity block : list) {
@@ -380,7 +463,9 @@ public class PlannerFragment extends Fragment {
     private void renderTasks(List<TaskEntity> list) {
         binding.taskContainer.removeAllViews();
         if (list == null || list.isEmpty()) {
-            binding.taskContainer.addView(infoText("Chưa có việc cần làm trong ngày này."));
+            binding.taskContainer.addView(emptyState(R.drawable.ic_check_circle,
+                    "Chưa có việc cần làm",
+                    "Thêm một việc nhỏ để bắt đầu ngày mới rõ ràng hơn."));
             return;
         }
         for (TaskEntity task : list) {
@@ -460,7 +545,9 @@ public class PlannerFragment extends Fragment {
         if (binding == null) return;
         binding.habitContainer.removeAllViews();
         if (habits.isEmpty()) {
-            binding.habitContainer.addView(infoText("Thêm thói quen đầu tiên để tạo chuỗi tốt mỗi ngày."));
+            binding.habitContainer.addView(emptyState(R.drawable.ic_star,
+                    "Chưa có thói quen",
+                    "Tạo thói quen đầu tiên để bắt đầu chuỗi ngày tích cực."));
             return;
         }
         int accent = ThemeUtils.getPrimaryColor(requireContext(), userStore.getThemeKey());
@@ -775,6 +862,34 @@ public class PlannerFragment extends Fragment {
         TextView tv = textView(value, 14, R.color.on_surface_variant, false);
         setRowPadding(tv);
         return tv;
+    }
+
+    private View emptyState(int iconRes, String titleText, String subtitleText) {
+        LinearLayout root = new LinearLayout(requireContext());
+        root.setOrientation(LinearLayout.VERTICAL);
+        root.setGravity(Gravity.CENTER);
+        root.setPadding(dp(16), dp(18), dp(16), dp(18));
+
+        ImageView icon = new ImageView(requireContext());
+        icon.setImageResource(iconRes);
+        icon.setColorFilter(ThemeUtils.getPrimaryColor(requireContext(), userStore.getThemeKey()));
+        root.addView(icon, new LinearLayout.LayoutParams(dp(58), dp(58)));
+
+        TextView title = textView(titleText, 15, R.color.on_surface, true);
+        title.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams titleParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        titleParams.topMargin = dp(10);
+        root.addView(title, titleParams);
+
+        TextView subtitle = textView(subtitleText, 13, R.color.on_surface_variant, false);
+        subtitle.setGravity(Gravity.CENTER);
+        subtitle.setLineSpacing(0f, 1.12f);
+        LinearLayout.LayoutParams subtitleParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        subtitleParams.topMargin = dp(4);
+        root.addView(subtitle, subtitleParams);
+        return root;
     }
 
     private TextView textView(String text, float size, int colorRes, boolean bold) {

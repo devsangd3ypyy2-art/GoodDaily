@@ -3,126 +3,175 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:paddingBottom="104dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp"
-        android:paddingBottom="110dp">
+        android:paddingBottom="28dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mai Hoa Dịch Số · chuyên sâu"
+            android:text="Mai Hoa Dịch Số"
             android:textColor="@color/on_surface"
-            android:textSize="26sp"
+            android:textSize="27sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Luận theo Thể–Dụng, quẻ hỗ, quẻ biến, khí mùa, chủ đề câu hỏi và vị trí hào động."
-            android:textColor="@color/on_surface_variant" />
+            android:layout_marginTop="5dp"
+            android:lineSpacingExtra="2dp"
+            android:text="Lập quẻ theo ba số hoặc thời gian, sau đó phân tích Thể–Dụng, khí mùa, quẻ hỗ, quẻ biến và chủ đề câu hỏi."
+            android:textColor="@color/on_surface_variant"
+            android:textSize="14sp" />
 
-        <TextView
+        <com.google.android.material.card.MaterialCardView
+            style="@style/GoodDaily.Card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Chủ đề cần xem"
-            android:textColor="@color/on_surface"
-            android:textStyle="bold" />
+            android:layout_marginTop="18dp">
 
-        <Spinner
-            android:id="@+id/spinnerMaiHoaTopic"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginTop="6dp"
-            android:background="@color/surface_variant"
-            android:paddingHorizontal="12dp" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="Câu hỏi cụ thể">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtMaiHoaQuestion"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="3" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:orientation="vertical"
+                android:padding="18dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Số thượng quái">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtMaiHoaUpper"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="numberSigned" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:text="Ý niệm cần xem"
+                    android:textColor="@color/on_surface"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
-            <Space android:layout_width="10dp" android:layout_height="1dp" />
+                <Spinner
+                    android:id="@+id/spinnerMaiHoaTopic"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/surface_variant"
+                    android:paddingHorizontal="12dp" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Số hạ quái">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtMaiHoaLower"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="numberSigned" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+                    android:layout_marginTop="12dp"
+                    android:hint="Câu hỏi cụ thể">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtMaiHoaQuestion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="4"
+                        android:minLines="2" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/GoodDaily.Card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="Số dùng tính hào động">
+            android:layout_marginTop="14dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtMaiHoaMoving"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberSigned" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:orientation="vertical"
+                android:padding="18dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnMaiHoaFromNumbers"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="14dp"
-            android:text="Lập và luận theo ba số" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lập quẻ"
+                    android:textColor="@color/on_surface"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnMaiHoaFromTime"
-            style="@style/Widget.Material3.Button.TonalButton"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="8dp"
-            android:text="Lập và luận theo thời gian hiện tại"
-            app:icon="@drawable/ic_clock" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="Thượng quái">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtMaiHoaUpper"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:gravity="center_vertical"
+                            android:inputType="numberSigned"
+                            android:paddingHorizontal="14dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Space android:layout_width="10dp" android:layout_height="1dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="Hạ quái">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtMaiHoaLower"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:gravity="center_vertical"
+                            android:inputType="numberSigned"
+                            android:paddingHorizontal="14dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="Số dùng tính hào động">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtMaiHoaMoving"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:gravity="center_vertical"
+                        android:inputType="numberSigned"
+                        android:paddingHorizontal="14dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnMaiHoaFromNumbers"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="14dp"
+                    android:maxLines="1"
+                    android:text="Lập và luận theo ba số" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnMaiHoaFromTime"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="8dp"
+                    android:maxLines="1"
+                    android:text="Lập theo thời gian hiện tại"
+                    app:icon="@drawable/ic_clock" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardMaiHoaResult"
@@ -143,74 +192,212 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/on_surface"
-                    android:textSize="19sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvMaiHoaHexagramLines"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Quẻ chủ"
+                            android:textColor="@color/on_surface_variant"
+                            android:textStyle="bold" />
+
+                        <com.sangapp.gooddaily.feature.metaphysics.ui.widget.HexagramView
+                            android:id="@+id/hexagramMaiHoaBase"
+                            android:layout_width="match_parent"
+                            android:layout_height="230dp" />
+                    </LinearLayout>
+
+                    <Space android:layout_width="10dp" android:layout_height="1dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Quẻ biến"
+                            android:textColor="@color/on_surface_variant"
+                            android:textStyle="bold" />
+
+                        <com.sangapp.gooddaily.feature.metaphysics.ui.widget.HexagramView
+                            android:id="@+id/hexagramMaiHoaChanged"
+                            android:layout_width="match_parent"
+                            android:layout_height="230dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipMaiHoaMeta"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:lineSpacingExtra="4dp"
-                    android:textColor="@color/primary"
-                    android:textSize="22sp"
-                    android:typeface="monospace" />
+                    app:chipSpacingHorizontal="6dp"
+                    app:chipSpacingVertical="6dp" />
 
                 <TextView
                     android:id="@+id/tvMaiHoaChanged"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/on_surface_variant" />
-
-                <TextView
-                    android:id="@+id/tvMaiHoaBodyUse"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/on_surface" />
-
-                <TextView
-                    android:id="@+id/tvMaiHoaInterpretation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:background="@color/surface_variant"
-                    android:padding="14dp"
-                    android:textColor="@color/on_surface" />
-
-                <TextView
-                    android:id="@+id/tvMaiHoaTechnical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:textColor="@color/on_surface_variant"
-                    android:typeface="monospace" />
+                    android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/tvMaiHoaTiming"
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/GoodDaily.QuickActionCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Thể–Dụng và Ngũ hành"
+                            android:textColor="@color/on_surface"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvMaiHoaBodyUse"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:lineSpacingExtra="2dp"
+                            android:textColor="@color/on_surface" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/GoodDaily.QuickActionCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:background="@color/surface_variant"
-                    android:padding="14dp"
-                    android:textColor="@color/on_surface" />
+                    app:cardBackgroundColor="@color/primary_container">
 
-                <TextView
-                    android:id="@+id/tvMaiHoaConfidence"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Kết luận trọng tâm"
+                            android:textColor="@color/on_primary_container"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvMaiHoaInterpretation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:lineSpacingExtra="3dp"
+                            android:textColor="@color/on_primary_container" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/GoodDaily.QuickActionCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/primary"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Phân tích chi tiết"
+                            android:textColor="@color/on_surface"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvMaiHoaTechnical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:lineSpacingExtra="2dp"
+                            android:textColor="@color/on_surface_variant" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/GoodDaily.QuickActionCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Ứng kỳ và độ tin cậy"
+                            android:textColor="@color/on_surface"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvMaiHoaTiming"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:lineSpacingExtra="2dp"
+                            android:textColor="@color/on_surface" />
+
+                        <TextView
+                            android:id="@+id/tvMaiHoaConfidence"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/primary"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSaveMaiHoa"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="14dp"
-                    android:text="Lưu toàn bộ luận giải"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="16dp"
+                    android:maxLines="1"
+                    android:text="Lưu quẻ để nghiệm lý"
                     app:icon="@drawable/ic_check" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

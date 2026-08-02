@@ -1,36 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="20dp">
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/tvVerificationSummary"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/on_surface"
-        android:textSize="15sp" />
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:hint="Kết quả thực tế / ghi chú nghiệm lý">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtVerification"
+        <TextView
+            android:id="@+id/tvVerificationSummary"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:gravity="top|start"
-            android:inputType="textMultiLine"
-            android:maxLines="8" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:maxHeight="220dp"
+            android:textColor="@color/on_surface"
+            android:textSize="14sp" />
 
-    <com.google.android.material.materialswitch.MaterialSwitch
-        android:id="@+id/switchVerified"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Đã kiểm chứng" />
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="Kết quả kiểm chứng"
+            android:textColor="@color/on_surface"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleVerificationOutcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:checkedButton="@id/btnOutcomeOther"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnOutcomeAccurate"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="2"
+                android:text="Ứng kỳ đúng"
+                android:textSize="12sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnOutcomeWrong"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="2"
+                android:text="Kết quả sai"
+                android:textSize="12sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnOutcomeOther"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="2"
+                android:text="Có biến khác"
+                android:textSize="12sp" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Mức độ khớp với thực tế"
+                android:textColor="@color/on_surface_variant" />
+
+            <RatingBar
+                android:id="@+id/ratingAccuracy"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:rating="3"
+                android:stepSize="1" />
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:hint="Kết quả thực tế / ghi chú nghiệm lý">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtVerification"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:maxLines="8"
+                android:padding="14dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switchVerified"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Đã hoàn tất kiểm chứng" />
+    </LinearLayout>
+</ScrollView>

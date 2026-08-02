@@ -33,12 +33,15 @@ import com.sangapp.gooddaily.data.local.entity.FinanceCategoryEntity;
 import com.sangapp.gooddaily.data.local.entity.TransactionEntity;
 import com.sangapp.gooddaily.data.local.entity.TransactionAttachmentEntity;
 import com.sangapp.gooddaily.data.local.prefs.LocalUserStore;
+import com.sangapp.gooddaily.feature.FeatureCatalog;
 import com.sangapp.gooddaily.databinding.BottomSheetTransactionBinding;
 import com.sangapp.gooddaily.databinding.DialogBudgetBinding;
 import com.sangapp.gooddaily.databinding.DialogInitialBalanceBinding;
 import com.sangapp.gooddaily.databinding.FragmentFinanceBinding;
 import com.sangapp.gooddaily.notification.FinanceAlertManager;
 import com.sangapp.gooddaily.ui.adapter.TransactionAdapter;
+import com.sangapp.gooddaily.ui.common.FeatureNavigator;
+import com.sangapp.gooddaily.ui.common.ModuleToolsRenderer;
 import com.sangapp.gooddaily.ui.auth.PinLockActivity;
 import com.sangapp.gooddaily.util.DateUtils;
 import com.sangapp.gooddaily.util.AttachmentStore;
@@ -49,6 +52,7 @@ import com.sangapp.gooddaily.viewmodel.FinanceViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Calendar;
@@ -126,6 +130,7 @@ public class FinanceFragment extends Fragment {
         userStore = new LocalUserStore(requireContext());
         hideAmounts = userStore.isHideAmountsEnabled();
         applyTheme();
+        setupFinanceTools();
 
         TransactionAdapter adapter = new TransactionAdapter(new TransactionAdapter.Listener() {
             @Override public void onClick(TransactionEntity entity) { showTransactionSheet(entity.type, entity); }
@@ -189,7 +194,7 @@ public class FinanceFragment extends Fragment {
         binding.btnAddIncome.setOnClickListener(v -> showTransactionSheet("INCOME", null));
         binding.btnAddExpense.setOnClickListener(v -> showTransactionSheet("EXPENSE", null));
         binding.btnEditOpeningBalance.setOnClickListener(v -> androidx.navigation.Navigation.findNavController(v).navigate(R.id.localAccountManagerFragment));
-        binding.btnFinanceAdvanced.setOnClickListener(v -> androidx.navigation.Navigation.findNavController(v).navigate(R.id.featureHubFragment));
+        binding.btnFinanceAdvanced.setOnClickListener(v -> FeatureNavigator.open(v, R.id.financeInsightsFragment));
         binding.cardBudget.setOnClickListener(v -> showBudgetDialog());
         binding.btnExportFinancePdf.setOnClickListener(v -> {
             String stamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm", Locale.US).format(new Date());
@@ -197,6 +202,56 @@ public class FinanceFragment extends Fragment {
         });
         renderBudget();
         scrollToRequestedSection();
+    }
+
+    private void setupFinanceTools() {
+        ModuleToolsRenderer.render(binding.financeToolsContainer, Arrays.asList(
+                new ModuleToolsRenderer.ToolItem(
+                        "Ví và tài khoản tiền",
+                        "Tạo ví local, nhập số dư và chuyển tiền nội bộ.",
+                        R.drawable.ic_finance,
+                        v -> FeatureNavigator.open(v, R.id.localAccountManagerFragment)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Tìm và lọc giao dịch",
+                        "Lọc theo ngày, ví, danh mục và từ khóa.",
+                        R.drawable.ic_search,
+                        v -> FeatureNavigator.open(v, R.id.financeSearchFragment)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Phân tích và báo cáo",
+                        "Biểu đồ, so sánh kỳ, dự báo và xuất dữ liệu.",
+                        R.drawable.ic_chart,
+                        v -> FeatureNavigator.open(v, R.id.financeInsightsFragment)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Giao dịch định kỳ",
+                        "Tiền nhà, Internet, học phí và khoản lặp lại.",
+                        R.drawable.ic_clock,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.FINANCE_RECURRING)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Ngân sách danh mục",
+                        "Đặt hạn mức riêng cho ăn uống, đi lại và học tập.",
+                        R.drawable.ic_finance_alert,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.FINANCE_BUDGET)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Mục tiêu tiết kiệm",
+                        "Theo dõi quỹ dự phòng và tiến độ mục tiêu.",
+                        R.drawable.ic_star,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.FINANCE_SAVING)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Quản lý nợ",
+                        "Tôi nợ ai, ai nợ tôi và tiến độ thanh toán.",
+                        R.drawable.ic_arrow_down,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.FINANCE_DEBT)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Hóa đơn và chứng từ",
+                        "Lưu ảnh hóa đơn, ghi chú và đối soát giao dịch.",
+                        R.drawable.ic_attachment,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.FINANCE_RECEIPT)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Ca chạy và phương tiện",
+                        "Theo dõi doanh thu, lợi nhuận, pin và bảo dưỡng xe.",
+                        R.drawable.ic_arrow_right,
+                        v -> FeatureNavigator.open(v, R.id.driverDashboardFragment))
+        ));
     }
 
     private void scrollToRequestedSection() {

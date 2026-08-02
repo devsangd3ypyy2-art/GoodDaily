@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Trung tâm quản lý"
+            android:text="Tất cả chức năng"
             android:textColor="@color/on_surface"
             android:textSize="28sp"
             android:textStyle="bold" />
@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Tất cả dữ liệu đều được lưu local. Không kết nối dịch vụ tài chính hoặc tài khoản bên ngoài."
+            android:text="Các công cụ chính đã được đặt ngay trong Tài chính, Sức khỏe, Kế hoạch và Cá nhân. Đây là danh mục dự phòng để xem toàn bộ chức năng."
             android:textColor="@color/on_surface_variant"
             android:textSize="14sp" />
 

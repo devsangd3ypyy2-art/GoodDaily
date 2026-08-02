@@ -23,14 +23,18 @@ import com.sangapp.gooddaily.R;
 import com.sangapp.gooddaily.data.local.entity.BodyRecordEntity;
 import com.sangapp.gooddaily.data.local.entity.MealEntity;
 import com.sangapp.gooddaily.data.local.prefs.LocalUserStore;
+import com.sangapp.gooddaily.feature.FeatureCatalog;
 import com.sangapp.gooddaily.databinding.DialogAddBodyBinding;
 import com.sangapp.gooddaily.databinding.DialogAddMealBinding;
 import com.sangapp.gooddaily.databinding.FragmentHealthBinding;
+import com.sangapp.gooddaily.ui.common.FeatureNavigator;
+import com.sangapp.gooddaily.ui.common.ModuleToolsRenderer;
 import com.sangapp.gooddaily.util.DateUtils;
 import com.sangapp.gooddaily.util.AttachmentStore;
 import com.sangapp.gooddaily.util.ThemeUtils;
 import com.sangapp.gooddaily.viewmodel.HealthViewModel;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -65,6 +69,7 @@ public class HealthFragment extends Fragment {
         vm = new ViewModelProvider(this).get(HealthViewModel.class);
         String themeKey = new LocalUserStore(requireContext()).getThemeKey();
         ThemeUtils.tintFilledButton(binding.btnAddBody, requireContext(), themeKey);
+        setupHealthTools();
 
         vm.latestBody().observe(getViewLifecycleOwner(), body -> {
             if (body == null) {
@@ -105,6 +110,46 @@ public class HealthFragment extends Fragment {
             if ("meals".equals(focus)) binding.healthScroll.smoothScrollTo(0, binding.tvMealsSection.getTop());
             else if ("body".equals(focus)) binding.healthScroll.smoothScrollTo(0, binding.tvBodiesSection.getTop());
         });
+    }
+
+    private void setupHealthTools() {
+        ModuleToolsRenderer.render(binding.healthToolsContainer, Arrays.asList(
+                new ModuleToolsRenderer.ToolItem(
+                        "Thực phẩm thường dùng",
+                        "Tạo món mẫu để nhập kcal và dinh dưỡng nhanh hơn.",
+                        R.drawable.ic_book,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.HEALTH_FOOD)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Lượng nước",
+                        "Ghi lượng nước uống và mục tiêu mỗi ngày.",
+                        R.drawable.ic_plus,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.HEALTH_WATER)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Giấc ngủ",
+                        "Theo dõi giờ ngủ, giờ thức và chất lượng giấc ngủ.",
+                        R.drawable.ic_clock,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.HEALTH_SLEEP)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Tâm trạng",
+                        "Ghi cảm xúc, căng thẳng và mức năng lượng.",
+                        R.drawable.ic_star,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.HEALTH_MOOD)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Bài tập",
+                        "Lưu thời gian, số hiệp, số lần và kcal vận động.",
+                        R.drawable.ic_health,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.HEALTH_WORKOUT)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Thuốc và lịch uống",
+                        "Theo dõi liều lượng, số lần và trạng thái đã uống.",
+                        R.drawable.ic_bell,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.HEALTH_MEDICATION)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Số đo cơ thể",
+                        "Theo dõi eo, ngực, tay, chân và các chỉ số bổ sung.",
+                        R.drawable.ic_chart,
+                        v -> FeatureNavigator.openFeature(v, FeatureCatalog.HEALTH_MEASUREMENT))
+        ));
     }
 
     private void renderMacros() {

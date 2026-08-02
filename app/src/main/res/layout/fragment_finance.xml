@@ -285,13 +285,36 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <TextView
+            style="@style/GoodDaily.SectionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="Công cụ tài chính" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Ví tiền, tìm kiếm, báo cáo, tiết kiệm, nợ và ca chạy đều ở ngay trong mục Tài chính."
+            android:textColor="@color/on_surface_variant"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:id="@+id/financeToolsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnFinanceAdvanced"
             style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginTop="14dp"
-            android:text="Tài chính nâng cao và báo cáo"
+            android:text="Mở danh mục toàn bộ công cụ"
+            android:visibility="gone"
             app:icon="@drawable/ic_more_grid" />
 
         <LinearLayout

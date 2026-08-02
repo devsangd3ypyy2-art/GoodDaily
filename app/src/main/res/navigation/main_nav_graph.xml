@@ -42,7 +42,7 @@
     <fragment
         android:id="@+id/featureHubFragment"
         android:name="com.sangapp.gooddaily.ui.featurehub.FeatureHubFragment"
-        android:label="Trung tâm quản lý" />
+        android:label="Tất cả chức năng" />
 
     <fragment
         android:id="@+id/featureManagerFragment"

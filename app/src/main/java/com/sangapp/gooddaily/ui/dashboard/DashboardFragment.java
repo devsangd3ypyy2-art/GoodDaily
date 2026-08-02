@@ -18,11 +18,14 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.sangapp.gooddaily.R;
 import com.sangapp.gooddaily.data.local.prefs.LocalUserStore;
 import com.sangapp.gooddaily.databinding.FragmentDashboardBinding;
+import com.sangapp.gooddaily.ui.common.FeatureNavigator;
+import com.sangapp.gooddaily.ui.common.ModuleToolsRenderer;
 import com.sangapp.gooddaily.util.DateUtils;
 import com.sangapp.gooddaily.util.MoneyUtils;
 import com.sangapp.gooddaily.util.ThemeUtils;
 import com.sangapp.gooddaily.viewmodel.DashboardViewModel;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -59,6 +62,7 @@ public class DashboardFragment extends Fragment {
         loadAvatar(userStore, accent);
 
         updateHeader(userStore, accent);
+        setupQuickTools();
 
         vm.totalBalance().observe(getViewLifecycleOwner(), value -> {
             totalBalance = value == null ? 0 : value;
@@ -111,12 +115,37 @@ public class DashboardFragment extends Fragment {
         binding.cardDashboardAvatar.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.profileFragment));
         ThemeUtils.tintTonalButton(binding.btnOpenFeatureHub, requireContext(), userStore.getThemeKey());
-        binding.btnOpenFeatureHub.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.featureHubFragment));
+        binding.btnOpenFeatureHub.setOnClickListener(v -> FeatureNavigator.open(v, R.id.globalSearchFragment));
         binding.btnCustomizeDashboard.setOnClickListener(v -> showDashboardCustomizer(userStore));
         applyDashboardVisibility(userStore);
 
         binding.getRoot().setAlpha(0f);
         binding.getRoot().animate().alpha(1f).setDuration(220L).start();
+    }
+
+    private void setupQuickTools() {
+        ModuleToolsRenderer.render(binding.dashboardQuickToolsContainer, Arrays.asList(
+                new ModuleToolsRenderer.ToolItem(
+                        "Ca chạy",
+                        "Doanh thu, lợi nhuận và phương tiện.",
+                        R.drawable.ic_arrow_right,
+                        v -> FeatureNavigator.open(v, R.id.driverDashboardFragment)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Lịch tháng",
+                        "Xem toàn bộ lịch và ngày bận.",
+                        R.drawable.ic_calendar,
+                        v -> FeatureNavigator.open(v, R.id.monthCalendarFragment)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Báo cáo sức khỏe",
+                        "Biểu đồ và tổng hợp tuần, tháng, năm.",
+                        R.drawable.ic_health,
+                        v -> FeatureNavigator.open(v, R.id.healthReportFragment)),
+                new ModuleToolsRenderer.ToolItem(
+                        "Dịch học",
+                        "Mai Hoa, Lục Hào và lịch sử nghiệm lý.",
+                        R.drawable.ic_book,
+                        v -> FeatureNavigator.open(v, R.id.metaphysicsHomeFragment))
+        ));
     }
 
     private void updateHeader(LocalUserStore store, int accent) {

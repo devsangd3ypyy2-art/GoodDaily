@@ -65,4 +65,16 @@
     <color name="schedule_other">#402B3B</color>
     <color name="schedule_other_text">#F1D3E9</color>
     <color name="busy_dot">#FF8580</color>
+
+    <!-- Hexagram and five-element visualization -->
+    <color name="hexagram_line">#E8ECEF</color>
+    <color name="hexagram_moving_line">#FFB070</color>
+    <color name="hexagram_placeholder">#68727C</color>
+    <color name="element_wood">#81C784</color>
+    <color name="element_fire">#EF9A9A</color>
+    <color name="element_earth">#E6B566</color>
+    <color name="element_metal">#B0BEC5</color>
+    <color name="element_water">#90CAF9</color>
+    <color name="coin_gold">#E4BD55</color>
+    <color name="coin_gold_dark">#352600</color>
 </resources>
