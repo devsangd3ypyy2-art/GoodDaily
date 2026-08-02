@@ -7,6 +7,7 @@ import android.graphics.Color;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.ColorUtils;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
@@ -66,6 +67,11 @@ public final class ThemeUtils {
         }
     }
 
+    @ColorInt
+    public static int getContrastingTextColor(@ColorInt int background) {
+        return ColorUtils.calculateLuminance(background) > 0.46 ? Color.BLACK : Color.WHITE;
+    }
+
     public static ColorStateList createBottomNavColorStateList(@NonNull Context context, @NonNull String themeKey) {
         int[][] states = new int[][] {
                 new int[] { android.R.attr.state_checked },
@@ -84,26 +90,29 @@ public final class ThemeUtils {
         view.setItemTextColor(tint);
         view.setItemActiveIndicatorEnabled(true);
         view.setItemActiveIndicatorColor(ColorStateList.valueOf(getContainerColor(context, themeKey)));
-        view.setItemRippleColor(ColorStateList.valueOf(adjustAlpha(getPrimaryColor(context, themeKey), 0.12f)));
+        view.setItemRippleColor(ColorStateList.valueOf(adjustAlpha(getPrimaryColor(context, themeKey), 0.18f)));
     }
 
     public static void tintSwitch(@NonNull MaterialSwitch view, @NonNull Context context, @NonNull String themeKey) {
         int accent = getPrimaryColor(context, themeKey);
         int container = getContainerColor(context, themeKey);
         int outline = ContextCompat.getColor(context, R.color.outline);
+        int surface = ContextCompat.getColor(context, R.color.surface);
 
         int[][] states = new int[][]{
                 new int[]{android.R.attr.state_checked},
                 new int[]{}
         };
-        view.setThumbTintList(new ColorStateList(states, new int[]{accent, Color.WHITE}));
+        view.setThumbTintList(new ColorStateList(states, new int[]{accent, surface}));
         view.setTrackTintList(new ColorStateList(states, new int[]{container, outline}));
     }
 
     public static void tintFilledButton(@NonNull MaterialButton button, @NonNull Context context, @NonNull String themeKey) {
-        button.setBackgroundTintList(ColorStateList.valueOf(getPrimaryColor(context, themeKey)));
-        button.setTextColor(Color.WHITE);
-        button.setIconTint(ColorStateList.valueOf(Color.WHITE));
+        int accent = getPrimaryColor(context, themeKey);
+        int onAccent = getContrastingTextColor(accent);
+        button.setBackgroundTintList(ColorStateList.valueOf(accent));
+        button.setTextColor(onAccent);
+        button.setIconTint(ColorStateList.valueOf(onAccent));
     }
 
     public static void tintTonalButton(@NonNull MaterialButton button, @NonNull Context context, @NonNull String themeKey) {

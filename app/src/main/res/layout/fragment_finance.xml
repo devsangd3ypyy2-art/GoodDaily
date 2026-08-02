@@ -81,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tổng số tiền hiện có"
-                    android:textColor="#D9D5CF"
+                    android:textColor="@color/on_primary_muted"
                     android:textSize="13sp" />
 
                 <TextView
@@ -101,7 +101,7 @@
                     android:layout_marginTop="12dp"
                     android:lineSpacingExtra="4dp"
                     android:text="Tiền mặt: 0 ₫\nNgân hàng: 0 ₫\nVí điện tử: 0 ₫"
-                    android:textColor="#E7E1D8"
+                    android:textColor="@color/on_primary_soft"
                     android:textSize="13sp" />
 
                 <com.google.android.material.button.MaterialButton

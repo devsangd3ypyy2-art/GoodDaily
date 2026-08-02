@@ -25,8 +25,8 @@
         <item name="android:windowBackground">@color/background</item>
         <item name="android:navigationBarColor">@color/surface</item>
         <item name="android:statusBarColor">@color/background</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
         <item name="android:forceDarkAllowed">false</item>
         <item name="android:fontFamily">sans</item>
     </style>

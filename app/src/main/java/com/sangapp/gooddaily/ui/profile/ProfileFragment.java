@@ -31,6 +31,7 @@ import com.sangapp.gooddaily.databinding.DialogChangePasswordBinding;
 import com.sangapp.gooddaily.databinding.FragmentProfileBinding;
 import com.sangapp.gooddaily.notification.ReminderScheduler;
 import com.sangapp.gooddaily.ui.auth.AuthActivity;
+import com.sangapp.gooddaily.util.AppearanceUtils;
 import com.sangapp.gooddaily.util.ThemeUtils;
 import com.sangapp.gooddaily.viewmodel.ReminderViewModel;
 
@@ -109,6 +110,7 @@ public class ProfileFragment extends Fragment {
 
         applyAppearance();
         setupThemeSelection();
+        setupDisplayMode();
 
         reminderVm.enabledCount().observe(getViewLifecycleOwner(), count ->
                 binding.tvCustomReminderCount.setText((count == null ? 0 : count) + " nhắc nhở đang bật"));
@@ -184,6 +186,24 @@ public class ProfileFragment extends Fragment {
         binding.themeOrange.setOnClickListener(v -> saveTheme(ThemeUtils.THEME_ORANGE));
         binding.themePurple.setOnClickListener(v -> saveTheme(ThemeUtils.THEME_PURPLE));
         updateThemeSelection(userStore.getThemeKey());
+    }
+
+    private void setupDisplayMode() {
+        String mode = userStore.getAppearanceMode();
+        int checkedId = R.id.btnModeSystem;
+        if (AppearanceUtils.MODE_LIGHT.equals(mode)) checkedId = R.id.btnModeLight;
+        else if (AppearanceUtils.MODE_DARK.equals(mode)) checkedId = R.id.btnModeDark;
+        binding.displayModeToggle.check(checkedId);
+
+        binding.displayModeToggle.addOnButtonCheckedListener((group, buttonId, isChecked) -> {
+            if (!isChecked) return;
+            String selected = AppearanceUtils.MODE_SYSTEM;
+            if (buttonId == R.id.btnModeLight) selected = AppearanceUtils.MODE_LIGHT;
+            else if (buttonId == R.id.btnModeDark) selected = AppearanceUtils.MODE_DARK;
+            if (selected.equals(userStore.getAppearanceMode())) return;
+            userStore.setAppearanceMode(selected);
+            AppearanceUtils.apply(selected);
+        });
     }
 
     private void saveTheme(String themeKey) {

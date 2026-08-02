@@ -51,6 +51,7 @@
 ./app/src/main/java/com/sangapp/gooddaily/ui/reminder/ReminderManagerFragment.java
 ./app/src/main/java/com/sangapp/gooddaily/ui/widget/WeeklyBarChartView.java
 ./app/src/main/java/com/sangapp/gooddaily/util/AppExecutors.java
+./app/src/main/java/com/sangapp/gooddaily/util/AppearanceUtils.java
 ./app/src/main/java/com/sangapp/gooddaily/util/DateUtils.java
 ./app/src/main/java/com/sangapp/gooddaily/util/LunarCalendarUtils.java
 ./app/src/main/java/com/sangapp/gooddaily/util/MoneyUtils.java
@@ -117,6 +118,8 @@
 ./app/src/main/res/layout/item_transaction.xml
 ./app/src/main/res/menu/bottom_nav_menu.xml
 ./app/src/main/res/navigation/main_nav_graph.xml
+./app/src/main/res/values-night/colors.xml
+./app/src/main/res/values-night/themes.xml
 ./app/src/main/res/values/colors.xml
 ./app/src/main/res/values/dimens.xml
 ./app/src/main/res/values/strings.xml

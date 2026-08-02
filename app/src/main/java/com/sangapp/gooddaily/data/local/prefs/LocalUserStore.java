@@ -19,6 +19,7 @@ public class LocalUserStore {
     public String getDisplayName() { return prefs.getString("display_name", "Người dùng"); }
     public boolean isReminderEnabled() { return prefs.getBoolean("reminder_enabled", false); }
     public String getThemeKey() { return prefs.getString("theme_key", "green"); }
+    public String getAppearanceMode() { return prefs.getString("appearance_mode", "system"); }
     public double getMonthlyBudget() { return Double.longBitsToDouble(prefs.getLong("monthly_budget", Double.doubleToRawLongBits(0))); }
     public boolean isFinancialAlertEnabled() { return prefs.getBoolean("financial_alert_enabled", true); }
     public boolean isHideAmountsEnabled() { return prefs.getBoolean("hide_amounts", false); }
@@ -62,6 +63,7 @@ public class LocalUserStore {
     public void logout() { prefs.edit().putBoolean("logged_in", false).apply(); }
     public void setReminderEnabled(boolean enabled) { prefs.edit().putBoolean("reminder_enabled", enabled).apply(); }
     public void setThemeKey(String key) { prefs.edit().putString("theme_key", key).apply(); }
+    public void setAppearanceMode(String mode) { prefs.edit().putString("appearance_mode", mode == null ? "system" : mode).apply(); }
     public void setMonthlyBudget(double amount) { prefs.edit().putLong("monthly_budget", Double.doubleToRawLongBits(Math.max(0, amount))).apply(); }
     public void setFinancialAlertEnabled(boolean enabled) { prefs.edit().putBoolean("financial_alert_enabled", enabled).apply(); }
     public void setHideAmountsEnabled(boolean enabled) { prefs.edit().putBoolean("hide_amounts", enabled).apply(); }

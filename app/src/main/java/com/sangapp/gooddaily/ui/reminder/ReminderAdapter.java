@@ -1,6 +1,5 @@
 package com.sangapp.gooddaily.ui.reminder;
 
-import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -72,10 +71,8 @@ public class ReminderAdapter extends ListAdapter<ReminderEntity, ReminderAdapter
             int accent = ThemeUtils.getPrimaryColor(binding.getRoot().getContext(), theme);
             binding.iconBox.setCardBackgroundColor(accent);
             binding.imgCategory.setImageResource(categoryIcon(item.category));
-            binding.switchEnabled.setThumbTintList(new ColorStateList(
-                    new int[][]{new int[]{android.R.attr.state_checked}, new int[]{}},
-                    new int[]{accent, android.graphics.Color.WHITE}
-            ));
+            binding.imgCategory.setColorFilter(ThemeUtils.getContrastingTextColor(accent));
+            ThemeUtils.tintSwitch(binding.switchEnabled, binding.getRoot().getContext(), theme);
 
             binding.tvTitle.setText(item.title);
             binding.tvDescription.setText(item.description == null || item.description.trim().isEmpty()

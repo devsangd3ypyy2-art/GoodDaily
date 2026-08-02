@@ -37,7 +37,7 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
-            app:cardBackgroundColor="@color/primary"
+            app:cardBackgroundColor="@color/primary_strong"
             app:cardCornerRadius="26dp"
             app:cardElevation="2dp">
 
@@ -56,7 +56,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="46dp"
                         android:layout_height="46dp"
-                        app:cardBackgroundColor="#33FFFFFF"
+                        app:cardBackgroundColor="@color/primary_glass"
                         app:cardCornerRadius="15dp"
                         app:cardElevation="0dp">
 
@@ -131,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="13dp"
                     android:text="Chạm để xem tài khoản, giao dịch và thống kê"
-                    android:textColor="#DFFFFFFF"
+                    android:textColor="@color/on_primary_muted"
                     android:textSize="12sp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -174,7 +174,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="44dp"
                         android:layout_height="44dp"
-                        app:cardBackgroundColor="#FBE4D4"
+                        app:cardBackgroundColor="@color/warm_soft_container"
                         app:cardCornerRadius="14dp"
                         app:cardElevation="0dp">
 
@@ -343,7 +343,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    app:cardBackgroundColor="#FDE1E4"
+                    app:cardBackgroundColor="@color/alert_soft_container"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp">
 
@@ -352,7 +352,7 @@
                         android:layout_height="match_parent"
                         android:padding="12dp"
                         android:src="@drawable/ic_health"
-                        app:tint="#A83F52" />
+                        app:tint="@color/alert_soft_icon" />
                 </com.google.android.material.card.MaterialCardView>
 
                 <LinearLayout

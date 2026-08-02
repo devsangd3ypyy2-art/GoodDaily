@@ -1,24 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Core light palette -->
     <color name="primary">#2E7D5B</color>
+    <color name="primary_strong">#2E7D5B</color>
     <color name="on_primary">#FFFFFF</color>
     <color name="primary_container">#B7F3D6</color>
     <color name="on_primary_container">#0B3B28</color>
     <color name="secondary">#556B5F</color>
+    <color name="on_secondary">#FFFFFF</color>
+    <color name="secondary_container">#DDE7DF</color>
+    <color name="on_secondary_container">#18251D</color>
+
     <color name="background">#F6F4EF</color>
+    <color name="on_background">#1F1B16</color>
     <color name="surface">#FFFFFF</color>
     <color name="surface_variant">#ECE7DF</color>
     <color name="on_surface">#1F1B16</color>
     <color name="on_surface_variant">#6E665C</color>
     <color name="outline">#D2C8BA</color>
+
     <color name="income">#17864B</color>
     <color name="income_container">#D9F2E3</color>
     <color name="expense">#C53C3C</color>
     <color name="expense_container">#F8DEDE</color>
     <color name="warning">#B26A00</color>
+
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
 
+    <!-- Reusable overlays/text on strong colored cards -->
+    <color name="on_primary_soft">#E7FFFFFF</color>
+    <color name="on_primary_muted">#DFFFFFFF</color>
+    <color name="primary_glass">#33FFFFFF</color>
+    <color name="warm_soft_container">#FBE4D4</color>
+    <color name="alert_soft_container">#FDE1E4</color>
+    <color name="alert_soft_icon">#A83F52</color>
+
+    <!-- User-selectable accents -->
     <color name="theme_green">#6E8B3D</color>
     <color name="theme_green_container">#E2EDC8</color>
     <color name="theme_green_on_container">#293600</color>
@@ -34,6 +53,8 @@
     <color name="theme_purple">#7A4CA2</color>
     <color name="theme_purple_container">#EBDCFA</color>
     <color name="theme_purple_on_container">#2F114A</color>
+
+    <!-- Schedule/timeline categories -->
     <color name="schedule_work">#DDEED6</color>
     <color name="schedule_work_text">#315225</color>
     <color name="schedule_study">#DCEBFA</color>
