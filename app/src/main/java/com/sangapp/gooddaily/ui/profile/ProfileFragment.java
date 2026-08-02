@@ -107,6 +107,8 @@ public class ProfileFragment extends Fragment {
         binding.switchReminder.setChecked(userStore.isReminderEnabled());
         binding.switchFinancialAlert.setChecked(userStore.isFinancialAlertEnabled());
         binding.switchHideAmounts.setChecked(userStore.isHideAmountsEnabled());
+        binding.switchDynamicColors.setChecked(userStore.isDynamicColorsEnabled());
+        binding.tvNotificationToneSummary.setText("Âm báo: " + userStore.getNotificationSoundName());
 
         applyAppearance();
         setupThemeSelection();
@@ -130,10 +132,17 @@ public class ProfileFragment extends Fragment {
             userStore.setHideAmountsEnabled(checked);
             toast(checked ? "Đã ẩn số tiền trên Tổng quan và Tài chính." : "Đã hiện lại số tiền.");
         });
+        binding.switchDynamicColors.setOnCheckedChangeListener((button, checked) -> {
+            if (checked == userStore.isDynamicColorsEnabled()) return;
+            userStore.setDynamicColorsEnabled(checked);
+            toast(checked ? "Đã bật màu Material You." : "Đã quay lại bảng màu Good Daily.");
+            requireActivity().recreate();
+        });
 
         View.OnClickListener openReminders = v -> Navigation.findNavController(v).navigate(R.id.reminderManagerFragment);
         binding.rowCustomReminders.setOnClickListener(openReminders);
         binding.btnNotificationSettings.setOnClickListener(openReminders);
+        binding.cardMusicCenter.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.musicFragment));
 
         binding.cardExport.setOnClickListener(v -> {
             String date = new SimpleDateFormat("yyyy-MM-dd_HH-mm", Locale.US).format(new Date());
@@ -229,6 +238,7 @@ public class ProfileFragment extends Fragment {
         binding.importIconBox.setCardBackgroundColor(accentContainer);
         binding.sampleIconBox.setCardBackgroundColor(accentContainer);
         binding.paletteIconBox.setCardBackgroundColor(accentContainer);
+        binding.musicIconBox.setCardBackgroundColor(accentContainer);
 
         if (userStore.getAvatarUri().isEmpty()) binding.imgAvatar.setColorFilter(accent);
         else binding.imgAvatar.clearColorFilter();
@@ -238,10 +248,23 @@ public class ProfileFragment extends Fragment {
         binding.imgImport.setColorFilter(accent);
         binding.imgSample.setColorFilter(accent);
         binding.imgPalette.setColorFilter(accent);
+        binding.imgMusicCenter.setColorFilter(accent);
+
+        boolean dynamic = userStore.isDynamicColorsEnabled();
+        float paletteAlpha = dynamic ? 0.42f : 1f;
+        binding.themeGreen.setAlpha(paletteAlpha);
+        binding.themeBlue.setAlpha(paletteAlpha);
+        binding.themeOrange.setAlpha(paletteAlpha);
+        binding.themePurple.setAlpha(paletteAlpha);
+        binding.themeGreen.setEnabled(!dynamic);
+        binding.themeBlue.setEnabled(!dynamic);
+        binding.themeOrange.setEnabled(!dynamic);
+        binding.themePurple.setEnabled(!dynamic);
 
         ThemeUtils.tintSwitch(binding.switchReminder, requireContext(), themeKey);
         ThemeUtils.tintSwitch(binding.switchFinancialAlert, requireContext(), themeKey);
         ThemeUtils.tintSwitch(binding.switchHideAmounts, requireContext(), themeKey);
+        ThemeUtils.tintSwitch(binding.switchDynamicColors, requireContext(), themeKey);
         ThemeUtils.tintTonalButton(binding.btnNotificationSettings, requireContext(), themeKey);
     }
 
@@ -341,6 +364,14 @@ public class ProfileFragment extends Fragment {
 
     private void toast(String message) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (binding != null && userStore != null) {
+            binding.tvNotificationToneSummary.setText("Âm báo: " + userStore.getNotificationSoundName());
+        }
     }
 
     @Override

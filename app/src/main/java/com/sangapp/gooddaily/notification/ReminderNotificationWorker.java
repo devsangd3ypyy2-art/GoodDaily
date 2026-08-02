@@ -1,11 +1,9 @@
 package com.sangapp.gooddaily.notification;
 
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -34,16 +32,12 @@ public class ReminderNotificationWorker extends Worker {
         ReminderEntity reminder = db.reminderDao().getByIdSync(id);
         if (reminder == null || !reminder.enabled) return Result.success();
 
-        String channelId = "custom_reminders";
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(
-                    channelId,
-                    "Nhắc nhở cá nhân",
-                    NotificationManager.IMPORTANCE_HIGH
-            );
-            channel.setDescription("Thông báo lịch, học tập, sức khỏe và tài chính của Good Daily");
-            context.getSystemService(NotificationManager.class).createNotificationChannel(channel);
-        }
+        String channelId = NotificationSoundManager.ensureChannel(
+                context,
+                "custom_reminders",
+                "Nhắc nhở cá nhân",
+                "Thông báo lịch, học tập, sức khỏe và tài chính của Good Daily",
+                NotificationManager.IMPORTANCE_HIGH);
 
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -54,18 +48,18 @@ public class ReminderNotificationWorker extends Worker {
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(reminder.title == null || reminder.title.trim().isEmpty() ? "Good Daily" : reminder.title)
+                .setContentText(reminder.description == null || reminder.description.trim().isEmpty()
+                        ? "Đã đến thời gian bạn đặt lịch."
+                        : reminder.description)
+                .setContentIntent(pendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+        NotificationSoundManager.applySoundForLegacy(context, builder);
         try {
-            NotificationManagerCompat.from(context).notify((int) (3000 + id),
-                    new NotificationCompat.Builder(context, channelId)
-                            .setSmallIcon(R.drawable.ic_notification)
-                            .setContentTitle(reminder.title == null || reminder.title.trim().isEmpty() ? "Good Daily" : reminder.title)
-                            .setContentText(reminder.description == null || reminder.description.trim().isEmpty()
-                                    ? "Đã đến thời gian bạn đặt lịch."
-                                    : reminder.description)
-                            .setContentIntent(pendingIntent)
-                            .setPriority(NotificationCompat.PRIORITY_HIGH)
-                            .setAutoCancel(true)
-                            .build());
+            NotificationManagerCompat.from(context).notify((int) (3000 + id), builder.build());
         } catch (SecurityException ignored) {
             // Người dùng chưa cấp quyền thông báo.
         }

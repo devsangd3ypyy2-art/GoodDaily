@@ -57,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="Theo dõi số tiền hiện có, thu chi và lịch sử theo thời gian"
+                    android:text="Nhập và theo dõi thủ công · không kết nối tài khoản ngân hàng"
                     android:textColor="@color/on_surface_variant"
                     android:textSize="13sp" />
             </LinearLayout>

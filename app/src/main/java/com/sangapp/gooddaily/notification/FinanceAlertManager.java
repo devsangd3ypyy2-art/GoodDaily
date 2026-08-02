@@ -1,9 +1,7 @@
 package com.sangapp.gooddaily.notification;
 
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -33,24 +31,24 @@ public final class FinanceAlertManager {
         if (lastLevel >= level) return;
         prefs.edit().putInt("level_" + monthKey, level).apply();
 
-        String channelId = "finance_alerts";
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(channelId, "Cảnh báo tài chính", NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription("Cảnh báo khi chi tiêu gần hoặc vượt ngân sách tháng");
-            context.getSystemService(NotificationManager.class).createNotificationChannel(channel);
-        }
+        String channelId = NotificationSoundManager.ensureChannel(
+                context,
+                "finance_alerts",
+                "Cảnh báo tài chính",
+                "Cảnh báo khi chi tiêu gần hoặc vượt ngân sách tháng",
+                NotificationManager.IMPORTANCE_HIGH);
 
         String title = level >= 100 ? "Đã vượt ngân sách tháng" : "Chi tiêu đã đạt " + level + "% ngân sách";
         String message = "Đã chi " + MoneyUtils.format(monthExpense) + " trên hạn mức " + MoneyUtils.format(budget) + ".";
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(R.drawable.ic_finance_alert)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+        NotificationSoundManager.applySoundForLegacy(context, builder);
         try {
-            NotificationManagerCompat.from(context).notify(4100 + level,
-                    new NotificationCompat.Builder(context, channelId)
-                            .setSmallIcon(R.drawable.ic_finance_alert)
-                            .setContentTitle(title)
-                            .setContentText(message)
-                            .setPriority(NotificationCompat.PRIORITY_HIGH)
-                            .setAutoCancel(true)
-                            .build());
+            NotificationManagerCompat.from(context).notify(4100 + level, builder.build());
         } catch (SecurityException ignored) {
             // Chưa cấp quyền thông báo.
         }

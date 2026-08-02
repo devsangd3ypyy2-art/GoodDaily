@@ -30,6 +30,11 @@
         android:label="Cá nhân" />
 
     <fragment
+        android:id="@+id/musicFragment"
+        android:name="com.sangapp.gooddaily.ui.music.MusicFragment"
+        android:label="Âm thanh và nhạc" />
+
+    <fragment
         android:id="@+id/reminderManagerFragment"
         android:name="com.sangapp.gooddaily.ui.reminder.ReminderManagerFragment"
         android:label="Quản lý thông báo" />

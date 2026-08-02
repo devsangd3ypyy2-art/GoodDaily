@@ -7,6 +7,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.color.DynamicColors;
+
 import com.sangapp.gooddaily.data.local.prefs.LocalUserStore;
 import com.sangapp.gooddaily.databinding.ActivityAuthBinding;
 import com.sangapp.gooddaily.ui.MainActivity;
@@ -19,6 +21,7 @@ public class AuthActivity extends AppCompatActivity {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         userStore = new LocalUserStore(this);
+        if (userStore.isDynamicColorsEnabled()) DynamicColors.applyToActivityIfAvailable(this);
         if (userStore.isLoggedIn()) {
             openMain();
             return;

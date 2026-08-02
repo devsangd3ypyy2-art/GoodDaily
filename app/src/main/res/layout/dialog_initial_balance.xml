@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nhập đúng số tiền bạn đang có hiện tại. Good Daily sẽ tự cân chỉnh số dư nền mà không làm mất lịch sử thu chi."
+        android:text="Nhập thủ công số tiền bạn đang có. Good Daily không kết nối ngân hàng hay ví điện tử và sẽ không làm mất lịch sử thu chi."
         android:textColor="@color/on_surface_variant" />
 
     <com.google.android.material.textfield.TextInputLayout

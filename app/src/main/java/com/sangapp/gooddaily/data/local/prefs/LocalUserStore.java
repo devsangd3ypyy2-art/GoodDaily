@@ -25,6 +25,11 @@ public class LocalUserStore {
     public boolean isHideAmountsEnabled() { return prefs.getBoolean("hide_amounts", false); }
     public String getAvatarUri() { return prefs.getString("avatar_uri", ""); }
     public int getWeeklyVocabularyGoal() { return prefs.getInt("weekly_vocabulary_goal", 70); }
+    public String getMusicUri() { return prefs.getString("music_uri", ""); }
+    public String getMusicName() { return prefs.getString("music_name", "Chưa chọn bài hát"); }
+    public String getNotificationSoundUri() { return prefs.getString("notification_sound_uri", ""); }
+    public String getNotificationSoundName() { return prefs.getString("notification_sound_name", "Âm thanh mặc định"); }
+    public boolean isDynamicColorsEnabled() { return prefs.getBoolean("dynamic_colors_enabled", false); }
 
     public boolean register(String displayName, String username, String password) {
         if (displayName.trim().isEmpty() || username.trim().isEmpty() || password.length() < 4) return false;
@@ -69,4 +74,17 @@ public class LocalUserStore {
     public void setHideAmountsEnabled(boolean enabled) { prefs.edit().putBoolean("hide_amounts", enabled).apply(); }
     public void setAvatarUri(String uri) { prefs.edit().putString("avatar_uri", uri == null ? "" : uri).apply(); }
     public void setWeeklyVocabularyGoal(int value) { prefs.edit().putInt("weekly_vocabulary_goal", Math.max(1, value)).apply(); }
+    public void setMusic(String uri, String name) {
+        prefs.edit()
+                .putString("music_uri", uri == null ? "" : uri)
+                .putString("music_name", name == null || name.trim().isEmpty() ? "Bài hát đã chọn" : name.trim())
+                .apply();
+    }
+    public void setNotificationSound(String uri, String name) {
+        prefs.edit()
+                .putString("notification_sound_uri", uri == null ? "" : uri)
+                .putString("notification_sound_name", name == null || name.trim().isEmpty() ? "Âm thanh mặc định" : name.trim())
+                .apply();
+    }
+    public void setDynamicColorsEnabled(boolean enabled) { prefs.edit().putBoolean("dynamic_colors_enabled", enabled).apply(); }
 }

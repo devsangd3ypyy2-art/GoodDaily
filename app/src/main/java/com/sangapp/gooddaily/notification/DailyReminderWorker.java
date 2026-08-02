@@ -1,9 +1,7 @@
 package com.sangapp.gooddaily.notification;
 
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -18,19 +16,22 @@ public class DailyReminderWorker extends Worker {
 
     @NonNull @Override public Result doWork() {
         Context context = getApplicationContext();
-        String channelId = "daily_summary";
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(channelId, "Nhắc nhở hằng ngày", NotificationManager.IMPORTANCE_DEFAULT);
-            context.getSystemService(NotificationManager.class).createNotificationChannel(channel);
-        }
+        String channelId = NotificationSoundManager.ensureChannel(
+                context,
+                "daily_summary",
+                "Nhắc nhở hằng ngày",
+                "Nhắc tổng kết và ghi lại hoạt động mỗi ngày",
+                NotificationManager.IMPORTANCE_DEFAULT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle("Good Daily")
+                .setContentText("Hãy ghi lại chi tiêu, sức khỏe và việc bạn đã hoàn thành hôm nay.")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
+        NotificationSoundManager.applySoundForLegacy(context, builder);
         try {
-            NotificationManagerCompat.from(context).notify(2001,
-                    new NotificationCompat.Builder(context, channelId)
-                            .setSmallIcon(R.drawable.ic_notification)
-                            .setContentTitle("Good Daily")
-                            .setContentText("Hãy ghi lại chi tiêu, sức khỏe và việc bạn đã hoàn thành hôm nay.")
-                            .setAutoCancel(true)
-                            .build());
+            NotificationManagerCompat.from(context).notify(2001, builder.build());
         } catch (SecurityException ignored) {
             // Người dùng chưa cấp quyền thông báo.
         }

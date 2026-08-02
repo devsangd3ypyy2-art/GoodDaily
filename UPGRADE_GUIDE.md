@@ -1,11 +1,59 @@
-# Cập nhật Good Daily v1.3.2
+# Cập nhật Good Daily lên v1.4.0
 
-1. Trong bản cũ, xuất JSON dự phòng tại Cá nhân → Xuất dữ liệu.
-2. Không Uninstall app và không Clear Data.
-3. Giải nén ZIP mới.
-4. Mở thư mục có trực tiếp `app`, `gradle`, `build.gradle`, `settings.gradle`.
-5. Chờ Gradle Sync.
-6. Chọn Build → Clean Project, sau đó Run.
-7. Vào Cá nhân → Chế độ hiển thị để chọn Theo máy, Sáng hoặc Tối.
+## Cách an toàn nhất
 
-Bản này không đổi cấu trúc Room nên không cần migration mới và dữ liệu cũ vẫn được giữ lại.
+1. Mở bản Good Daily hiện tại.
+2. Vào `Cá nhân → Xuất JSON` để tạo một file dự phòng.
+3. Không gỡ cài đặt ứng dụng trên máy ảo/điện thoại.
+4. Không chọn Clear Data.
+5. Giải nén `GoodDaily_v1.4.0_music_notifications_ui.zip`.
+6. Mở đúng thư mục có trực tiếp:
+
+```text
+app
+gradle
+build.gradle
+settings.gradle
+gradlew
+gradlew.bat
+```
+
+7. Trong Android Studio chạy:
+
+```text
+Build → Clean Project
+Build → Rebuild Project
+```
+
+8. Chạy app trên đúng thiết bị trước đó.
+
+## Dữ liệu có được giữ không?
+
+Có. Bản này giữ nguyên:
+
+```text
+applicationId: com.sangapp.gooddaily
+Room database: good_daily_database
+Room version: 3
+```
+
+Bài hát, âm báo, avatar và tùy chọn giao diện được lưu trong SharedPreferences. File âm thanh/ảnh được chọn bằng URI có quyền đọc lâu dài từ Android.
+
+## Đưa code mới vào thư mục GitHub chính
+
+Giữ một thư mục Git chính, sau đó chép code mới vào nhưng không đè `.git`, `.gradle`, `.idea`, `build` và `local.properties`.
+
+Ví dụ PowerShell:
+
+```powershell
+robocopy `
+"C:\Users\ADMIN\Downloads\GoodDaily_v1.4.0" `
+"C:\Users\ADMIN\Documents\GoodDaily" `
+/E /XD .git .gradle .idea build /XF local.properties
+
+cd C:\Users\ADMIN\Documents\GoodDaily
+git status
+git add .
+git commit -m "Update Good Daily v1.4.0 music and notification sounds"
+git push
+```

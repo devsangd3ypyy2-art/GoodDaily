@@ -1,6 +1,8 @@
 package com.sangapp.gooddaily.ui.dashboard;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,16 +46,15 @@ public class DashboardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         DashboardViewModel vm = new ViewModelProvider(this).get(DashboardViewModel.class);
         LocalUserStore userStore = new LocalUserStore(requireContext());
-        String name = userStore.getDisplayName();
         hideAmounts = userStore.isHideAmountsEnabled();
-        binding.cardFinanceSummary.setCardBackgroundColor(
-                ThemeUtils.getPrimaryColor(requireContext(), userStore.getThemeKey())
-        );
+        int accent = ThemeUtils.getPrimaryColor(requireContext(), userStore.getThemeKey());
+        int accentContainer = ThemeUtils.getContainerColor(requireContext(), userStore.getThemeKey());
+        binding.cardFinanceSummary.setCardBackgroundColor(accent);
+        binding.cardDashboardAvatar.setCardBackgroundColor(accentContainer);
+        ThemeUtils.tintTonalButton(binding.btnDashboardNotifications, requireContext(), userStore.getThemeKey());
+        loadAvatar(userStore, accent);
 
-        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        String greeting = hour < 11 ? "Chào buổi sáng" : hour < 18 ? "Chào buổi chiều" : "Chào buổi tối";
-        binding.tvGreeting.setText(greeting + ", " + name);
-        binding.tvToday.setText(DateUtils.formatFullToday());
+        updateHeader(userStore, accent);
 
         vm.totalBalance().observe(getViewLifecycleOwner(), value -> {
             totalBalance = value == null ? 0 : value;
@@ -101,6 +102,49 @@ public class DashboardFragment extends Fragment {
         binding.cardStudy.setOnClickListener(v -> navigate(v, R.id.plannerFragment, "learning"));
         binding.cardHabits.setOnClickListener(v -> navigate(v, R.id.plannerFragment, "habits"));
         binding.cardTaskProgress.setOnClickListener(v -> navigate(v, R.id.plannerFragment, "tasks"));
+        binding.btnDashboardNotifications.setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.reminderManagerFragment));
+        binding.cardDashboardAvatar.setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.profileFragment));
+
+        binding.getRoot().setAlpha(0f);
+        binding.getRoot().animate().alpha(1f).setDuration(220L).start();
+    }
+
+    private void updateHeader(LocalUserStore store, int accent) {
+        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        String greeting = hour < 11 ? "Chào buổi sáng" : hour < 18 ? "Chào buổi chiều" : "Chào buổi tối";
+        binding.tvGreeting.setText(greeting + ", " + store.getDisplayName());
+        binding.tvToday.setText(DateUtils.formatFullToday());
+        loadAvatar(store, accent);
+    }
+
+    private void loadAvatar(LocalUserStore store, int accent) {
+        String value = store.getAvatarUri();
+        if (value == null || value.trim().isEmpty()) {
+            binding.imgDashboardAvatar.setImageResource(R.drawable.ic_app_logo);
+            int padding = dp(12);
+            binding.imgDashboardAvatar.setPadding(padding, padding, padding, padding);
+            binding.imgDashboardAvatar.setScaleType(android.widget.ImageView.ScaleType.CENTER_INSIDE);
+            binding.imgDashboardAvatar.setColorFilter(accent);
+            return;
+        }
+        try {
+            binding.imgDashboardAvatar.clearColorFilter();
+            binding.imgDashboardAvatar.setPadding(0, 0, 0, 0);
+            binding.imgDashboardAvatar.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+            binding.imgDashboardAvatar.setImageURI(Uri.parse(value));
+        } catch (Exception ignored) {
+            binding.imgDashboardAvatar.setImageResource(R.drawable.ic_app_logo);
+            int padding = dp(12);
+            binding.imgDashboardAvatar.setPadding(padding, padding, padding, padding);
+            binding.imgDashboardAvatar.setColorFilter(accent);
+        }
+    }
+
+    private int dp(int value) {
+        return (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, value, getResources().getDisplayMetrics());
     }
 
     private void navigate(View view, int destination, String focus) {
@@ -127,6 +171,15 @@ public class DashboardFragment extends Fragment {
 
     private void renderHabits() {
         binding.tvHabitProgress.setText(checkedHabits + "/" + habitCount);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (binding != null) {
+            LocalUserStore store = new LocalUserStore(requireContext());
+            updateHeader(store, ThemeUtils.getPrimaryColor(requireContext(), store.getThemeKey()));
+        }
     }
 
     @Override

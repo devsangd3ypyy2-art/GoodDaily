@@ -3,8 +3,10 @@ package com.sangapp.gooddaily.util;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.util.TypedValue;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
@@ -13,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.sangapp.gooddaily.R;
+import com.sangapp.gooddaily.data.local.prefs.LocalUserStore;
 
 public final class ThemeUtils {
     public static final String THEME_GREEN = "green";
@@ -24,6 +27,9 @@ public final class ThemeUtils {
 
     @ColorInt
     public static int getPrimaryColor(@NonNull Context context, @NonNull String themeKey) {
+        if (new LocalUserStore(context).isDynamicColorsEnabled()) {
+            return resolveThemeColor(context, "colorPrimary", R.color.primary);
+        }
         switch (themeKey) {
             case THEME_BLUE:
                 return ContextCompat.getColor(context, R.color.theme_blue);
@@ -39,6 +45,9 @@ public final class ThemeUtils {
 
     @ColorInt
     public static int getContainerColor(@NonNull Context context, @NonNull String themeKey) {
+        if (new LocalUserStore(context).isDynamicColorsEnabled()) {
+            return resolveThemeColor(context, "colorPrimaryContainer", R.color.primary_container);
+        }
         switch (themeKey) {
             case THEME_BLUE:
                 return ContextCompat.getColor(context, R.color.theme_blue_container);
@@ -54,6 +63,9 @@ public final class ThemeUtils {
 
     @ColorInt
     public static int getOnContainerColor(@NonNull Context context, @NonNull String themeKey) {
+        if (new LocalUserStore(context).isDynamicColorsEnabled()) {
+            return resolveThemeColor(context, "colorOnPrimaryContainer", R.color.on_primary_container);
+        }
         switch (themeKey) {
             case THEME_BLUE:
                 return ContextCompat.getColor(context, R.color.theme_blue_on_container);
@@ -65,6 +77,44 @@ public final class ThemeUtils {
             default:
                 return ContextCompat.getColor(context, R.color.theme_green_on_container);
         }
+    }
+
+    /**
+     * Resolves a Material theme color without directly referencing Material R.attr fields.
+     * This keeps the project compatible with Material library versions where some generated
+     * attribute constants are not exposed through com.google.android.material.R.attr.
+     */
+    @ColorInt
+    private static int resolveThemeColor(
+            @NonNull Context context,
+            @NonNull String attributeName,
+            @ColorRes int fallbackColor
+    ) {
+        int attributeId = context.getResources().getIdentifier(
+                attributeName,
+                "attr",
+                context.getPackageName()
+        );
+
+        if (attributeId == 0) {
+            attributeId = context.getResources().getIdentifier(
+                    attributeName,
+                    "attr",
+                    "com.google.android.material"
+            );
+        }
+
+        if (attributeId != 0) {
+            TypedValue value = new TypedValue();
+            if (context.getTheme().resolveAttribute(attributeId, value, true)) {
+                if (value.resourceId != 0) {
+                    return ContextCompat.getColor(context, value.resourceId);
+                }
+                return value.data;
+            }
+        }
+
+        return ContextCompat.getColor(context, fallbackColor);
     }
 
     @ColorInt
